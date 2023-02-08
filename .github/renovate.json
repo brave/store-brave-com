@@ -2,5 +2,6 @@
   "extends": ["config:base"],
   "labels": ["dependencies", "renovate"],
   "prConcurrentLimit": 4,
-  "rangeStrategy": "pin"
+  "rangeStrategy": "pin",
+  "schedule": "at 10:00 am on Monday"
 }
