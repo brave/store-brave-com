@@ -121,7 +121,7 @@
   }
 </script>
 
-<article class="product-layout max-w-screen-lg mx-auto">
+<article class="product-layout w-full max-w-screen-lg mx-auto">
   <Breadcrumbs ref="product-layout__breadcrumbs" crumbs={breadcrumbs} />
 
   <img
