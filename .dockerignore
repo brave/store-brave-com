@@ -1,0 +1,5 @@
+.git/
+api/
+
+# Allow api/schema.graphql
+!api/schema.graphql

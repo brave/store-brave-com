@@ -1,0 +1,25 @@
+name: security
+on:
+  workflow_dispatch:
+  push:
+    branches: [main, staging]
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+    branches: [main, staging]
+
+jobs:
+  security:
+    name: security
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      # CodeQL analyzed languages
+      matrix:
+        language: [ 'generic', 'javascript' ]
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - uses: brave/security-action@main
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}

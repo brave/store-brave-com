@@ -1,0 +1,192 @@
+name: Build Deploy
+on:
+  push:
+    branches:
+      - main
+      - staging
+permissions:
+  id-token: write
+  contents: read # This is required for actions/checkout
+
+jobs:
+  get-environment:
+    runs-on: ubuntu-latest
+    outputs:
+      environment: ${{ steps.get_environment.outputs.environment }}
+    steps:
+      - id: get_environment
+        name: Get Environment
+        run: |
+          if [[ "$GITHUB_REF" = "refs/heads/staging" ]]
+          then
+            echo "environment=staging" >> $GITHUB_OUTPUT
+          elif [[ "$GITHUB_REF" = "refs/heads/main" ]]
+          then
+            echo "environment=production" >> $GITHUB_OUTPUT
+          else
+            echo "Fatal error. Could not determine environment"
+            exit 1
+          fi
+
+  build-deploy-store:
+    runs-on: ubuntu-latest
+    needs: ["get-environment"]
+    environment:
+      name: ${{ needs.get-environment.outputs.environment }}
+    steps:
+      - name: Git clone the repository
+        uses: actions/checkout@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+        with:
+          install: true
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          role-session-name: github-actions-store-public-ecr
+          aws-region: us-east-1
+
+      - name: Login to public Amazon ECR
+        id: login-ecr-public
+        uses: aws-actions/amazon-ecr-login@v1
+        with:
+          registry-type: public
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          role-session-name: github-actions-store-build-push
+          aws-region: us-west-2
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+
+      - name: Build, tag, and push image to Amazon ECR
+        id: build-image
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: store-ecr
+          IMAGE_TAG: ${{ github.sha }}
+          PUBLIC_ASSETS_PATH: ${{ secrets.PUBLIC_ASSETS_PATH }}
+        run: |
+          docker buildx build --push --build-arg PUBLIC_ASSETS_PATH=$PUBLIC_ASSETS_PATH \
+          --build-arg BUILDKIT_INLINE_CACHE=1 \
+          --cache-from=type=registry,ref=$ECR_REGISTRY/$ECR_REPOSITORY:latest \
+          -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -t $ECR_REGISTRY/$ECR_REPOSITORY:latest .
+          echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
+          # Cannot use `--cache-to` due to https://github.com/docker/buildx/issues/271
+          # Caching to `latest` with inline caching which seems to work
+
+      - name: Download task definition
+        run: |
+          aws ecs describe-task-definition --task-definition store --query taskDefinition > task-definition.json
+
+      - name: Fill in the new image ID in the Amazon ECS task definition
+        id: task-def
+        uses: aws-actions/amazon-ecs-render-task-definition@v1
+        with:
+          task-definition: task-definition.json
+          container-name: store
+          image: ${{ steps.build-image.outputs.image }}
+
+      - name: Deploy Amazon ECS task definition
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+        with:
+          task-definition: ${{ steps.task-def.outputs.task-definition }}
+          service: store
+          cluster: store
+          wait-for-service-stability: true
+
+  build-deploy-store-backend:
+    runs-on: ubuntu-latest
+    needs: ["get-environment"]
+    environment:
+      name: ${{ needs.get-environment.outputs.environment }}
+    steps:
+      - name: Git clone the repository
+        uses: actions/checkout@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+        with:
+          install: true
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          role-session-name: github-actions-store-public-ecr
+          aws-region: us-east-1
+
+      - name: Login to public Amazon ECR
+        id: login-ecr-public
+        uses: aws-actions/amazon-ecr-login@v1
+        with:
+          registry-type: public
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          role-session-name: github-actions-store-build-push
+          aws-region: us-west-2
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+
+      - name: Build, tag, and push image to Amazon ECR
+        id: build-image
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: store-backend-ecr
+          IMAGE_TAG: ${{ github.sha }}
+        run: |
+          SESSION_SECRET=$( xxd -u -l 16 -p /dev/urandom )
+          docker buildx build --push --build-arg SESSION_SECRET=$SESSION_SECRET --build-arg BUILDKIT_INLINE_CACHE=1 \
+          --cache-from=type=registry,ref=$ECR_REGISTRY/$ECR_REPOSITORY:latest \
+          -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -t $ECR_REGISTRY/$ECR_REPOSITORY:latest api/
+          echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
+          # Cannot use `--cache-to` due to https://github.com/docker/buildx/issues/271
+          # Caching to `latest` with inline caching which seems to work
+
+      - name: Download task definition
+        run: |
+          aws ecs describe-task-definition --task-definition store-backend --query taskDefinition > task-definition.json
+
+      - name: Fill in the new image ID in the Amazon ECS task definition
+        id: task-def
+        uses: aws-actions/amazon-ecs-render-task-definition@v1
+        with:
+          task-definition: task-definition.json
+          container-name: store-backend
+          image: ${{ steps.build-image.outputs.image }}
+
+      - name: Register Amazon ECS task definition for DB migration
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+        with:
+          task-definition: ${{ steps.task-def.outputs.task-definition }}
+
+      - name: DB migration
+        run: |
+          run_result=$(aws ecs run-task --overrides '{ "containerOverrides": [{ "name": "store-backend", "command": [ "npm", "run", "migrate" ] }]}' --task-definition store-backend --cluster store --launch-type="FARGATE" --network-configuration '{ "awsvpcConfiguration": { "subnets": ["${{ secrets.ECS_DB_MIGRATION_SUBNET }}"],"securityGroups": ["${{ secrets.ECS_DB_MIGRATION_SG }}"] }}')
+          container_arn=$(echo $run_result | jq '.tasks[0].taskArn' | sed -e 's/^"//' -e 's/"$//')
+          echo "container arn: ${container_arn}"
+          aws ecs wait tasks-stopped --cluster store --tasks "${container_arn}"
+          describe_result=$(aws ecs describe-tasks --cluster store --tasks "${container_arn}")
+          terminated_status=$(echo $describe_result | jq '.tasks[0].containers[0].exitCode')
+          echo "exit status:" $terminated_status
+          exit $terminated_status
+
+      - name: Deploy Amazon ECS task definition
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+        with:
+          task-definition: ${{ steps.task-def.outputs.task-definition }}
+          service: store-backend
+          cluster: store
+          wait-for-service-stability: true

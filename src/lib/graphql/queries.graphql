@@ -1,0 +1,98 @@
+query FeaturedProducts {
+  products(where: { isFeatured: { equals: true } }) {
+    ...ProductSummary
+  }
+}
+
+query Products($limit: Int = 9, $offset: Int = 0) {
+  products(take: $limit, skip: $offset, orderBy: { printfulProductId: asc }) {
+    ...ProductSummary
+  }
+  productsCount
+}
+
+query ProductsByCategory($categorySlug: String, $limit: Int = 9, $offset: Int = 0) {
+  category(where: { slug: $categorySlug }) {
+    name
+    slug
+    products(take: $limit, skip: $offset, orderBy: { printfulProductId: asc }) {
+      ...ProductSummary
+    }
+    productsCount
+  }
+}
+
+# In order to query by productSlug AND variant ID, this uses
+# the variants query and returns an array of one item.
+query Variant($printfulId: String, $productSlug: String) {
+  variants(
+    where: {
+      printfulVariantId: { equals: $printfulId }
+      product: { slug: { equals: $productSlug } }
+    }
+    orderBy: { printfulVariantId: asc }
+  ) {
+    ...VariantDetails
+    product {
+      ...ProductDetails
+      variants {
+        ...VariantDetails
+      }
+    }
+  }
+}
+
+query Variants($variantIds: [ID!] = []) {
+  variants(where: { id: { in: $variantIds } }) {
+    ...VariantDetails
+  }
+}
+
+query Categories {
+  categories {
+    id
+    name
+    slug
+    productsCount
+  }
+}
+
+mutation AddProcessedOrder($idempotencyKey: String) {
+  createProcessedOrder(data: { idempotency_key: $idempotencyKey }) {
+    id
+  }
+}
+
+fragment ProductSummary on Product {
+  id
+  name
+  priceRange
+  firstVariant {
+    permalink
+    details
+  }
+  category {
+    name
+    slug
+  }
+}
+
+fragment ProductDetails on Product {
+  name
+  slug
+  description
+  thumbnail
+  filters
+  sizingCharts
+  category {
+    name
+    slug
+  }
+}
+
+fragment VariantDetails on Variant {
+  id
+  permalink
+  printfulVariantId
+  details
+}

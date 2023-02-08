@@ -1,0 +1,40 @@
+/*------------------------------------*\
+#Base
+\*------------------------------------*/
+@use '@brave/leo/build/css/variables.css';
+
+@tailwind base;
+
+@layer base {
+  html,
+  body {
+    font-size: 16px;
+    height: 100%;
+    color: theme('colors.text.primary');
+  }
+
+  body {
+    min-height: 100%;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+  }
+
+  body > footer {
+    grid-row-start: 3;
+    grid-row-end: 4;
+  }
+
+  .preload * {
+    transition: none !important;
+  }
+}
+
+/*------------------------------------*\
+  #Components
+\*------------------------------------*/
+@tailwind components;
+
+/*------------------------------------*\
+  #Utilities
+\*------------------------------------*/
+@tailwind utilities;

@@ -1,0 +1,4 @@
+Contact: security@brave.com
+Acknowledgments: https://hackerone.com/brave/thanks
+Preferred-Languages: en
+Policy: https://hackerone.com/brave?view_policy=true
