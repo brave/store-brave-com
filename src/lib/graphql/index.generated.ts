@@ -102,7 +102,7 @@ export const FeaturedProductsDocument = gql`
     ${ProductSummaryFragmentDoc}`;
 export const ProductsDocument = gql`
     query Products($limit: Int = 9, $offset: Int = 0) {
-  products(take: $limit, skip: $offset, orderBy: {printfulProductId: asc}) {
+  products(take: $limit, skip: $offset, orderBy: {printfulProductId: desc}) {
     ...ProductSummary
   }
   productsCount
@@ -113,7 +113,7 @@ export const ProductsByCategoryDocument = gql`
   category(where: {slug: $categorySlug}) {
     name
     slug
-    products(take: $limit, skip: $offset, orderBy: {printfulProductId: asc}) {
+    products(take: $limit, skip: $offset, orderBy: {printfulProductId: desc}) {
       ...ProductSummary
     }
     productsCount
