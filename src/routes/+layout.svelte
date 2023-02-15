@@ -120,7 +120,7 @@
 </script>
 
 <svelte:head>
-  <title>{$page.error ? $page.status : $page.data.title} | Brave Swag Store</title>
+  <title>{$page.error ? $page.status : $page.data.title} | Brave Merch Store</title>
   <link rel="preconnect" crossorigin="anonymous" href={env.PUBLIC_ASSETS_PATH} />
 </svelte:head>
 
@@ -141,9 +141,7 @@
   class="text-text-primary bg-page-background py-10 border-t border-divider-subtle"
 >
   <div class="container mx-auto px-6 flex justify-between items-center">
-    <p class="text-text-secondary">© 2015 - 2022 Brave Software, Inc. | All rights reserved | <a href="/refunds-and-returns/" data-sveltekit-reload>Refunds & Returns</a></p>
-    <address class="not-italic text-text-secondary">
-      580 Howard St. Unit 402,<br /> San Francisco, CA 94105
-    </address>
+    <p class="text-text-secondary">© 2015 - 2022 Brave Software, Inc. | All rights reserved | <a class="link" href="/refunds-and-returns/" data-sveltekit-reload>Refunds & Returns</a></p>
+    <p class="not-italic text-text-secondary">Email: <a class="link" href="mailto:merch@brave.com" target="_blank" rel="noreferrer noopener">merch@brave.com</a></p>
   </div>
 </footer>

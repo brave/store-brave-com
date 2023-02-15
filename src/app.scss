@@ -8,7 +8,7 @@
 @layer base {
   html,
   body {
-    font-size: 16px;
+    @apply text-large-regular;
     height: 100%;
     color: theme('colors.text.primary');
   }
@@ -33,6 +33,29 @@
   #Components
 \*------------------------------------*/
 @tailwind components;
+
+@layer components {
+  .link {
+    all: unset;
+    color: theme("colors.text.interactive");
+    cursor: pointer;
+    text-decoration: underline;
+    &:hover {
+      color: theme("colors.primary.60");
+    }
+    &:visited:not(:hover) {
+      color: theme("colors.pink.50");
+    }
+    &:focus-visible:not(.disabled) {
+      color: theme("colors.text.interactive");
+      box-shadow: theme("boxShadow.focus-state");
+    }
+    &.disabled {
+      color: theme("colors.text.disabled");
+      pointer-events: none;
+    }
+  }
+}
 
 /*------------------------------------*\
   #Utilities

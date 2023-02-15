@@ -10,7 +10,7 @@
 
   const pages = [
     { name: 'Home', permalink: '/' },
-    { name: 'Privacy', permalink: 'https://brave.com/privacy/website/#brave-swag-store', newTab: true }
+    { name: 'Privacy', permalink: 'https://brave.com/privacy/website/#brave-merch-store', newTab: true }
   ];
 
   let mobileMenuOpen = false;
@@ -24,12 +24,12 @@
   </button>
 
   <a class="inline-flex items-center" href="/">
-    <img class="h-8 inline dark:hidden" src="/images/brave-logo.svg" alt="Brave Swag Store" /><img
+    <img class="h-8 inline dark:hidden" src="/images/brave-logo.svg" alt="Brave Merch Store" /><img
       class="h-8 hidden dark:inline"
       src="/images/brave-logo-dark.svg"
-      alt="Brave Swag Store"
+      alt="Brave Merch Store"
     />
-    <span class="text-h2 whitespace-nowrap text-text-primary opacity-90 ml-2 font-normal">| swag</span>
+    <span class="text-h2 whitespace-nowrap text-text-primary opacity-90 ml-2 font-normal">| merch</span>
   </a>
 
   <nav class="flex gap-x-8">
@@ -49,12 +49,12 @@
   <nav class="mobile-menu__nav w-4/5 bg-container-background min-h-screen z-10 pl-6 pr-4 py-5">
     <div class="flex justify-between pb-12">
       <a class="flex items-center" href="/" on:click={closeMobileMenu}>
-        <img class="h-8 inline dark:hidden" src="/images/brave-logo.svg" alt="Brave Swag Store" /><img
+        <img class="h-8 inline dark:hidden" src="/images/brave-logo.svg" alt="Brave Merch Store" /><img
           class="w-44 hidden dark:inline"
           src="/images/brave-logo-dark.svg"
-          alt="Brave Swag Store"
+          alt="Brave Merch Store"
         />
-        <span class="text-h2 text-primary opacity-90 ml-2 font-normal">| swag</span>
+        <span class="text-h2 text-primary opacity-90 ml-2 font-normal">| merch</span>
       </a>
 
       <button aria-label="open mobile menu" class="nav-item" on:click={closeMobileMenu}>

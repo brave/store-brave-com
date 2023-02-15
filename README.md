@@ -1,4 +1,4 @@
-# Brave Swag Store
+# Brave Merch Store
 
 ## Frontend
 
