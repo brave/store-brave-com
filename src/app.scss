@@ -8,7 +8,7 @@
 @layer base {
   html,
   body {
-    @apply text-large-regular;
+    font: 16px;
     height: 100%;
     color: theme('colors.text.primary');
   }

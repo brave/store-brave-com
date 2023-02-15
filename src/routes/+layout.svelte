@@ -132,7 +132,7 @@
   <Navigation />
 </header>
 
-<main class="container mx-auto px-6 pt-10 pb-20 grid grid-rows-[max-content]">
+<main class="container mx-auto px-6 pt-10 pb-20 grid auto-rows-max">
   <slot />
 </main>
 
