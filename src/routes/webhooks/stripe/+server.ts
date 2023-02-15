@@ -69,7 +69,8 @@ async function fulfillOrder(session: Stripe.Checkout.Session): Promise<void> {
       items
     };
 
-    await printfulApi.createOrder(newOrder);
+    const shouldBeDraft = env.BASE_URL.includes("bravesoftware.com");
+    await printfulApi.createOrder(newOrder, { draft: shouldBeDraft });
   } catch (e: any) {
     console.log(session.payment_intent);
     console.log(e.message);

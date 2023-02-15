@@ -107,8 +107,8 @@
           <div in:slide class="shipping_address">
             <h3 class="text-default-semibold pb-4">Shipping address</h3>
             <div class="form-control required" class:errors={form?.shippingAddress?.address1?.missing}>
-              <label for="shippingAddress[address1]">Address 1</label>
-              <input name="shippingAddress[address1]" id="shippingAddress[address1]" type="text" placeholder="Address 1" required />
+              <label for="shippingAddress[address1]">Address</label>
+              <input name="shippingAddress[address1]" id="shippingAddress[address1]" type="text" placeholder="Address" required />
             </div>
 
             <div class="input-group">

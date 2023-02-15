@@ -34,9 +34,18 @@ export async function printfulApi (resourcePath: string, options?: RequestInit) 
   return responseBody.result;
 }
 
-export async function createOrder (order: App.Order): Promise<void> {
+interface CreateOrderOptions {
+  draft: boolean
+}
+
+export async function createOrder (order: App.Order, { draft = true }: CreateOrderOptions): Promise<void> {
+  let url = "/orders";
+  if (!draft) {
+    url += "?confirm=true";
+  }
+
   try {
-    await printfulApi("/orders", {
+    await printfulApi(url, {
       method: "POST",
       body: JSON.stringify(order)
     });
