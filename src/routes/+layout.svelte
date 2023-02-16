@@ -140,8 +140,11 @@
   data-theme="dark"
   class="text-text-primary bg-page-background py-10 border-t border-divider-subtle"
 >
-  <div class="container mx-auto px-6 flex justify-between items-center">
-    <p class="text-text-secondary">© 2015 - 2023 Brave Software, Inc. | All rights reserved | <a class="link" href="/refunds-and-returns/">Refunds & Returns</a></p>
-    <p class="not-italic text-text-secondary">Email: <a class="link" href="mailto:merch@brave.com" target="_blank" rel="noreferrer noopener">merch@brave.com</a></p>
+  <div class="container mx-auto flex max-md:flex-col md:items-center px-6 gap-3">
+    <div class="md:ml-auto flex flex-col gap-2 text-large-regular">
+      <a class="link" href="/refunds-and-returns/">Refunds & Returns</a>
+      <p class="not-italic text-text-secondary">Email: <a class="link" href="mailto:merch@brave.com" target="_blank" rel="noreferrer noopener">merch@brave.com</a></p>
+    </div>
+    <p class="text-x-small-regular xs:text-small-regular md:text-large-regular text-text-secondary md:order-first">© 2015 - 2023 Brave Software, Inc. | All rights reserved</p>
   </div>
 </footer>
