@@ -56,7 +56,7 @@
           src="/images/brave-logo-dark.svg"
           alt="Brave Merch Store"
         />
-        <span class="logo-tag text-h2 text-primary opacity-90 ml-2 font-normal">| merch</span>
+        <span class="logo-tag text-h2 whitespace-nowrap text-primary opacity-90 ml-2 font-normal">| merch</span>
       </a>
 
       <button aria-label="open mobile menu" class="nav-item" on:click={closeMobileMenu}>
