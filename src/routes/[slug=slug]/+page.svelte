@@ -1,10 +1,10 @@
 <script lang="ts">
-  import { sanitize } from 'isomorphic-dompurify';
+  import DOMPurify from 'isomorphic-dompurify';
   import type { PageData } from './$types';
 
   export let data: PageData;
 
-  const sanitizedBody = sanitize(data.body, { RETURN_TRUSTED_TYPE: true });
+  const sanitizedBody = DOMPurify.sanitize(data.body, { RETURN_TRUSTED_TYPE: true });
 </script>
 
 <article class="page max-w-screen-lg mx-auto">
