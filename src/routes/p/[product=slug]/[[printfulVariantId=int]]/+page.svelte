@@ -4,8 +4,9 @@
   import Button from '@brave/leo/web-components/button/button.svelte';
   import MeasurementDetails from './MeasurementDetails.svelte';
   import QuantitySelector from '$lib/QuantitySelector.svelte';
-    import Breadcrumbs from '$lib/Breadcrumbs.svelte';
-    import { formatPrice } from '$lib/utils';
+  import Breadcrumbs from '$lib/Breadcrumbs.svelte';
+  import { formatPrice } from '$lib/utils';
+  import { goto } from '$app/navigation';
 
   const { addToCart } = getContext(contextKey);
 
@@ -104,6 +105,15 @@
 
   let purchaseQuantity = 1;
 
+  /**
+   * @param {Event} e
+   * @return {void}
+   */
+  const handleVariantClick = (e) => {
+    e.preventDefault();
+    // @ts-ignore
+    goto(e.currentTarget.href, { replaceState: true })
+  }
 
   /** @type {Array<{ label: string, link?: string }>} */
   let breadcrumbs;
@@ -150,6 +160,7 @@
                     class="rounded-8 border border-gray-30 block overflow-hidden"
                     class:active-option={variant.details.color === color.name}
                     href={getColorVariantFromColor(color.name)?.permalink}
+                    on:click={handleVariantClick}
                     title={color.name}
                   >
                     <span class="h-8 w-8 block" style="background: {getColorBg(color)}" />
@@ -170,6 +181,7 @@
                 <li>
                   <a
                     href={sizeVariant.permalink}
+                    on:click={handleVariantClick}
                     class="border-dashed border rounded-8 p-2 min-w-[40px] inline-block text-center"
                     class:active-option={sizeVariant.details.size === variant.details.size}
                   >
