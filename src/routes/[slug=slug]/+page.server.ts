@@ -1,11 +1,9 @@
 import { error } from '@sveltejs/kit';
 import { readdir, readFile } from 'fs/promises';
 import { marked } from 'marked';
-import DOMPurify from 'isomorphic-dompurify';
 import type { PageServerLoad } from './$types';
 
 export const prerender = true;
-export const csr = false;
 
 const BASE_DIR = './src/pages';
 
@@ -28,7 +26,7 @@ export const load: PageServerLoad = async ({ params }) => {
 
   return {
     title: metadata.title,
-    sanitizedBody: DOMPurify.sanitize(marked.parse(body))
+    body: marked.parse(body)
   };
 };
 

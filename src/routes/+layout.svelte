@@ -141,7 +141,7 @@
   class="text-text-primary bg-page-background py-10 border-t border-divider-subtle"
 >
   <div class="container mx-auto px-6 flex justify-between items-center">
-    <p class="text-text-secondary">© 2015 - 2022 Brave Software, Inc. | All rights reserved | <a class="link" href="/refunds-and-returns/" data-sveltekit-reload>Refunds & Returns</a></p>
+    <p class="text-text-secondary">© 2015 - 2023 Brave Software, Inc. | All rights reserved | <a class="link" href="/refunds-and-returns/">Refunds & Returns</a></p>
     <p class="not-italic text-text-secondary">Email: <a class="link" href="mailto:merch@brave.com" target="_blank" rel="noreferrer noopener">merch@brave.com</a></p>
   </div>
 </footer>
