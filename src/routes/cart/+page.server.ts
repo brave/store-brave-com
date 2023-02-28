@@ -1,7 +1,3 @@
-/**
- * TODO: Stripe should send an email confirming purchase
- */
-
 import { parse } from 'qs';
 import { fail, redirect } from '@sveltejs/kit';
 import {
@@ -241,14 +237,15 @@ export const actions: Actions = {
       })
     });
 
-    console.log(shippingRates);
-
     const stripeShippingOptions: Array<Stripe.Checkout.SessionCreateParams.ShippingOption> =
       shippingRates.map(
         (shippingRate: any): Stripe.Checkout.SessionCreateParams.ShippingOption => ({
           shipping_rate_data: {
             display_name: shippingRate.name,
             type: 'fixed_amount',
+            metadata: {
+              printful_shipping_rate_id: shippingRate.id
+            },
             fixed_amount: {
               amount: parseFloat(shippingRate.rate) * 100,
               currency: 'USD'

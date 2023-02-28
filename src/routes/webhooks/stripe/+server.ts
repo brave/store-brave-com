@@ -36,9 +36,10 @@ export const POST: RequestHandler = async ({ request }) => {
 async function fulfillOrder(session: Stripe.Checkout.Session): Promise<void> {
   try {
     const sessionDetails = await stripe.checkout.sessions.retrieve(session.id, {
-      expand: ['line_items.data.price.product']
+      expand: ['line_items.data.price.product', 'shipping_cost.shipping_rate']
     });
 
+    const shippingRate = sessionDetails.shipping_cost?.shipping_rate as Stripe.ShippingRate;
     const line_items = sessionDetails.line_items?.data;
     const { customer_details, metadata } = sessionDetails;
 
@@ -66,6 +67,7 @@ async function fulfillOrder(session: Stripe.Checkout.Session): Promise<void> {
         country_code: metadata?.country_code,
         phone: metadata?.phone
       },
+      shipping: shippingRate?.metadata?.printful_shipping_rate_id,
       external_id: sessionDetails.payment_intent as string,
       items
     };
