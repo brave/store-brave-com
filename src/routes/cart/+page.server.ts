@@ -203,7 +203,7 @@ export const actions: Actions = {
     // Format line_item data for Stripe
     const line_items: Array<Stripe.Checkout.SessionCreateParams.LineItem> = items.map(
       ({ id, quantity }) => {
-        const variant = variantDetailsHash[id];
+        const variant: Omit<StrongVariant, 'id'> = variantDetailsHash[id];
         return {
           price_data: {
             currency: variant.details.currency,
@@ -215,7 +215,7 @@ export const actions: Actions = {
                 baseVariantId: variant.details.baseVariantId
               }
             },
-            unit_amount: variant.details.price * 100
+            unit_amount: Math.round(variant.details.price * 100)
           },
           quantity
         };
@@ -247,7 +247,7 @@ export const actions: Actions = {
               printful_shipping_rate_id: shippingRate.id
             },
             fixed_amount: {
-              amount: parseFloat(shippingRate.rate) * 100,
+              amount: Math.round(parseFloat(shippingRate.rate) * 100),
               currency: 'USD'
             },
             delivery_estimate: {
