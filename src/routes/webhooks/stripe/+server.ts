@@ -56,20 +56,21 @@ async function fulfillOrder(session: Stripe.Checkout.Session): Promise<void> {
 
     const newOrder = {
       recipient: {
-        name: customer_details?.name,
+        name: metadata?.name || customer_details?.name,
         email: customer_details?.email,
         address1: metadata?.address1,
         address2: metadata?.address2,
         city: metadata?.city,
         state_code: metadata?.state_code,
         zip: metadata?.zip,
-        country_code: metadata?.country_code
+        country_code: metadata?.country_code,
+        phone: metadata?.phone
       },
       external_id: sessionDetails.payment_intent as string,
       items
     };
 
-    const shouldBeDraft = env.BASE_URL.includes("bravesoftware.com");
+    const shouldBeDraft = !env.BASE_URL.startsWith("https://brave.com");
     await printfulApi.createOrder(newOrder, { draft: shouldBeDraft });
   } catch (e: any) {
     console.log(session.payment_intent);

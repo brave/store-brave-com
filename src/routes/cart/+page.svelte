@@ -1,5 +1,8 @@
 <script lang="ts">
   import { getContext } from 'svelte';
+  import examples from "libphonenumber-js/mobile/examples"
+  import { getExampleNumber } from "libphonenumber-js/max"
+  import type { CountryCode } from "libphonenumber-js/max"
   import { contextKey } from '$lib/cartStore';
   import { formatPrice } from '$lib/utils';
   import Button from '@brave/leo/web-components/button/button.svelte';
@@ -21,11 +24,24 @@
   ));
 
   export let data: PageData;
-  $: ({ countries, statesByCountry } = data);
+  $: ({ countries, statesByCountry, countryCallingCodes } = data);
   export let form: import('./$types').ActionData;
 
-  let showShippingAddress = form?.shippingAddress?.hasErrors;
-  let shippingCountryChoice: string;
+  let showShippingAddress = form?.errors?.shippingAddress?.hasErrors;
+  let shippingCountryChoice: string = form?.values?.country_code || '';
+  let phoneNumber = form?.values?.phone || '';
+  let callingCodeChoice = form?.values?.calling_code || 'US+1';
+  $: [callingCodeCountry] = callingCodeChoice.split("+");
+
+  let phoneExample: string;
+  $: {
+    const exampleNumber = getExampleNumber(callingCodeCountry as CountryCode, examples);
+    phoneExample = exampleNumber?.formatNational() || "(201) 555-0123";
+  }
+
+  function updateCountryCallingCode (e: any) {
+    callingCodeChoice = countryCallingCodes[e.target.value]?.key || callingCodeChoice;
+  }
 </script>
 
 {#if $cartStore.length <= 0}
@@ -36,14 +52,14 @@
 {:else}
   <h1 class="text-h1 pb-6">Shopping cart</h1>
 
-  {#if form?.cartEmpty}
+  {#if form?.errors?.cartEmpty}
     <div class="flex flex-col justify-center items-center pt-[8vh]">
       <h2 class="text-h2 pb-4">Hmm... looks like you haven't put anything in your cart.</h2>
       <Button href="/categories/all/" size="large">Browse products</Button>
     </div>
   {/if}
 
-  {#if form?.somethingWentWrong}
+  {#if form?.errors?.somethingWentWrong}
     <div class="flex flex-col justify-center items-center pt-[8vh]">
       <h2 class="text-h2 pb-4">Something went wrong on our end. Please try again later.</h2>
     </div>
@@ -104,30 +120,35 @@
         </p>
 
         {#if showShippingAddress}
-          <div in:slide class="shipping_address">
+          <div transition:slide class="shipping_address">
             <h3 class="text-default-semibold pb-4">Shipping address</h3>
-            <div class="form-control required" class:errors={form?.shippingAddress?.address1?.missing}>
+            <div class="form-control">
+              <label for="shippingAddress[name]">Name <span class="label-explanation">(if different from billing name)</span></label>
+              <input value={form?.values?.name || ''} name="shippingAddress[name]" id="shippingAddress[name]" type="text" placeholder="Jane Smith" />
+            </div>
+
+            <div class="form-control required" class:errors={form?.errors?.shippingAddress?.address1?.missing}>
               <label for="shippingAddress[address1]">Address</label>
-              <input name="shippingAddress[address1]" id="shippingAddress[address1]" type="text" placeholder="Address" required />
+              <input value={form?.values?.address1 || ''} name="shippingAddress[address1]" id="shippingAddress[address1]" type="text" placeholder="580 Howard St. Unit 402" required />
             </div>
 
             <div class="input-group">
-              <div class="form-control required" class:errors={form?.shippingAddress?.city?.missing}>
+              <div class="form-control required" class:errors={form?.errors?.shippingAddress?.city?.missing}>
                 <label for="shippingAddress[city]">City</label>
-                <input name="shippingAddress[city]" id="shippingAddress[city]" type="text" placeholder="City" required />
+                <input value={form?.values?.city || ''} name="shippingAddress[city]" id="shippingAddress[city]" type="text" placeholder="San Francisco" required />
               </div>
 
-              <div class="form-control required" class:errors={form?.shippingAddress?.zip?.missing}>
-                <label for="shippingAddress[zip]">Zip code</label>
-                <input name="shippingAddress[zip]" id="shippingAddress[zip]" type="text" placeholder="Zip code" required />
+              <div class="form-control required" class:errors={form?.errors?.shippingAddress?.zip?.missing}>
+                <label for="shippingAddress[zip]">Postal code</label>
+                <input value={form?.values?.zip || ''} name="shippingAddress[zip]" id="shippingAddress[zip]" type="text" placeholder="94105" required />
               </div>
             </div>
 
             <div class="input-group">
-              <div class="form-control required" class:errors={form?.shippingAddress?.country_code?.missing}>
+              <div class="form-control required" class:errors={form?.errors?.shippingAddress?.country_code?.missing}>
                 <label for="shippingAddress[country_code]">Country</label>
                 <div class="input-select">
-                  <select bind:value={shippingCountryChoice} name="shippingAddress[country_code]" id="shippingAddress[country_code]" required>
+                  <select bind:value={shippingCountryChoice} on:change={updateCountryCallingCode} name="shippingAddress[country_code]" id="shippingAddress[country_code]" required>
                     <option value="" disabled selected>Select your country</option>
                     {#each countries as country}
                       <option value={country.code}>{country.name}</option>
@@ -136,14 +157,14 @@
                 </div>
               </div>
 
-              <div class="form-control required" class:errors={form?.shippingAddress?.state_code?.missing}>
-                <label for="shippingAddress[state_code]">State</label>
+              <div class="form-control required" class:errors={form?.errors?.shippingAddress?.state_code?.missing}>
+                <label for="shippingAddress[state_code]">Region</label>
                 <div class="input-select">
-                  <select name="shippingAddress[state_code]" id="shippingAddress[state_code]" required>
+                  <select value={form?.values?.state_code} name="shippingAddress[state_code]" id="shippingAddress[state_code]" required>
                     {#if shippingCountryChoice && !statesByCountry[shippingCountryChoice]?.length}
                       <option value="N/A" selected>N/A</option>
                     {:else}
-                      <option value="" disabled selected>Select your state</option>
+                      <option value="" disabled selected>Select your region</option>
                     {/if}
                     {#each statesByCountry[shippingCountryChoice] || [] as state}
                       <option value={state.code}>{state.name}</option>
@@ -151,6 +172,22 @@
                   </select>
                 </div>
               </div>
+            </div>
+
+            <div class="form-control phone-number" class:errors={form?.errors?.shippingAddress?.phone?.invalid}>
+              <label for="shippingAddress[phone]">Phone number</label>
+              <div class="input-select phone-number__country">
+                <select bind:value={callingCodeChoice} name="shippingAddress[calling_code]" id="shippingAddress[calling_code]" required>
+                  {#each Object.values(countryCallingCodes) as country}
+                    <option value={country.key}>{country.code} +{country.callingCode}</option>
+                  {/each}
+                </select>
+              </div>
+              <input bind:value={phoneNumber} class="phone-number__number" name="shippingAddress[phone]" id="shippingAddress[phone]" type="text" placeholder={phoneExample} />
+              {#if form?.errors?.shippingAddress?.phone?.invalid}
+                <p class="text-systemfeedback-error-icon text-small-regular pt-1">Your phone number is invalid.</p>
+              {/if}
+              <p class="help-text">Providing a telephone number is optional, however if there is a failure to ship on account of the carrier being unable to reach the recipient, you could incur reshipment costs after the package is returned.</p>
             </div>
           </div>
         {/if}
@@ -212,6 +249,16 @@
       color: var(--label-text-color);
     }
 
+    & .label-explanation,
+    & .help-text {
+      @apply text-small-regular;
+
+      // Left padding to account for invisible border on text inputs
+      padding-left: 2px;
+      padding-top: 8px;
+      color: theme("colors.text.secondary");
+    }
+
     &.required label::after {
       @apply text-small-regular;
       content: '*';
@@ -226,6 +273,42 @@
 
     &.disabled {
       --label-text-color: theme('colors.text.secondary');
+    }
+
+    &.phone-number {
+      display: grid;
+      grid-auto-rows: auto;
+      column-gap: 3px;
+      grid-template:
+        'label label'
+        'country_code number'
+        / 1fr 4fr;
+
+      label {
+        grid-area: label;
+      }
+
+      .phone-number__country {
+        grid-area: country_code;
+      }
+
+      .phone-number__country select {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+      }
+
+      .phone-number__number {
+        grid-area: number;
+      }
+
+      .phone-number__number {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+      }
+
+      & *:nth-child(n + 4) {
+        grid-column: 1 / -1;
+      }
     }
   }
 
@@ -293,6 +376,7 @@
         right: 8px;
         top: 50%;
       transform: translateY(-50%);
+      pointer-events: none;
     }
   }
 
@@ -309,7 +393,7 @@
       @apply text-default-regular;
 
       order: theme('order.last');
-      color: var(--label-text-colorl);
+      color: var(--label-text-color);
     }
 
     & input[type=checkbox] {
