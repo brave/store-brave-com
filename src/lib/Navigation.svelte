@@ -18,7 +18,7 @@
   const closeMobileMenu = () => mobileMenuOpen = false;
 </script>
 
-<div class="container mx-auto px-6 flex justify-between items-stretch">
+<div class="max-sm:container max-sm:mx-auto xl:container xl:mx-auto px-6 flex justify-between items-stretch">
   <button aria-label="open mobile menu" class="md:hidden nav-item inline-flex self-center" on:click={openMobileMenu}>
     <svg width="16" height="12" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M14.875 7H1.125a.625.625 0 0 1 0-1.25h13.75a.625.625 0 0 1 0 1.25Zm0-5H1.125a.625.625 0 0 1 0-1.25h13.75a.625.625 0 0 1 0 1.25Zm-13.75 8.75h13.75a.625.625 0 0 1 0 1.25H1.125a.625.625 0 0 1 0-1.25Z" fill="currentColor"/></svg>
   </button>

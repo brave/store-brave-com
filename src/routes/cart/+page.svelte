@@ -65,7 +65,7 @@
     </div>
   {/if}
 
-  <form method="post" class="grid max-md:grid-rows-[1fr_auto] md:grid-cols-[3fr_2fr] gap-20">
+  <form method="post" class="grid max-lg:grid-rows-[1fr_auto] lg:grid-cols-[3fr_2fr] gap-20 h-[stretch]">
     <section id="cart-items">
       {#each $cartStore as { variant, quantity }, i (variant.id)}
         <article
@@ -110,8 +110,8 @@
     </section>
 
     <section id="total" class="cart-total">
-      <div class="shadow-04 md:rounded-8 p-6 sticky top-5 bg-container-background border border-divider-subtle">
-        <button on:click={() => showShippingAddress = !showShippingAddress} class="md:hidden absolute top-4 right-4 focus-visible:shadow-focus-state outline-none rounded-4 transition-transform duration-200" class:hidden={!showShippingAddress} type="button">
+      <div class="shadow-04 lg:rounded-8 p-6 sticky top-5 bg-container-background border border-divider-subtle">
+        <button on:click={() => showShippingAddress = !showShippingAddress} class="lg:hidden absolute top-4 right-4 focus-visible:shadow-focus-state outline-none rounded-4 transition-transform duration-200" class:hidden={!showShippingAddress} type="button">
           <svg width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M5.992 5.992a.85.85 0 0 0 0 1.202L10.798 12l-4.81 4.81a.85.85 0 1 0 1.202 1.202l4.81-4.81 4.806 4.806a.85.85 0 0 0 1.202-1.202L13.202 12l4.81-4.81a.85.85 0 1 0-1.202-1.202L12 10.798 7.194 5.992a.85.85 0 0 0-1.202 0Z" fill="#6B7084"/></svg>
         </button>
         <p class="pb-2">
@@ -120,7 +120,7 @@
         </p>
 
         {#if showShippingAddress}
-          <div transition:slide class="shipping_address">
+          <div transition:slide|local class="shipping_address">
             <h3 class="text-default-semibold pb-4">Shipping address</h3>
             <div class="form-control">
               <label for="shippingAddress[name]">Name <span class="label-explanation">(if different from billing name)</span></label>
@@ -216,24 +216,7 @@
   .input-group {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-    gap: 3px;
-
-    & .form-control input,
-    & .form-control select {
-      border-radius: 0;
-    }
-
-    & .form-control:first-child input,
-    & .form-control:first-child select {
-      border-bottom-left-radius: theme('borderRadius.8');
-      border-top-left-radius: theme('borderRadius.8');
-    }
-
-    & .form-control:last-child input,
-    & .form-control:last-child select {
-      border-bottom-right-radius: theme('borderRadius.8');
-      border-top-right-radius: theme('borderRadius.8');
-    }
+    gap: 8px;
   }
 
   .form-control {
@@ -279,13 +262,20 @@
       display: grid;
       grid-auto-rows: auto;
       column-gap: 3px;
+      row-gap: 8px;
       grid-template:
-        'label label'
-        'country_code number'
-        / 1fr 4fr;
+        'label'
+        'country_code'
+        'number'
+        / 1fr;
 
       label {
+        padding-bottom: 0;
         grid-area: label;
+      }
+
+      .help-text {
+        padding-top: 0;
       }
 
       .phone-number__country {
@@ -308,6 +298,15 @@
 
       & *:nth-child(n + 4) {
         grid-column: 1 / -1;
+      }
+    }
+
+    @screen xs {
+      &.phone-number {
+        grid-template:
+          'label label'
+          'country_code number'
+          / 1fr 4fr;
       }
     }
   }
@@ -434,7 +433,7 @@
     }
   }
 
-  @screen md {
+  @screen lg {
     .cart-total {
       position: static;
       width: auto;
