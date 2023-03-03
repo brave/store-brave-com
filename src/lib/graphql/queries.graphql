@@ -1,3 +1,4 @@
+# Queries
 query FeaturedProducts {
   products(where: { isFeatured: { equals: true } }) {
     ...ProductSummary
@@ -57,8 +58,27 @@ query Categories {
   }
 }
 
+query ShippingDataKey($id: ID) {
+  shippingDataKey(where: { id: $id }) {
+    key
+  }
+}
+
+# Mutations
 mutation AddProcessedOrder($idempotencyKey: String) {
   createProcessedOrder(data: { idempotency_key: $idempotencyKey }) {
+    id
+  }
+}
+
+mutation AddShippingDataKey($key: String) {
+  createShippingDataKey(data: { key: $key }) {
+    id
+  }
+}
+
+mutation DeleteShippingDataKey($id: ID) {
+  deleteShippingDataKey(where: { id: $id }) {
     id
   }
 }

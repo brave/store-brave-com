@@ -12,7 +12,7 @@ import type { Stripe } from 'stripe';
 import { env } from '$env/dynamic/private';
 import type { Actions, PageServerLoad } from './$types';
 import { printfulApi } from '$lib/printful-api';
-import { sanctionedCountryCodes } from '$lib/utils';
+import { CustomError, encrypt, generateKey, sanctionedCountryCodes } from '$lib/utils';
 import { sdk } from '$lib/graphql/sdk';
 import type { Variant } from '$lib/graphql/types';
 
@@ -65,7 +65,29 @@ function sortStateCountryAlphabetically(a: StateCountry, b: StateCountry) {
   }
 }
 
-export const load: PageServerLoad = async () => {
+/**
+ * This is used to both set and retrieve a query param
+ * in the event that the user cancels the Stripe checkout
+ * session by clicking 'Back' on the checkout page.
+ */
+const canceledSessionQueryParam = 'session_id';
+
+export const load: PageServerLoad = async ({ url }) => {
+
+  /**
+   * If this page load is from a canceled session then delete
+   * the shipping data key from DB.
+   */
+  const canceledSession = url.searchParams.get(canceledSessionQueryParam);
+  if (canceledSession) {
+    try {
+      const session = await stripe.checkout.sessions.retrieve(canceledSession);
+      await sdk.DeleteShippingDataKey({ id: session.metadata?.keyId });
+    } catch (e: any) {
+      console.log(`Could not delete shipping data key due to error: ${e.message}`);
+    }
+  }
+
   const countryData = await printfulApi('/countries');
 
   let countries: Array<StateCountry> = [];
@@ -169,7 +191,7 @@ export const actions: Actions = {
 
     delete shippingAddress.calling_code;
 
-    let recipientInformation = shippingAddress;
+    let recipientInformation = shippingAddress as App.Recipient;
     if (recipientInformation.state_code === 'N/A') {
       const { state_code, ...rest } = recipientInformation;
       recipientInformation = rest;
@@ -266,14 +288,26 @@ export const actions: Actions = {
 
     let session;
     try {
+      const encryptionKey = generateKey();
+      const encryptedShippingData = encrypt(recipientInformation, encryptionKey);
+
+      const { createShippingDataKey: shippingDataKey } = await sdk.AddShippingDataKey({ key: encryptionKey });
+
+      if (!shippingDataKey?.id) {
+        throw new CustomError("Could not get shipping data key id.");
+      }
+
       session = await stripe.checkout.sessions.create({
         line_items,
         mode: 'payment',
         success_url: `${env.BASE_URL}/success/{CHECKOUT_SESSION_ID}/`,
-        cancel_url: `${env.BASE_URL}/cart/`,
+        cancel_url: `${env.BASE_URL}/cart?${canceledSessionQueryParam}={CHECKOUT_SESSION_ID}`,
         allow_promotion_codes: true,
         shipping_options: stripeShippingOptions,
-        metadata: recipientInformation
+        metadata: {
+          shippingData: encryptedShippingData,
+          keyId: shippingDataKey.id
+        }
       });
     } catch (e: any) {
       console.log(`Error creating checkout session: ${e.message}`);

@@ -20,9 +20,10 @@ declare namespace App {
     address1: string | null | undefined
     address2: string | null | undefined
     city: string | null | undefined
-    state_code: string | null | undefined
+    state_code?: string | null | undefined
     zip: string | null | undefined
     country_code: string | null | undefined
+    phone?: string | null | undefined
   }
 
   interface OrderItem {

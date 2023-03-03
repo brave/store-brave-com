@@ -233,6 +233,8 @@ export type Mutation = {
   createProcessedOrders?: Maybe<Array<Maybe<ProcessedOrder>>>;
   createProduct?: Maybe<Product>;
   createProducts?: Maybe<Array<Maybe<Product>>>;
+  createShippingDataKey?: Maybe<ShippingDataKey>;
+  createShippingDataKeys?: Maybe<Array<Maybe<ShippingDataKey>>>;
   createUser?: Maybe<User>;
   createUsers?: Maybe<Array<Maybe<User>>>;
   createVariant?: Maybe<Variant>;
@@ -243,6 +245,8 @@ export type Mutation = {
   deleteProcessedOrders?: Maybe<Array<Maybe<ProcessedOrder>>>;
   deleteProduct?: Maybe<Product>;
   deleteProducts?: Maybe<Array<Maybe<Product>>>;
+  deleteShippingDataKey?: Maybe<ShippingDataKey>;
+  deleteShippingDataKeys?: Maybe<Array<Maybe<ShippingDataKey>>>;
   deleteUser?: Maybe<User>;
   deleteUsers?: Maybe<Array<Maybe<User>>>;
   deleteVariant?: Maybe<Variant>;
@@ -254,6 +258,8 @@ export type Mutation = {
   updateProcessedOrders?: Maybe<Array<Maybe<ProcessedOrder>>>;
   updateProduct?: Maybe<Product>;
   updateProducts?: Maybe<Array<Maybe<Product>>>;
+  updateShippingDataKey?: Maybe<ShippingDataKey>;
+  updateShippingDataKeys?: Maybe<Array<Maybe<ShippingDataKey>>>;
   updateUser?: Maybe<User>;
   updateUsers?: Maybe<Array<Maybe<User>>>;
   updateVariant?: Maybe<Variant>;
@@ -299,6 +305,16 @@ export type MutationCreateProductArgs = {
 
 export type MutationCreateProductsArgs = {
   data: Array<ProductCreateInput>;
+};
+
+
+export type MutationCreateShippingDataKeyArgs = {
+  data: ShippingDataKeyCreateInput;
+};
+
+
+export type MutationCreateShippingDataKeysArgs = {
+  data: Array<ShippingDataKeyCreateInput>;
 };
 
 
@@ -352,6 +368,16 @@ export type MutationDeleteProductsArgs = {
 };
 
 
+export type MutationDeleteShippingDataKeyArgs = {
+  where: ShippingDataKeyWhereUniqueInput;
+};
+
+
+export type MutationDeleteShippingDataKeysArgs = {
+  where: Array<ShippingDataKeyWhereUniqueInput>;
+};
+
+
 export type MutationDeleteUserArgs = {
   where: UserWhereUniqueInput;
 };
@@ -402,6 +428,17 @@ export type MutationUpdateProductArgs = {
 
 export type MutationUpdateProductsArgs = {
   data: Array<ProductUpdateArgs>;
+};
+
+
+export type MutationUpdateShippingDataKeyArgs = {
+  data: ShippingDataKeyUpdateInput;
+  where: ShippingDataKeyWhereUniqueInput;
+};
+
+
+export type MutationUpdateShippingDataKeysArgs = {
+  data: Array<ShippingDataKeyUpdateArgs>;
 };
 
 
@@ -622,6 +659,9 @@ export type Query = {
   product?: Maybe<Product>;
   products?: Maybe<Array<Product>>;
   productsCount?: Maybe<Scalars['Int']>;
+  shippingDataKey?: Maybe<ShippingDataKey>;
+  shippingDataKeys?: Maybe<Array<ShippingDataKey>>;
+  shippingDataKeysCount?: Maybe<Scalars['Int']>;
   user?: Maybe<User>;
   users?: Maybe<Array<User>>;
   usersCount?: Maybe<Scalars['Int']>;
@@ -685,6 +725,24 @@ export type QueryProductsCountArgs = {
 };
 
 
+export type QueryShippingDataKeyArgs = {
+  where: ShippingDataKeyWhereUniqueInput;
+};
+
+
+export type QueryShippingDataKeysArgs = {
+  orderBy?: Array<ShippingDataKeyOrderByInput>;
+  skip?: Scalars['Int'];
+  take?: InputMaybe<Scalars['Int']>;
+  where?: ShippingDataKeyWhereInput;
+};
+
+
+export type QueryShippingDataKeysCountArgs = {
+  where?: ShippingDataKeyWhereInput;
+};
+
+
 export type QueryUserArgs = {
   where: UserWhereUniqueInput;
 };
@@ -724,6 +782,42 @@ export enum QueryMode {
   Default = 'default',
   Insensitive = 'insensitive'
 }
+
+export type ShippingDataKey = {
+  __typename?: 'ShippingDataKey';
+  id: Scalars['ID'];
+  key?: Maybe<Scalars['String']>;
+};
+
+export type ShippingDataKeyCreateInput = {
+  key?: InputMaybe<Scalars['String']>;
+};
+
+export type ShippingDataKeyOrderByInput = {
+  id?: InputMaybe<OrderDirection>;
+  key?: InputMaybe<OrderDirection>;
+};
+
+export type ShippingDataKeyUpdateArgs = {
+  data: ShippingDataKeyUpdateInput;
+  where: ShippingDataKeyWhereUniqueInput;
+};
+
+export type ShippingDataKeyUpdateInput = {
+  key?: InputMaybe<Scalars['String']>;
+};
+
+export type ShippingDataKeyWhereInput = {
+  AND?: InputMaybe<Array<ShippingDataKeyWhereInput>>;
+  NOT?: InputMaybe<Array<ShippingDataKeyWhereInput>>;
+  OR?: InputMaybe<Array<ShippingDataKeyWhereInput>>;
+  id?: InputMaybe<IdFilter>;
+  key?: InputMaybe<StringFilter>;
+};
+
+export type ShippingDataKeyWhereUniqueInput = {
+  id?: InputMaybe<Scalars['ID']>;
+};
 
 export type StringFilter = {
   contains?: InputMaybe<Scalars['String']>;

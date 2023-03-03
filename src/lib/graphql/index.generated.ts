@@ -43,12 +43,33 @@ export type CategoriesQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type CategoriesQuery = { __typename?: 'Query', categories?: Array<{ __typename?: 'Category', id: string, name?: string | null, slug?: string | null, productsCount?: number | null }> | null };
 
+export type ShippingDataKeyQueryVariables = Exact<{
+  id?: InputMaybe<Scalars['ID']>;
+}>;
+
+
+export type ShippingDataKeyQuery = { __typename?: 'Query', shippingDataKey?: { __typename?: 'ShippingDataKey', key?: string | null } | null };
+
 export type AddProcessedOrderMutationVariables = Exact<{
   idempotencyKey?: InputMaybe<Scalars['String']>;
 }>;
 
 
 export type AddProcessedOrderMutation = { __typename?: 'Mutation', createProcessedOrder?: { __typename?: 'ProcessedOrder', id: string } | null };
+
+export type AddShippingDataKeyMutationVariables = Exact<{
+  key?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type AddShippingDataKeyMutation = { __typename?: 'Mutation', createShippingDataKey?: { __typename?: 'ShippingDataKey', id: string } | null };
+
+export type DeleteShippingDataKeyMutationVariables = Exact<{
+  id?: InputMaybe<Scalars['ID']>;
+}>;
+
+
+export type DeleteShippingDataKeyMutation = { __typename?: 'Mutation', deleteShippingDataKey?: { __typename?: 'ShippingDataKey', id: string } | null };
 
 export type ProductSummaryFragment = { __typename?: 'Product', id: string, name?: string | null, priceRange?: Array<number | null> | null, firstVariant?: { __typename?: 'Variant', permalink?: string | null, details?: any | null } | null, category?: { __typename?: 'Category', name?: string | null, slug?: string | null } | null };
 
@@ -154,9 +175,30 @@ export const CategoriesDocument = gql`
   }
 }
     `;
+export const ShippingDataKeyDocument = gql`
+    query ShippingDataKey($id: ID) {
+  shippingDataKey(where: {id: $id}) {
+    key
+  }
+}
+    `;
 export const AddProcessedOrderDocument = gql`
     mutation AddProcessedOrder($idempotencyKey: String) {
   createProcessedOrder(data: {idempotency_key: $idempotencyKey}) {
+    id
+  }
+}
+    `;
+export const AddShippingDataKeyDocument = gql`
+    mutation AddShippingDataKey($key: String) {
+  createShippingDataKey(data: {key: $key}) {
+    id
+  }
+}
+    `;
+export const DeleteShippingDataKeyDocument = gql`
+    mutation DeleteShippingDataKey($id: ID) {
+  deleteShippingDataKey(where: {id: $id}) {
     id
   }
 }
@@ -187,8 +229,17 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     Categories(variables?: CategoriesQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<CategoriesQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<CategoriesQuery>(CategoriesDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'Categories', 'query');
     },
+    ShippingDataKey(variables?: ShippingDataKeyQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<ShippingDataKeyQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<ShippingDataKeyQuery>(ShippingDataKeyDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'ShippingDataKey', 'query');
+    },
     AddProcessedOrder(variables?: AddProcessedOrderMutationVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<AddProcessedOrderMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<AddProcessedOrderMutation>(AddProcessedOrderDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'AddProcessedOrder', 'mutation');
+    },
+    AddShippingDataKey(variables?: AddShippingDataKeyMutationVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<AddShippingDataKeyMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<AddShippingDataKeyMutation>(AddShippingDataKeyDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'AddShippingDataKey', 'mutation');
+    },
+    DeleteShippingDataKey(variables?: DeleteShippingDataKeyMutationVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<DeleteShippingDataKeyMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<DeleteShippingDataKeyMutation>(DeleteShippingDataKeyDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'DeleteShippingDataKey', 'mutation');
     }
   };
 }
