@@ -248,5 +248,22 @@ export const lists: Lists = {
     ui: {
       isHidden: true
     }
+  }),
+
+  ShippingDataKey: list({
+    access: allowAll,
+    fields: {
+      key: text({
+        validation: { isRequired: true },
+        ui: {
+          itemView: { fieldMode: 'read' },
+          listView: { fieldMode: 'read' },
+          createView: { fieldMode: 'hidden' }
+        }
+      })
+    },
+    ui: {
+      isHidden: true
+    }
   })
 };

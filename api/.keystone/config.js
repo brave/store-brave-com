@@ -467,6 +467,22 @@ var lists = {
     ui: {
       isHidden: true
     }
+  }),
+  ShippingDataKey: (0, import_core.list)({
+    access: import_access.allowAll,
+    fields: {
+      key: (0, import_fields.text)({
+        validation: { isRequired: true },
+        ui: {
+          itemView: { fieldMode: "read" },
+          listView: { fieldMode: "read" },
+          createView: { fieldMode: "hidden" }
+        }
+      })
+    },
+    ui: {
+      isHidden: true
+    }
   })
 };
 

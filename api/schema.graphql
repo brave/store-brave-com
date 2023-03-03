@@ -367,6 +367,41 @@ input ProcessedOrderCreateInput {
   idempotency_key: String
 }
 
+type ShippingDataKey {
+  id: ID!
+  key: String
+}
+
+input ShippingDataKeyWhereUniqueInput {
+  id: ID
+}
+
+input ShippingDataKeyWhereInput {
+  AND: [ShippingDataKeyWhereInput!]
+  OR: [ShippingDataKeyWhereInput!]
+  NOT: [ShippingDataKeyWhereInput!]
+  id: IDFilter
+  key: StringFilter
+}
+
+input ShippingDataKeyOrderByInput {
+  id: OrderDirection
+  key: OrderDirection
+}
+
+input ShippingDataKeyUpdateInput {
+  key: String
+}
+
+input ShippingDataKeyUpdateArgs {
+  where: ShippingDataKeyWhereUniqueInput!
+  data: ShippingDataKeyUpdateInput!
+}
+
+input ShippingDataKeyCreateInput {
+  key: String
+}
+
 """
 The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 """
@@ -403,6 +438,12 @@ type Mutation {
   updateProcessedOrders(data: [ProcessedOrderUpdateArgs!]!): [ProcessedOrder]
   deleteProcessedOrder(where: ProcessedOrderWhereUniqueInput!): ProcessedOrder
   deleteProcessedOrders(where: [ProcessedOrderWhereUniqueInput!]!): [ProcessedOrder]
+  createShippingDataKey(data: ShippingDataKeyCreateInput!): ShippingDataKey
+  createShippingDataKeys(data: [ShippingDataKeyCreateInput!]!): [ShippingDataKey]
+  updateShippingDataKey(where: ShippingDataKeyWhereUniqueInput!, data: ShippingDataKeyUpdateInput!): ShippingDataKey
+  updateShippingDataKeys(data: [ShippingDataKeyUpdateArgs!]!): [ShippingDataKey]
+  deleteShippingDataKey(where: ShippingDataKeyWhereUniqueInput!): ShippingDataKey
+  deleteShippingDataKeys(where: [ShippingDataKeyWhereUniqueInput!]!): [ShippingDataKey]
   endSession: Boolean!
   authenticateUserWithPassword(email: String!, password: String!): UserAuthenticationWithPasswordResult
   createInitialUser(data: CreateInitialUserInput!): UserAuthenticationWithPasswordSuccess!
@@ -441,6 +482,9 @@ type Query {
   processedOrders(where: ProcessedOrderWhereInput! = {}, orderBy: [ProcessedOrderOrderByInput!]! = [], take: Int, skip: Int! = 0): [ProcessedOrder!]
   processedOrder(where: ProcessedOrderWhereUniqueInput!): ProcessedOrder
   processedOrdersCount(where: ProcessedOrderWhereInput! = {}): Int
+  shippingDataKeys(where: ShippingDataKeyWhereInput! = {}, orderBy: [ShippingDataKeyOrderByInput!]! = [], take: Int, skip: Int! = 0): [ShippingDataKey!]
+  shippingDataKey(where: ShippingDataKeyWhereUniqueInput!): ShippingDataKey
+  shippingDataKeysCount(where: ShippingDataKeyWhereInput! = {}): Int
   keystone: KeystoneMeta!
   authenticatedItem: AuthenticatedItem
 }

@@ -57,3 +57,8 @@ model ProcessedOrder {
   id              String @id @default(cuid())
   idempotency_key String @unique @default("")
 }
+
+model ShippingDataKey {
+  id  String @id @default(cuid())
+  key String @default("")
+}
