@@ -59,6 +59,9 @@ model ProcessedOrder {
 }
 
 model ShippingDataKey {
-  id  String @id @default(cuid())
-  key String @default("")
+  id        String   @id @default(cuid())
+  key       String   @default("")
+  createdAt DateTime @default(now())
+
+  @@index([createdAt])
 }

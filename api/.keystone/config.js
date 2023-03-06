@@ -237,6 +237,29 @@ function upsertProduct(newProductData, existingProductData, context) {
     });
   }
 }
+var getDateFromXDaysAgo = (daysAgo) => {
+  const currDate = new Date();
+  const pastDate = new Date();
+  pastDate.setDate(currDate.getDate() - daysAgo);
+  return pastDate;
+};
+var purgeOldShippingDataKeys = async (context) => {
+  try {
+    const date7DaysAgo = getDateFromXDaysAgo(7);
+    const oldShippingDataKeys = await context.db.ShippingDataKey.findMany({
+      where: { createdAt: { lte: date7DaysAgo } }
+    });
+    await context.db.ShippingDataKey.deleteMany({
+      where: oldShippingDataKeys.map((item) => ({ id: item.id }))
+    });
+  } catch (e) {
+    console.log(e);
+    Sentry.captureMessage(
+      `Could not purge old shipping data keys.`,
+      "error"
+    );
+  }
+};
 
 // schema.ts
 var lists = {
@@ -472,6 +495,16 @@ var lists = {
     access: import_access.allowAll,
     fields: {
       key: (0, import_fields.text)({
+        validation: { isRequired: true },
+        ui: {
+          itemView: { fieldMode: "read" },
+          listView: { fieldMode: "read" },
+          createView: { fieldMode: "hidden" }
+        }
+      }),
+      createdAt: (0, import_fields.timestamp)({
+        defaultValue: { kind: "now" },
+        isIndexed: true,
         validation: { isRequired: true },
         ui: {
           itemView: { fieldMode: "read" },
@@ -34401,6 +34434,9 @@ var keystone_default = withAuth(
         if (process.argv.includes("--reset-db") || process.argv.includes("--seed-db")) {
           seedDB(context);
         }
+        purgeOldShippingDataKeys(context);
+        const purgeInterval = 1 * 864e5;
+        setInterval(() => purgeOldShippingDataKeys(context), purgeInterval);
       }
     },
     ui: {

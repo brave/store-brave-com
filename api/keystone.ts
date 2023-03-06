@@ -18,6 +18,7 @@ import { withAuth, session } from './auth';
 
 import { seedDB } from './seed';
 import { syncStore } from './routes/syncStore';
+import { purgeOldShippingDataKeys } from './utils';
 
 export default withAuth(
   // Using the config function helps typescript guide you to the available options.
@@ -31,6 +32,13 @@ export default withAuth(
         if (process.argv.includes('--reset-db') || process.argv.includes('--seed-db')) {
           seedDB(context);
         }
+
+        // Immediately purge shipping data keys that are 7 days old or older
+        purgeOldShippingDataKeys(context);
+
+        // Set interval to purge shipping data keys daily
+        const purgeInterval = 1 * 86_400_000;
+        setInterval(() => purgeOldShippingDataKeys(context), purgeInterval);
       }
     },
     // This config allows us to set up features of the Admin UI https://keystonejs.com/docs/apis/config#ui
