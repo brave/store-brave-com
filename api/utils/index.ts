@@ -1,11 +1,12 @@
 import https from 'https';
-import type { IncomingMessage } from 'http';
 import crypto from 'crypto';
 import { Upload } from '@aws-sdk/lib-storage';
 import { ListObjectsCommand, S3Client } from '@aws-sdk/client-s3';
 import * as Sentry from '@sentry/node';
 import dotenv from 'dotenv';
 
+import type { IncomingMessage } from 'http';
+import type { KeystoneContext } from '@keystone-6/core/types';
 import type {
   Context,
   ProductCreateInput,
@@ -277,5 +278,32 @@ export function upsertProduct(
       },
       data: updatedProductData
     });
+  }
+}
+
+export const getDateFromXDaysAgo = (daysAgo: number): Date => {
+  const currDate = new Date();
+  const pastDate = new Date();
+  pastDate.setDate(currDate.getDate() - daysAgo);
+  return pastDate;
+}
+
+export const purgeOldShippingDataKeys = async (context: KeystoneContext) => {
+  try {
+    const date7DaysAgo = getDateFromXDaysAgo(7);
+
+    const oldShippingDataKeys = await context.db.ShippingDataKey.findMany({
+      where: { createdAt: { lte: date7DaysAgo } }
+    });
+
+    await context.db.ShippingDataKey.deleteMany({
+      where: oldShippingDataKeys.map((item: any) => ({ id: item.id }))
+    })
+  } catch (e) {
+    console.log(e);
+    Sentry.captureMessage(
+      `Could not purge old shipping data keys.`,
+      'error'
+    );
   }
 }

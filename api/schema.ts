@@ -2,7 +2,7 @@ import { list, graphql } from '@keystone-6/core';
 import slugify from 'slugify';
 
 import { allowAll } from '@keystone-6/core/access';
-import { text, relationship, password, json, virtual, checkbox } from '@keystone-6/core/fields';
+import { text, relationship, password, json, virtual, checkbox, timestamp } from '@keystone-6/core/fields';
 
 import { Lists, Context } from '.keystone/types';
 import { findAndDownloadImages } from './utils';
@@ -254,6 +254,16 @@ export const lists: Lists = {
     access: allowAll,
     fields: {
       key: text({
+        validation: { isRequired: true },
+        ui: {
+          itemView: { fieldMode: 'read' },
+          listView: { fieldMode: 'read' },
+          createView: { fieldMode: 'hidden' }
+        }
+      }),
+      createdAt: timestamp({
+        defaultValue: { kind: 'now' },
+        isIndexed: true,
         validation: { isRequired: true },
         ui: {
           itemView: { fieldMode: 'read' },

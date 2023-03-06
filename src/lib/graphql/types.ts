@@ -10,6 +10,7 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  DateTime: any;
   /** The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf). */
   JSON: any;
 };
@@ -96,6 +97,17 @@ export type CreateInitialUserInput = {
   email?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
   password?: InputMaybe<Scalars['String']>;
+};
+
+export type DateTimeFilter = {
+  equals?: InputMaybe<Scalars['DateTime']>;
+  gt?: InputMaybe<Scalars['DateTime']>;
+  gte?: InputMaybe<Scalars['DateTime']>;
+  in?: InputMaybe<Array<Scalars['DateTime']>>;
+  lt?: InputMaybe<Scalars['DateTime']>;
+  lte?: InputMaybe<Scalars['DateTime']>;
+  not?: InputMaybe<DateTimeFilter>;
+  notIn?: InputMaybe<Array<Scalars['DateTime']>>;
 };
 
 export type IdFilter = {
@@ -785,15 +797,18 @@ export enum QueryMode {
 
 export type ShippingDataKey = {
   __typename?: 'ShippingDataKey';
+  createdAt?: Maybe<Scalars['DateTime']>;
   id: Scalars['ID'];
   key?: Maybe<Scalars['String']>;
 };
 
 export type ShippingDataKeyCreateInput = {
+  createdAt?: InputMaybe<Scalars['DateTime']>;
   key?: InputMaybe<Scalars['String']>;
 };
 
 export type ShippingDataKeyOrderByInput = {
+  createdAt?: InputMaybe<OrderDirection>;
   id?: InputMaybe<OrderDirection>;
   key?: InputMaybe<OrderDirection>;
 };
@@ -804,6 +819,7 @@ export type ShippingDataKeyUpdateArgs = {
 };
 
 export type ShippingDataKeyUpdateInput = {
+  createdAt?: InputMaybe<Scalars['DateTime']>;
   key?: InputMaybe<Scalars['String']>;
 };
 
@@ -811,6 +827,7 @@ export type ShippingDataKeyWhereInput = {
   AND?: InputMaybe<Array<ShippingDataKeyWhereInput>>;
   NOT?: InputMaybe<Array<ShippingDataKeyWhereInput>>;
   OR?: InputMaybe<Array<ShippingDataKeyWhereInput>>;
+  createdAt?: InputMaybe<DateTimeFilter>;
   id?: InputMaybe<IdFilter>;
   key?: InputMaybe<StringFilter>;
 };
