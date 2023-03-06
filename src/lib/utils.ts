@@ -3,7 +3,7 @@ const { secretbox, randomBytes } = tweetnacl;
 import { encode as encodeUTF8, decode as decodeUTF8 } from '@stablelib/utf8';
 import { encode as encodeBase64, decode as decodeBase64 } from '@stablelib/base64';
 
-export const sanctionedCountryCodes: Array<string> = ['IR', 'CU', 'KP', 'SY', 'UA'];
+export const sanctionedCountryCodes: Array<string> = ['CU', 'IR', 'KP', 'RU', 'SY', 'UA'];
 
 export const formatPrice = (price: string | number, currency = 'USD') => {
   if (typeof price === 'string') {
