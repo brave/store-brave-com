@@ -17,7 +17,7 @@ npm run start
 You'll need the following environment variables:
 
 ```
-BASE_URL=/* environment specific domain for store frontend */
+BASE_URL=/* environment specific domain for store frontend (IMPORTANT: no trailing slash) */
 PUBLIC_ASSETS_PATH=/* public URL to images S3 bucket e.g. https://cdn.store.brave.com */
 API_URL=/* url (not including the path) where GraphQL api can be found */
 PRINTFUL_API_TOKEN=/* api token from printful */

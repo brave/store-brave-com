@@ -94,7 +94,9 @@ async function fulfillOrder(session: Stripe.Checkout.Session): Promise<void> {
       items
     };
 
-    const shouldBeDraft = !env.BASE_URL.startsWith("https://brave.com");
+    // Normalize by removing potential trailing slash
+    const isProduction = env.BASE_URL.replace(/\/$/, "").endsWith("brave.com");
+    const shouldBeDraft = !isProduction;
     await printfulApi.createOrder(newOrder, { draft: shouldBeDraft });
     await sdk.DeleteShippingDataKey({ id: metadata?.keyId });
   } catch (e: any) {
