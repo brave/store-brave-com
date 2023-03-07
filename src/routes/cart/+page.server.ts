@@ -12,7 +12,7 @@ import type { Stripe } from 'stripe';
 import { env } from '$env/dynamic/private';
 import type { Actions, PageServerLoad } from './$types';
 import { printfulApi } from '$lib/printful-api';
-import { CustomError, encrypt, generateKey, sanctionedCountryCodes } from '$lib/utils';
+import { CustomError, encrypt, generateKey, blockedCountryCodes } from '$lib/utils';
 import { sdk } from '$lib/graphql/sdk';
 import type { Variant } from '$lib/graphql/types';
 
@@ -94,7 +94,7 @@ export const load: PageServerLoad = async ({ url }) => {
   let statesByCountry: Record<string, Array<StateCountry>> = {};
   for (let country of countryData) {
     const { code, name, states } = country;
-    if (!sanctionedCountryCodes.includes(code)) {
+    if (!blockedCountryCodes.includes(code)) {
       countries = [...countries, { code, name }];
       statesByCountry[code] = states?.sort(sortStateCountryAlphabetically);
     }
@@ -169,7 +169,7 @@ export const actions: Actions = {
       errors.shippingAddress.hasErrors = true;
       errors.shippingAddress.country_code = { missing: true };
     }
-    if (sanctionedCountryCodes.includes(shippingAddress.country_code)) {
+    if (blockedCountryCodes.includes(shippingAddress.country_code)) {
       errors.shippingAddress.hasErrors = true;
       errors.shippingAddress.country_code = { invalidRegion: true };
     }

@@ -3,7 +3,7 @@ import type { Stripe } from 'stripe';
 import { env } from '$env/dynamic/private';
 import { stripe } from '$lib/stripe-api';
 import * as printfulApi from '$lib/printful-api';
-import { CustomError, decrypt, sanctionedCountryCodes, ValidationError } from '$lib/utils';
+import { CustomError, decrypt, blockedCountryCodes, ValidationError } from '$lib/utils';
 import { sdk } from '$lib/graphql/sdk';
 
 import * as Sentry from "@sentry/node";
@@ -56,7 +56,7 @@ async function fulfillOrder(session: Stripe.Checkout.Session): Promise<void> {
     const line_items = sessionDetails.line_items?.data;
     const { customer_details, metadata } = sessionDetails;
 
-    if (sanctionedCountryCodes.includes(metadata?.country_code as string)) {
+    if (blockedCountryCodes.includes(metadata?.country_code as string)) {
       throw new ValidationError('Invalid recipient region.');
     }
 
