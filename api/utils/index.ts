@@ -60,17 +60,14 @@ export async function findAndDownloadImages(resolvedData: Record<string, any>) {
 
     for (let [imageUrl] of images) {
       try {
-        const sanitizedUrl = (new URL(imageUrl)).href;
-        const newImageUrl = (await downloadImageIfNeeded(sanitizedUrl));
+        const sanitizedUrl = new URL(imageUrl).href;
+        const newImageUrl = await downloadImageIfNeeded(sanitizedUrl);
         if (newImageUrl) {
           stringifiedData = stringifiedData.replaceAll(imageUrl, newImageUrl);
         } else {
           // Remove references to images which couldn't be downloaded
-          stringifiedData = stringifiedData.replaceAll(imageUrl, "");
-          Sentry.captureMessage(
-            `Could not download image: ${sanitizedUrl}`,
-            'error'
-          );
+          stringifiedData = stringifiedData.replaceAll(imageUrl, '');
+          Sentry.captureMessage(`Could not download image: ${sanitizedUrl}`, 'error');
         }
       } catch (e) {
         console.log(e);
@@ -223,7 +220,7 @@ export function upsertProduct(
         variants: {
           create: newProductData.variants
         }
-      }
+      };
     }
     return context.db.Product.createOne({
       data: createProductData
@@ -286,24 +283,17 @@ export const getDateFromXDaysAgo = (daysAgo: number): Date => {
   const pastDate = new Date();
   pastDate.setDate(currDate.getDate() - daysAgo);
   return pastDate;
-}
+};
 
 export const purgeOldShippingDataKeys = async (context: KeystoneContext) => {
   try {
     const date7DaysAgo = getDateFromXDaysAgo(7);
 
-    const oldShippingDataKeys = await context.db.ShippingDataKey.findMany({
+    await context.prisma.ShippingDataKey.deleteMany({
       where: { createdAt: { lte: date7DaysAgo } }
     });
-
-    await context.db.ShippingDataKey.deleteMany({
-      where: oldShippingDataKeys.map((item: any) => ({ id: item.id }))
-    })
   } catch (e) {
     console.log(e);
-    Sentry.captureMessage(
-      `Could not purge old shipping data keys.`,
-      'error'
-    );
+    Sentry.captureMessage(`Could not purge old shipping data keys.`, 'error');
   }
-}
+};

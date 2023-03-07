@@ -81,10 +81,7 @@ async function findAndDownloadImages(resolvedData) {
           stringifiedData = stringifiedData.replaceAll(imageUrl, newImageUrl);
         } else {
           stringifiedData = stringifiedData.replaceAll(imageUrl, "");
-          Sentry.captureMessage(
-            `Could not download image: ${sanitizedUrl}`,
-            "error"
-          );
+          Sentry.captureMessage(`Could not download image: ${sanitizedUrl}`, "error");
         }
       } catch (e) {
         console.log(e);
@@ -246,18 +243,12 @@ var getDateFromXDaysAgo = (daysAgo) => {
 var purgeOldShippingDataKeys = async (context) => {
   try {
     const date7DaysAgo = getDateFromXDaysAgo(7);
-    const oldShippingDataKeys = await context.db.ShippingDataKey.findMany({
+    await context.prisma.ShippingDataKey.deleteMany({
       where: { createdAt: { lte: date7DaysAgo } }
-    });
-    await context.db.ShippingDataKey.deleteMany({
-      where: oldShippingDataKeys.map((item) => ({ id: item.id }))
     });
   } catch (e) {
     console.log(e);
-    Sentry.captureMessage(
-      `Could not purge old shipping data keys.`,
-      "error"
-    );
+    Sentry.captureMessage(`Could not purge old shipping data keys.`, "error");
   }
 };
 
