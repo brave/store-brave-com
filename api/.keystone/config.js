@@ -34442,6 +34442,17 @@ var keystone_default = withAuth(
           next();
         });
         app.get("/rest/sync-store", syncStore);
+        app.get("/rest/keys/:keyId", async (req, res) => {
+          const { context } = req;
+          const { keyId } = req.params;
+          if (keyId && /^c[^\s<>]{6,}$/.test(keyId)) {
+            const keyItem = await context.db.ShippingDataKey.findOne({ where: { id: keyId } });
+            if (keyItem) {
+              return res.json({ key: keyItem.key });
+            }
+          }
+          res.status(400).json({ message: "Could not find key. Please try a different ID." });
+        });
       }
     },
     telemetry: false

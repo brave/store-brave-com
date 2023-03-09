@@ -301,7 +301,7 @@ export const actions: Actions = {
         line_items,
         mode: 'payment',
         success_url: `${env.BASE_URL}/success/{CHECKOUT_SESSION_ID}/`,
-        cancel_url: `${env.BASE_URL}/cart?${canceledSessionQueryParam}={CHECKOUT_SESSION_ID}`,
+        cancel_url: `${env.BASE_URL}/cart/?${canceledSessionQueryParam}={CHECKOUT_SESSION_ID}`,
         allow_promotion_codes: true,
         shipping_options: stripeShippingOptions,
         metadata: {

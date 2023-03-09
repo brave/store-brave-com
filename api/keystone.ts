@@ -16,6 +16,8 @@ import { lists } from './schema';
 // Keystone auth is configured separately - check out the basic auth setup we are importing from our auth file.
 import { withAuth, session } from './auth';
 
+import type { Request, Response } from 'express';
+import type { Context } from '.keystone/types';
 import { seedDB } from './seed';
 import { syncStore } from './routes/syncStore';
 import { purgeOldShippingDataKeys } from './utils';
@@ -56,6 +58,21 @@ export default withAuth(
         });
 
         app.get('/rest/sync-store', syncStore);
+
+        app.get('/rest/keys/:keyId', async (req: Request, res: Response) => {
+          const { context } = req as typeof req & { context: Context };
+          const { keyId } = req.params;
+
+          if (keyId && /^c[^\s<>]{6,}$/.test(keyId)) {
+            const keyItem = await context.db.ShippingDataKey.findOne({ where: { id: keyId } });
+
+            if (keyItem) {
+              return res.json({ key: keyItem.key });
+            }
+          }
+
+          res.status(400).json({ message: "Could not find key. Please try a different ID." })
+        });
       }
     },
     telemetry: false
