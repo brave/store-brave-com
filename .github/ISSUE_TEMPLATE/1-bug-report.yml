@@ -1,0 +1,53 @@
+name: Bug report
+description: Report an issue with store.brave.com
+labels:
+  - bug
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out this bug report!
+  - type: textarea
+    id: bug-description
+    attributes:
+      label: Describe the bug
+      description: Please describe the bug in as much detail as possible. If applicable, add screenshots to help explain your problem.
+      placeholder: Bug description
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduction
+      description: Please provide clear instructions with steps to reproduce the bug.
+      placeholder: Reproduction
+    validations:
+      required: true
+  - type: textarea
+    id: system-info
+    attributes:
+      label: System Info
+      description: |
+        examples:
+          - **OS**: (e.g. iOS 16.3.1, macOS 13.2.1, Android 13, etc.)
+          - **Browser**: (e.g. Brave, Firefox, Safari)
+      value: |
+          - OS:
+          - Browser:
+      placeholder: Platform details
+    validations:
+      required: true
+  - type: dropdown
+    id: severity
+    attributes:
+      label: Severity
+      options:
+        - annoyance
+        - serious, but I can still use the site
+        - blocking me/others from using the site
+    validations:
+      required: true
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Additional Information
