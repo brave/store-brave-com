@@ -31,7 +31,7 @@ export default withAuth(
       useMigrations: true,
       url: `postgresql://${DB_URL}/keystone`,
       onConnect: async (context) => {
-        if (process.argv.includes('--reset-db') || process.argv.includes('--seed-db')) {
+        if (process.argv.includes('--seed-db')) {
           seedDB(context);
         }
 
