@@ -63,7 +63,8 @@ export default withAuth(
           const { context } = req as typeof req & { context: Context };
           const { keyId } = req.params;
 
-          if (keyId && /^c[^\s<>]{6,}$/.test(keyId)) {
+          const validCUIDPattern = /^c[0-9a-z]{6,}$/;
+          if (keyId && validCUIDPattern.test(keyId)) {
             const keyItem = await context.db.ShippingDataKey.findOne({ where: { id: keyId } });
 
             if (keyItem) {

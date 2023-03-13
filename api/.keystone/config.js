@@ -34445,7 +34445,8 @@ var keystone_default = withAuth(
         app.get("/rest/keys/:keyId", async (req, res) => {
           const { context } = req;
           const { keyId } = req.params;
-          if (keyId && /^c[^\s<>]{6,}$/.test(keyId)) {
+          const validCUIDPattern = /^c[0-9a-z]{6,}$/;
+          if (keyId && validCUIDPattern.test(keyId)) {
             const keyItem = await context.db.ShippingDataKey.findOne({ where: { id: keyId } });
             if (keyItem) {
               return res.json({ key: keyItem.key });
