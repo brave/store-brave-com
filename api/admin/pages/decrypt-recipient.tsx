@@ -6,7 +6,7 @@ import { PageContainer } from '@keystone-6/core/admin-ui/components';
 import { jsx, Heading, Stack, Box } from "@keystone-ui/core";
 import { Button } from "@keystone-ui/button";
 import { TextInput, FieldContainer, FieldLabel } from "@keystone-ui/fields"
-import { decrypt } from "../../utils/index";
+import { decrypt } from "../../utils/decrypt";
 import { ToastProvider, useToasts } from "@keystone-ui/toast";
 
 export default function DecryptRecipient() {
