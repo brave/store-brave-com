@@ -8,12 +8,12 @@ export const prerender = true;
 const BASE_DIR = './src/pages';
 
 export const load: PageServerLoad = async ({ params }) => {  
-  const pageMap = (await readdir(BASE_DIR)).reduce((pageMap, page) => {
+  const pageMap = (await readdir(BASE_DIR)).reduce((pageAggregator, page) => {
     if (page.endsWith(".md")) {
       const slug = page.replace('.md', '');
-      return new Map(...pageMap, [[slug, page]]);
+      return new Map([...pageAggregator, [slug, page]]);
     } else {
-      return pageMap;
+      return pageAggregator;
     }
   }, new Map());
 

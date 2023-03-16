@@ -4,7 +4,7 @@
 
   export let data: PageData;
 
-  const sanitizedBody = DOMPurify.sanitize(data.body, { RETURN_TRUSTED_TYPE: true });
+  $: sanitizedBody = DOMPurify.sanitize(data.body, { RETURN_TRUSTED_TYPE: true });
 </script>
 
 <article class="page max-w-screen-lg mx-auto">
@@ -16,5 +16,10 @@
 <style>
   article.page :global(p) {
     margin-bottom: 1rem;
+  }
+
+  article.page :global(h2) {
+    @apply text-h2;
+    margin-bottom: 0.5rem;
   }
 </style>

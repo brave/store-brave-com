@@ -142,6 +142,7 @@
 >
   <div class="max-sm:container max-sm:mx-auto xl:container xl:mx-auto flex max-md:flex-col md:items-center px-6 gap-3">
     <div class="md:ml-auto flex flex-col gap-2 text-large-regular">
+      <a class="link" href="/faq/">FAQ</a>
       <a class="link" href="/refunds-and-returns/">Refunds & Returns</a>
       <p class="not-italic text-text-secondary">Email: <a class="link" href="mailto:merch@brave.com" target="_blank" rel="noreferrer noopener">merch@brave.com</a></p>
     </div>
