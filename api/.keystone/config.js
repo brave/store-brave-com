@@ -18,6 +18,10 @@ var __copyProps = (to, from, except, desc) => {
   return to;
 };
 var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(
+  // If the importer is in node compatibility mode or this is not an ESM
+  // file that has been converted to a CommonJS file using a Babel-
+  // compatible transform (i.e. "__esModule" has not been set), then set
+  // "default" to the CommonJS "module.exports" for node compatibility.
   isNodeMode || !mod || !mod.__esModule ? __defProp(target, "default", { value: mod, enumerable: true }) : target,
   mod
 ));
@@ -235,8 +239,8 @@ function upsertProduct(newProductData, existingProductData, context) {
   }
 }
 var getDateFromXDaysAgo = (daysAgo) => {
-  const currDate = new Date();
-  const pastDate = new Date();
+  const currDate = /* @__PURE__ */ new Date();
+  const pastDate = /* @__PURE__ */ new Date();
   pastDate.setDate(currDate.getDate() - daysAgo);
   return pastDate;
 };
@@ -254,8 +258,11 @@ var purgeOldShippingDataKeys = async (context) => {
 
 // schema.ts
 var lists = {
+  // Here we define the user list.
   User: (0, import_core.list)({
     access: import_access.allowAll,
+    // Here are the fields that `User` will have. We want an email and password so they can log in
+    // a name so we can refer to them, and a way to connect users to posts.
     fields: {
       name: (0, import_fields.text)({ validation: { isRequired: true } }),
       email: (0, import_fields.text)({
@@ -263,8 +270,10 @@ var lists = {
         isIndexed: "unique",
         isFilterable: true
       }),
+      // The password field takes care of hiding details and hashing values
       password: (0, import_fields.password)({ validation: { isRequired: true } })
     },
+    // Here we can configure the Admin UI. We want to show a user's name and posts in the Admin UI
     ui: {
       listView: {
         initialColumns: ["name"]
@@ -527,6 +536,8 @@ var { withAuth } = (0, import_auth.createAuth)({
   sessionData: "name",
   secretField: "password",
   initFirstItem: {
+    // If there are no items in the database, keystone will ask you to create
+    // a new user, filling in these fields.
     fields: ["name", "email", "password"]
   }
 });
@@ -34416,13 +34427,15 @@ async function getProductsAndVariants({ existingProductIds }) {
 // keystone.ts
 var { DB_URL } = process.env;
 var keystone_default = withAuth(
+  // Using the config function helps typescript guide you to the available options.
   (0, import_core2.config)({
+    // the db sets the database provider - we're using sqlite for the fastest startup experience
     db: {
       provider: "postgresql",
       useMigrations: true,
       url: `postgresql://${DB_URL}/keystone`,
       onConnect: async (context) => {
-        if (process.argv.includes("--reset-db") || process.argv.includes("--seed-db")) {
+        if (process.argv.includes("--seed-db")) {
           seedDB(context);
         }
         purgeOldShippingDataKeys(context);
@@ -34430,7 +34443,9 @@ var keystone_default = withAuth(
         setInterval(() => purgeOldShippingDataKeys(context), purgeInterval);
       }
     },
+    // This config allows us to set up features of the Admin UI https://keystonejs.com/docs/apis/config#ui
     ui: {
+      // For our starter, we check that someone has session data before letting them see the Admin UI.
       isAccessAllowed: (context) => !!context.session?.data
     },
     lists,

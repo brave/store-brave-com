@@ -112,7 +112,7 @@ type Product {
   category: Category
   priceRange: [Float]
   firstVariant: Variant
-  variants(where: VariantWhereInput! = {}, orderBy: [VariantOrderByInput!]! = [], take: Int, skip: Int! = 0): [Variant!]
+  variants(where: VariantWhereInput! = {}, orderBy: [VariantOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: VariantWhereUniqueInput): [Variant!]
   variantsCount(where: VariantWhereInput! = {}): Int
 }
 
@@ -271,7 +271,7 @@ type Category {
   id: ID!
   name: String
   slug: String
-  products(where: ProductWhereInput! = {}, orderBy: [ProductOrderByInput!]! = [], take: Int, skip: Int! = 0): [Product!]
+  products(where: ProductWhereInput! = {}, orderBy: [ProductOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ProductWhereUniqueInput): [Product!]
   productsCount(where: ProductWhereInput! = {}): Int
 }
 
@@ -485,22 +485,22 @@ input CreateInitialUserInput {
 }
 
 type Query {
-  users(where: UserWhereInput! = {}, orderBy: [UserOrderByInput!]! = [], take: Int, skip: Int! = 0): [User!]
+  users(where: UserWhereInput! = {}, orderBy: [UserOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserWhereUniqueInput): [User!]
   user(where: UserWhereUniqueInput!): User
   usersCount(where: UserWhereInput! = {}): Int
-  products(where: ProductWhereInput! = {}, orderBy: [ProductOrderByInput!]! = [], take: Int, skip: Int! = 0): [Product!]
+  products(where: ProductWhereInput! = {}, orderBy: [ProductOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ProductWhereUniqueInput): [Product!]
   product(where: ProductWhereUniqueInput!): Product
   productsCount(where: ProductWhereInput! = {}): Int
-  variants(where: VariantWhereInput! = {}, orderBy: [VariantOrderByInput!]! = [], take: Int, skip: Int! = 0): [Variant!]
+  variants(where: VariantWhereInput! = {}, orderBy: [VariantOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: VariantWhereUniqueInput): [Variant!]
   variant(where: VariantWhereUniqueInput!): Variant
   variantsCount(where: VariantWhereInput! = {}): Int
-  categories(where: CategoryWhereInput! = {}, orderBy: [CategoryOrderByInput!]! = [], take: Int, skip: Int! = 0): [Category!]
+  categories(where: CategoryWhereInput! = {}, orderBy: [CategoryOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CategoryWhereUniqueInput): [Category!]
   category(where: CategoryWhereUniqueInput!): Category
   categoriesCount(where: CategoryWhereInput! = {}): Int
-  processedOrders(where: ProcessedOrderWhereInput! = {}, orderBy: [ProcessedOrderOrderByInput!]! = [], take: Int, skip: Int! = 0): [ProcessedOrder!]
+  processedOrders(where: ProcessedOrderWhereInput! = {}, orderBy: [ProcessedOrderOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ProcessedOrderWhereUniqueInput): [ProcessedOrder!]
   processedOrder(where: ProcessedOrderWhereUniqueInput!): ProcessedOrder
   processedOrdersCount(where: ProcessedOrderWhereInput! = {}): Int
-  shippingDataKeys(where: ShippingDataKeyWhereInput! = {}, orderBy: [ShippingDataKeyOrderByInput!]! = [], take: Int, skip: Int! = 0): [ShippingDataKey!]
+  shippingDataKeys(where: ShippingDataKeyWhereInput! = {}, orderBy: [ShippingDataKeyOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ShippingDataKeyWhereUniqueInput): [ShippingDataKey!]
   shippingDataKey(where: ShippingDataKeyWhereUniqueInput!): ShippingDataKey
   shippingDataKeysCount(where: ShippingDataKeyWhereInput! = {}): Int
   keystone: KeystoneMeta!
@@ -545,6 +545,7 @@ type KeystoneAdminUIFieldMeta {
   description: String
   isOrderable: Boolean!
   isFilterable: Boolean!
+  isNonNull: [KeystoneAdminUIFieldMetaIsNonNull!]
   fieldMeta: JSON
   viewsIndex: Int!
   customViewsIndex: Int
@@ -552,6 +553,12 @@ type KeystoneAdminUIFieldMeta {
   listView: KeystoneAdminUIFieldMetaListView!
   itemView(id: ID): KeystoneAdminUIFieldMetaItemView
   search: QueryMode
+}
+
+enum KeystoneAdminUIFieldMetaIsNonNull {
+  read
+  create
+  update
 }
 
 type KeystoneAdminUIFieldMetaCreateView {

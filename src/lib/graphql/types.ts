@@ -33,6 +33,7 @@ export type Category = {
 
 
 export type CategoryProductsArgs = {
+  cursor?: InputMaybe<ProductWhereUniqueInput>;
   orderBy?: Array<ProductOrderByInput>;
   skip?: Scalars['Int'];
   take?: InputMaybe<Scalars['Int']>;
@@ -146,6 +147,7 @@ export type KeystoneAdminUiFieldMeta = {
   description?: Maybe<Scalars['String']>;
   fieldMeta?: Maybe<Scalars['JSON']>;
   isFilterable: Scalars['Boolean'];
+  isNonNull?: Maybe<Array<KeystoneAdminUiFieldMetaIsNonNull>>;
   isOrderable: Scalars['Boolean'];
   itemView?: Maybe<KeystoneAdminUiFieldMetaItemView>;
   label: Scalars['String'];
@@ -168,6 +170,12 @@ export type KeystoneAdminUiFieldMetaCreateView = {
 export enum KeystoneAdminUiFieldMetaCreateViewFieldMode {
   Edit = 'edit',
   Hidden = 'hidden'
+}
+
+export enum KeystoneAdminUiFieldMetaIsNonNull {
+  Create = 'create',
+  Read = 'read',
+  Update = 'update'
 }
 
 export type KeystoneAdminUiFieldMetaItemView = {
@@ -556,6 +564,7 @@ export type Product = {
 
 
 export type ProductVariantsArgs = {
+  cursor?: InputMaybe<VariantWhereUniqueInput>;
   orderBy?: Array<VariantOrderByInput>;
   skip?: Scalars['Int'];
   take?: InputMaybe<Scalars['Int']>;
@@ -684,6 +693,7 @@ export type Query = {
 
 
 export type QueryCategoriesArgs = {
+  cursor?: InputMaybe<CategoryWhereUniqueInput>;
   orderBy?: Array<CategoryOrderByInput>;
   skip?: Scalars['Int'];
   take?: InputMaybe<Scalars['Int']>;
@@ -707,6 +717,7 @@ export type QueryProcessedOrderArgs = {
 
 
 export type QueryProcessedOrdersArgs = {
+  cursor?: InputMaybe<ProcessedOrderWhereUniqueInput>;
   orderBy?: Array<ProcessedOrderOrderByInput>;
   skip?: Scalars['Int'];
   take?: InputMaybe<Scalars['Int']>;
@@ -725,6 +736,7 @@ export type QueryProductArgs = {
 
 
 export type QueryProductsArgs = {
+  cursor?: InputMaybe<ProductWhereUniqueInput>;
   orderBy?: Array<ProductOrderByInput>;
   skip?: Scalars['Int'];
   take?: InputMaybe<Scalars['Int']>;
@@ -743,6 +755,7 @@ export type QueryShippingDataKeyArgs = {
 
 
 export type QueryShippingDataKeysArgs = {
+  cursor?: InputMaybe<ShippingDataKeyWhereUniqueInput>;
   orderBy?: Array<ShippingDataKeyOrderByInput>;
   skip?: Scalars['Int'];
   take?: InputMaybe<Scalars['Int']>;
@@ -761,6 +774,7 @@ export type QueryUserArgs = {
 
 
 export type QueryUsersArgs = {
+  cursor?: InputMaybe<UserWhereUniqueInput>;
   orderBy?: Array<UserOrderByInput>;
   skip?: Scalars['Int'];
   take?: InputMaybe<Scalars['Int']>;
@@ -779,6 +793,7 @@ export type QueryVariantArgs = {
 
 
 export type QueryVariantsArgs = {
+  cursor?: InputMaybe<VariantWhereUniqueInput>;
   orderBy?: Array<VariantOrderByInput>;
   skip?: Scalars['Int'];
   take?: InputMaybe<Scalars['Int']>;
