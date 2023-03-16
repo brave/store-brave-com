@@ -10,6 +10,15 @@ RUN npm ci --omit=dev --ignore-scripts
 
 COPY . .
 
+# Keystone telemetry flag
+ENV KEYSTONE_TELEMETRY_DISABLED=1
+
+# Prisma telemetry flag
+ENV CHECKPOINT_DISABLE=1
+
+# NextJS telemetry flag
+ENV NEXT_TELEMETRY_DISABLED=1
+
 ARG SESSION_SECRET
 
 # Allow scripts, keystone uses that to generate files
