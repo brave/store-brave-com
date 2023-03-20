@@ -28,6 +28,17 @@ type Address = {
   calling_code?: string;
 };
 
+type ShippingRate = {
+  id: string,
+  name: string,
+  rate: string,
+  currency: string,
+  minDeliveryDays?: number,
+  maxDeliveryDays?: number,
+  minDeliveryDate?: string,
+  maxDeliveryDate?: string
+}
+
 interface StrongVariant extends Omit<Variant, 'details'> {
   printfulVariantId: string;
   details: {
@@ -259,31 +270,75 @@ export const actions: Actions = {
       })
     });
 
+    const formatDate = (date: Date) => date.toLocaleString("en-US", { month: "short", day: "numeric" });
+
+    const getCustomShippingName = (shippingRate: ShippingRate) => {
+      const shippingNameMappings: Record<string, string> = {
+        STANDARD: "Standard",
+        PRINTFUL_FAST: "Express"
+      };
+
+      let shippingName = shippingNameMappings[shippingRate.id] || shippingRate.name;
+
+      const minDate = shippingRate?.minDeliveryDate && new Date(shippingRate.minDeliveryDate + "T00:00:00");
+      const maxDate = shippingRate?.maxDeliveryDate && new Date(shippingRate.maxDeliveryDate + "T00:00:00");
+
+      if (minDate && maxDate && minDate.getDate() === maxDate.getDate()) {
+        shippingName += ` (Estimated delivery: ${formatDate(maxDate)})`
+      } else if (minDate && maxDate) {
+        shippingName += ` (Estimated delivery: ${formatDate(minDate)}-${formatDate(maxDate)})`
+      } else if (minDate) {
+        shippingName += ` (Estimated delivery: ${formatDate(minDate)})`
+      } else if (maxDate) {
+        shippingName += ` (Estimated delivery: ${formatDate(maxDate)})`
+      }
+
+      return shippingName;
+    }
+
     const stripeShippingOptions: Array<Stripe.Checkout.SessionCreateParams.ShippingOption> =
       shippingRates.map(
-        (shippingRate: any): Stripe.Checkout.SessionCreateParams.ShippingOption => ({
-          shipping_rate_data: {
-            display_name: shippingRate.name,
-            type: 'fixed_amount',
-            metadata: {
-              printful_shipping_rate_id: shippingRate.id
-            },
-            fixed_amount: {
-              amount: Math.round(parseFloat(shippingRate.rate) * 100),
-              currency: 'USD'
-            },
-            delivery_estimate: {
-              minimum: {
+        (shippingRate: ShippingRate): Stripe.Checkout.SessionCreateParams.ShippingOption => {
+          const shippingOption = {
+            shipping_rate_data: {
+              display_name: getCustomShippingName(shippingRate),
+              type: 'fixed_amount',
+              metadata: {
+                printful_shipping_rate_id: shippingRate.id
+              },
+              fixed_amount: {
+                amount: Math.round(parseFloat(shippingRate.rate) * 100),
+                currency: 'USD'
+              }
+            }
+          } as Stripe.Checkout.SessionCreateParams.ShippingOption;
+
+          // Check to see if we can create a delivery_estimate property
+          if (
+            shippingOption.shipping_rate_data &&
+            (shippingRate.minDeliveryDays || shippingRate.maxDeliveryDays)
+          ) {
+            shippingOption.shipping_rate_data.delivery_estimate = {};
+
+            // Add the minimum estimate if Printful provided one
+            if (shippingRate.minDeliveryDays) {
+              shippingOption.shipping_rate_data.delivery_estimate.minimum = {
                 unit: 'day',
                 value: shippingRate.minDeliveryDays
-              },
-              maximum: {
+              }
+            }
+
+            // Add the maximum estimate if Printful provided one
+            if (shippingRate.maxDeliveryDays) {
+              shippingOption.shipping_rate_data.delivery_estimate.maximum = {
                 unit: 'day',
                 value: shippingRate.maxDeliveryDays
               }
             }
           }
-        })
+
+          return shippingOption;
+        }
       );
 
     let session;
