@@ -13,6 +13,9 @@ services:
     volumes:
       - ./:/src/store
     command: npm run dev -- --host
+    security_opt:
+      - no-new-privileges: true
+    read_only: true
     depends_on:
       api:
         condition: service_started
@@ -31,6 +34,9 @@ services:
     volumes:
       - ./api:/src/api
     command: npm run dev
+    security_opt:
+      - no-new-privileges: true
+    read_only: true
     depends_on:
       - postgres
   postgres:
@@ -44,6 +50,9 @@ services:
       - 5432:5432
     volumes: 
       - db:/var/lib/postgresql/data
+    security_opt:
+      - no-new-privileges: true
+    read_only: true
 volumes:
   db:
     driver: local
