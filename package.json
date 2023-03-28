@@ -2,9 +2,10 @@
 	"name": "store-brave-com",
 	"version": "0.0.1",
 	"scripts": {
-		"dev": "concurrently \"npm:gen -- --watch \"src/**/*.graphql\"\" \"vite dev\"",
+		"dev": "vite dev",
 		"build": "vite build",
 		"start": "node build",
+		"dev:with-codegen": "concurrently \"npm:gen -- --watch \"src/**/*.graphql\"\" \"vite dev\"",
 		"package": "svelte-kit package",
 		"preview": "vite preview",
 		"check": "svelte-check --tsconfig ./jsconfig.json",

@@ -12,9 +12,9 @@ services:
       - 5173:5173
     volumes:
       - ./:/src/store
-    command: npm run dev -- --host
+    command: npm run dev:with-codegen -- --host
     security_opt:
-      - no-new-privileges: true
+      - no-new-privileges:true
     read_only: true
     depends_on:
       api:
@@ -35,7 +35,7 @@ services:
       - ./api:/src/api
     command: npm run dev
     security_opt:
-      - no-new-privileges: true
+      - no-new-privileges:true
     read_only: true
     depends_on:
       - postgres
@@ -51,7 +51,7 @@ services:
     volumes: 
       - db:/var/lib/postgresql/data
     security_opt:
-      - no-new-privileges: true
+      - no-new-privileges:true
     read_only: true
 volumes:
   db:
