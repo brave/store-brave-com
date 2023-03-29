@@ -6,6 +6,7 @@ services:
     env_file: .env
     build:
       context: .
+      dockerfile: ./Dockerfile.local
       args:
         - PUBLIC_ASSETS_PATH
     ports:
