@@ -359,6 +359,9 @@ export const actions: Actions = {
         cancel_url: `${env.BASE_URL}/cart/?${canceledSessionQueryParam}={CHECKOUT_SESSION_ID}`,
         allow_promotion_codes: true,
         shipping_options: stripeShippingOptions,
+        invoice_creation: {
+          enabled: true
+        },
         metadata: {
           shippingData: encryptedShippingData,
           keyId: shippingDataKey.id
