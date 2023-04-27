@@ -15,7 +15,7 @@
     "@aws-sdk/lib-storage": "3.292.0",
     "@aws-sdk/util-endpoints": "3.292.0",
     "@keystone-6/auth": "7.0.0",
-    "@keystone-6/core": "5.1.0",
+    "@keystone-6/core": "5.2.0",
     "@keystone-6/fields-document": "7.0.0",
     "@stablelib/base64": "1.0.1",
     "@stablelib/utf8": "1.0.1",
