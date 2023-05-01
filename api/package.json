@@ -11,19 +11,19 @@
     "start": "keystone start"
   },
   "dependencies": {
-    "@aws-sdk/client-s3": "3.292.0",
-    "@aws-sdk/lib-storage": "3.292.0",
-    "@aws-sdk/util-endpoints": "3.292.0",
+    "@aws-sdk/client-s3": "3.321.1",
+    "@aws-sdk/lib-storage": "3.321.1",
+    "@aws-sdk/util-endpoints": "3.319.0",
     "@keystone-6/auth": "7.0.0",
-    "@keystone-6/core": "5.1.0",
-    "@keystone-6/fields-document": "7.0.0",
+    "@keystone-6/core": "5.2.0",
+    "@keystone-6/fields-document": "8.0.0",
+    "@sentry/node": "7.50.0",
     "@stablelib/base64": "1.0.1",
     "@stablelib/utf8": "1.0.1",
-    "@sentry/node": "7.43.0",
     "dotenv": "16.0.3",
     "graphql": "16.6.0",
-    "slugify": "1.6.5",
+    "slugify": "1.6.6",
     "tweetnacl": "1.0.3",
-    "typescript": "4.9.5"
+    "typescript": "5.0.4"
   }
 }
