@@ -23,7 +23,7 @@
     } else if (e.type === 'mouseenter') {
       currentImage = e.detail.colorVariant?.details.files.at(-1).preview_url;
     }
-  }
+  };
 </script>
 
 <article class="shadow-02 border border-divider-subtle rounded-8 p-4 bg-container-background">
@@ -34,25 +34,23 @@
       alt="Thumbnail for {product.name}"
       class="js-loading aspect-square w-full"
     />
-  </a>
-  <div class="flex flex-col pt-4">
-    {#if product?.filters?.colors?.length > 1}
-      <div class="pb-2 mx-auto">
-        <ColorPicker
-          size="small"
-          colors={product?.filters?.colors}
-          {colorVariants}
-          on:click={(e) => goto(e.detail.colorVariant.permalink)}
-          on:mouseenter={handleColorHover}
-          on:mouseleave={handleColorHover}
-        />
-      </div>
-    {/if}
-    <a href={`${product.firstVariant?.permalink}/`}>
+    <div class="flex flex-col pt-4">
       <h1 class="text-h3 max-xs:text-center">
         {product.name}
       </h1>
       <p class="whitespace-nowrap shrink-0 leading-7 max-xs:text-center">{priceRange}</p>
-    </a>
-  </div>
+    </div>
+  </a>
+  {#if product?.filters?.colors?.length > 1}
+    <div class="pt-1 mx-auto">
+      <ColorPicker
+        size="small"
+        colors={product?.filters?.colors}
+        {colorVariants}
+        on:click={(e) => goto(e.detail.colorVariant.permalink)}
+        on:mouseenter={handleColorHover}
+        on:mouseleave={handleColorHover}
+      />
+    </div>
+  {/if}
 </article>

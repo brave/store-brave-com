@@ -34,10 +34,14 @@
   };
 </script>
 
-<ul class="flex flex-wrap gap-2 max-w-max" on:mouseleave={() => dispatch('mouseleave')}>
+<ul
+  class="color-container flex flex-wrap max-w-max"
+  class:is-small={size === 'small'}
+  on:mouseleave={() => dispatch('mouseleave')}
+>
   {#each colors as color}
     {@const colorVariant = getColorVariantFromColor(color.name)}
-    <li class:is-small={size === 'small'}>
+    <li>
       <a
         class="color-link border border-gray-30 block overflow-hidden"
         class:active-option={activeColor === color.name}
@@ -61,6 +65,9 @@
     border-style: solid;
   }
 
+  .color-container {
+    gap: theme('gap.2');
+  }
   .color-link {
     border-radius: theme('borderRadius.8');
   }
@@ -71,6 +78,10 @@
   }
 
   .is-small {
+    &.color-container {
+      gap: theme('gap.1');
+    }
+
     .color-link {
       border-radius: theme('borderRadius.4');
     }
