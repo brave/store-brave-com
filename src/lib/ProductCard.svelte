@@ -52,7 +52,7 @@
       <h1 class="text-h3 max-xs:text-center">
         {product.name}
       </h1>
-      <p class="whitespace-nowrap shrink-0 leading-7">{priceRange}</p>
+      <p class="whitespace-nowrap shrink-0 leading-7 max-xs:text-center">{priceRange}</p>
     </a>
   </div>
 </article>
