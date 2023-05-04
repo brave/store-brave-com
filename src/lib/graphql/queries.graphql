@@ -91,6 +91,10 @@ fragment ProductSummary on Product {
     permalink
     details
   }
+  filters
+  variants {
+    ...VariantDetails
+  }
   category {
     name
     slug

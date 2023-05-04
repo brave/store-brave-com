@@ -7,6 +7,7 @@
   import Breadcrumbs from '$lib/Breadcrumbs.svelte';
   import { formatPrice } from '$lib/utils';
   import { goto } from '$app/navigation';
+  import ColorPicker from '$lib/ColorPicker.svelte';
 
   const { addToCart } = getContext(contextKey);
 
@@ -57,16 +58,6 @@
     return aSizeOrder - bSizeOrder;
   };
 
-  /**
-   * Sort colors
-   * @typedef {{ primary: string, secondary: string }} Color
-   * @param {Color} a
-   * @param {Color} b
-   */
-  const sortColors = (a, b) => {
-    return parseInt(b.primary.slice(1), 16) - parseInt(a.primary.slice(1), 16);
-  };
-
   /** @type {import('./$types').PageData} */
   export let data;
 
@@ -74,7 +65,6 @@
   $: currency = variant.details.currency;
   $: price = formatPrice(variant.details.price, currency);
 
-  $: colors = product?.filters?.colors?.sort(sortColors);
   $: sizeVariants =
     product?.variants?.filter((v) => v.details.color === variant.details.color)?.sort(sortSizes) ||
     [];
@@ -83,36 +73,36 @@
 
   $: sizeTables = [...(product?.sizingCharts?.size_tables ?? [])].reverse();
 
-  /**
-   * @param {{ name: string, primary: string, secondary?: string }} color
-   * @return {string}
-   */
-  const getColorBg = (color) => {
-    if (color.secondary) {
-      return `linear-gradient(135deg, ${color.primary} 50%, ${color.secondary} 50%)`;
-    } else {
-      return color.primary;
-    }
-  };
-
-  /**
-   * @param {string} color
-   * @return {import("$lib/graphql/types").Variant|undefined}
-   */
-  const getColorVariantFromColor = (color) => {
-    return colorVariants?.find((v) => color === v.details.color);
-  };
-
   let purchaseQuantity = 1;
+
+  $: defaultImage = variant?.details.files.at(-1).preview_url;
+  $: currentImage = defaultImage;
+  /**
+   * @param {CustomEvent} e
+   * @return {void}
+   */
+  const handleColorHover = (e) => {
+    if (e.type === 'mouseleave') {
+      currentImage = defaultImage;
+    } else if (e.type === 'mouseenter') {
+      currentImage = e.detail.colorVariant?.details.files.at(-1).preview_url;
+    }
+  }
 
   /**
    * @param {Event} e
    * @return {void}
    */
   const handleVariantClick = (e) => {
-    e.preventDefault();
-    // @ts-ignore
-    goto(e.currentTarget.href, { replaceState: true })
+    let url;
+    if (e instanceof CustomEvent) {
+      url = e.detail.colorVariant.permalink;
+    } else {
+      e.preventDefault();
+      // @ts-ignore
+      url = e.currentTarget.href;
+    }
+    goto(url, { replaceState: true })
   }
 
   /** @type {Array<{ label: string, link?: string }>} */
@@ -136,7 +126,7 @@
 
   <img
     class="w-full shadow-02 rounded-2 max-w-screen-xs product-layout__image mx-auto md:mx-0"
-    src={variant?.details.files.at(-1).preview_url}
+    src={currentImage}
     alt="{product?.name} product image"
   />
 
@@ -148,26 +138,19 @@
   <section class="product-layout__body flex flex-col md:items-start">
     {#if (product?.variants?.length ?? 0) > 1}
       <div class="pb-5 space-y-4">
-        {#if colors?.length > 1}
+        {#if product?.filters?.colors?.length > 1}
           <div>
             <h2 class="text-x-large font-normal pb-2">
               Color: <strong class="font-semibold">{variant.details.color}</strong>
             </h2>
-            <ul class="flex flex-wrap gap-2">
-              {#each colors as color}
-                <li>
-                  <a
-                    class="rounded-8 border border-gray-30 block overflow-hidden"
-                    class:active-option={variant.details.color === color.name}
-                    href={getColorVariantFromColor(color.name)?.permalink}
-                    on:click={handleVariantClick}
-                    title={color.name}
-                  >
-                    <span class="h-8 w-8 block" style="background: {getColorBg(color)}" />
-                  </a>
-                </li>
-              {/each}
-            </ul>
+            <ColorPicker
+              activeColor={variant.details.color}
+              colors={product?.filters?.colors}
+              {colorVariants}
+              on:click={handleVariantClick}
+              on:mouseenter={handleColorHover}
+              on:mouseleave={handleColorHover}
+            />
           </div>
         {/if}
 
