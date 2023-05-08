@@ -14,6 +14,8 @@
   export let colorVariants: Array<Variant> = [];
   export let activeColor: string = '';
   export let size: Size = 'default';
+  export let shouldPreloadImages = true;
+  export let shouldClickReplaceState = false;
 
   const sortColors = (a: Color, b: Color) => {
     return parseInt(b.primary.slice(1), 16) - parseInt(a.primary.slice(1), 16);
@@ -34,6 +36,14 @@
   };
 </script>
 
+<svelte:head>
+  {#if shouldPreloadImages}
+    {#each colorVariants as colorVariant}
+      <link rel="preload" href="{colorVariant.details?.files.at(-1).preview_url}" as="image">
+    {/each}
+  {/if}
+</svelte:head>
+
 <ul
   class="color-container flex flex-wrap max-w-max"
   class:is-small={size === 'small'}
@@ -46,10 +56,7 @@
         class="color-link border border-gray-30 block overflow-hidden"
         class:active-option={activeColor === color.name}
         href={colorVariant?.permalink}
-        on:click={(e) => {
-          e.preventDefault();
-          dispatch('click', { colorVariant });
-        }}
+        data-sveltekit-replacestate={shouldClickReplaceState ? "" : "off"}
         on:mouseenter={() => dispatch('mouseenter', { colorVariant })}
         title={color.name}
       >

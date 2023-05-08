@@ -6,57 +6,10 @@
   import QuantitySelector from '$lib/QuantitySelector.svelte';
   import Breadcrumbs from '$lib/Breadcrumbs.svelte';
   import { formatPrice } from '$lib/utils';
-  import { goto } from '$app/navigation';
   import ColorPicker from '$lib/ColorPicker.svelte';
+  import SizePicker from '$lib/SizePicker.svelte';
 
   const { addToCart } = getContext(contextKey);
-
-  /**
-   * Sort sizes
-   * @param {import("$lib/graphql/types").Variant} a
-   * @param {import("$lib/graphql/types").Variant} b
-   */
-  const sortSizes = (a, b) => {
-    const sizeOrder = [
-      '11oz',
-      '15oz',
-      '3″×3″',
-      '4″×4″',
-      '5.5″×5.5″',
-      '18″×18″',
-      '22″×22″',
-      '"S/M"',
-      '"M/"',
-      'Samsung Galaxy S10e',
-      'Samsung Galaxy S10',
-      'Samsung Galaxy S10+',
-      'iPhone 7/8',
-      'iPhone 7 Plus/8 Plus',
-      'iPhone XR',
-      'iPhone X/XS',
-      'iPhone XS Max',
-      'iPhone 11 Pro',
-      'iPhone 11 Pro Max',
-      '3-6M',
-      '6-12M',
-      '18-24M',
-      '12-18M',
-      'XS',
-      'S',
-      'M',
-      'L',
-      'XL',
-      '2XL',
-      '3XL',
-      '4XL',
-      '5XL'
-    ];
-
-    const aSizeOrder = sizeOrder.indexOf(a.details.size.toUpperCase());
-    const bSizeOrder = sizeOrder.indexOf(b.details.size.toUpperCase());
-
-    return aSizeOrder - bSizeOrder;
-  };
 
   /** @type {import('./$types').PageData} */
   export let data;
@@ -66,7 +19,7 @@
   $: price = formatPrice(variant.details.price, currency);
 
   $: sizeVariants =
-    product?.variants?.filter((v) => v.details.color === variant.details.color)?.sort(sortSizes) ||
+    product?.variants?.filter((v) => v.details.color === variant.details.color) ||
     [];
   $: colorVariants =
     product?.variants?.filter((v) => v.details.size === variant.details.size) || [];
@@ -87,22 +40,6 @@
     } else if (e.type === 'mouseenter') {
       currentImage = e.detail.colorVariant?.details.files.at(-1).preview_url;
     }
-  }
-
-  /**
-   * @param {Event} e
-   * @return {void}
-   */
-  const handleVariantClick = (e) => {
-    let url;
-    if (e instanceof CustomEvent) {
-      url = e.detail.colorVariant.permalink;
-    } else {
-      e.preventDefault();
-      // @ts-ignore
-      url = e.currentTarget.href;
-    }
-    goto(url, { replaceState: true })
   }
 
   /** @type {Array<{ label: string, link?: string }>} */
@@ -147,7 +84,7 @@
               activeColor={variant.details.color}
               colors={product?.filters?.colors}
               {colorVariants}
-              on:click={handleVariantClick}
+              shouldClickReplaceState={true}
               on:mouseenter={handleColorHover}
               on:mouseleave={handleColorHover}
             />
@@ -159,20 +96,11 @@
             <h2 class="text-x-large font-normal pb-2">
               Size: <strong class="font-semibold">{variant.details.size}</strong>
             </h2>
-            <ul class="flex flex-wrap gap-2">
-              {#each sizeVariants as sizeVariant}
-                <li>
-                  <a
-                    href={sizeVariant.permalink}
-                    on:click={handleVariantClick}
-                    class="border-dashed border rounded-8 p-2 min-w-[40px] inline-block text-center"
-                    class:active-option={sizeVariant.details.size === variant.details.size}
-                  >
-                    {sizeVariant.details.size}
-                  </a>
-                </li>
-              {/each}
-            </ul>
+            <SizePicker
+              activeSize={variant.details.size}
+              {sizeVariants}
+              shouldClickReplaceState={true}
+            />
           </div>
         {/if}
       </div>
@@ -250,10 +178,5 @@
     :global([data-ref="product-quantity-selector"]) {
       margin-bottom: 16px;
     }
-  }
-
-  .active-option {
-    border-color: theme('colors.yellow.30');
-    border-style: solid;
   }
 </style>

@@ -3,7 +3,6 @@
   import type { ProductSummaryFragment } from './graphql/index.generated';
   import { formatPrice } from './utils';
   import ColorPicker from './ColorPicker.svelte';
-  import { goto } from '$app/navigation';
 
   export let product: ProductSummaryFragment;
   $: colorVariants =
@@ -15,6 +14,13 @@
     })
     .join(' - ');
 
+  /**
+   * Rather than preload all color variant images for the entire list
+   * of products on a page, the shouldPreloadImages variable is used
+   * as a switch which is enabled on mouseenter for a ProductCard to
+   * only preload images associated with that specific card.
+   */
+  let shouldPreloadImages = false;
   const defaultImage = product.firstVariant?.details.files.at(-1).preview_url;
   let currentImage = defaultImage;
   const handleColorHover = (e: CustomEvent) => {
@@ -26,7 +32,7 @@
   };
 </script>
 
-<article class="shadow-02 border border-divider-subtle rounded-8 p-4 bg-container-background">
+<article class="shadow-02 border border-divider-subtle rounded-8 p-4 bg-container-background" on:mouseenter={() => shouldPreloadImages = true}>
   <a href={`${product.firstVariant?.permalink}/`}>
     <img
       in:fade={{ duration: 200 }}
@@ -47,7 +53,7 @@
         size="small"
         colors={product?.filters?.colors}
         {colorVariants}
-        on:click={(e) => goto(e.detail.colorVariant.permalink)}
+        {shouldPreloadImages}
         on:mouseenter={handleColorHover}
         on:mouseleave={handleColorHover}
       />
