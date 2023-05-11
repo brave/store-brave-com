@@ -4,16 +4,24 @@ services:
     image: store:latest
     container_name: store
     env_file: .env
+    user: node
+    environment:
+      - NODE_ENV=development
+    deploy:
+      resources:
+        reservations:
+          memory: 1500M
     build:
       context: .
-      dockerfile: ./Dockerfile.local
       args:
-        - PUBLIC_ASSETS_PATH
+        - PUBLIC_ASSETS_PATH=https://cdn.store.bravesoftware.com
     ports:
       - 5173:5173
     volumes:
-      - ./:/src/store
-    command: npm run dev:with-codegen -- --host
+      - ./:/app
+      - storenm:/app/node_modules:nocopy
+      - storenpm:/home/node/.npm:nocopy
+    command: /bin/bash -c "npm ci && npm run dev:with-codegen -- --host"
     security_opt:
       - no-new-privileges:true
     read_only: true
@@ -24,6 +32,11 @@ services:
     image: api:latest
     container_name: api
     env_file: ./api/.env
+    user: node
+    deploy:
+      resources:
+        reservations:
+          memory: 1500M
     environment:
       - DB_URL=user:password@postgres
     build:
@@ -33,13 +46,36 @@ services:
     ports:
       - 3000:3000
     volumes:
-      - ./api:/src/api
-    command: npm run dev
+      - ./api:/app
+      - apinm:/app/node_modules:nocopy
+      - apinpm:/home/node/.npm:nocopy
+      - /tmp
+    command: /bin/bash -c "npm ci --omit=dev && npm run dev"
     security_opt:
       - no-new-privileges:true
     read_only: true
     depends_on:
-      - postgres
+      postgres:
+        condition: service_started
+      change-vol-ownership:
+        # Wait for the ownership to change
+        condition: service_completed_successfully
+
+  # Workaround: https://github.com/docker/compose/issues/3270#issuecomment-1245819741
+  change-vol-ownership:
+    image: api:latest
+    # Need a user priviliged enough to chown
+    user: "root"
+    volumes:
+      - apinpm:/tmp/change-ownership-apinpm
+      - apinm:/tmp/change-ownership-apinm
+      - storenm:/tmp/change-ownership-storenm
+      - storenpm:/tmp/change-ownership-storenpm
+    command: chown -R node:node /tmp/change-ownership-apinpm /tmp/change-ownership-apinm /tmp/change-ownership-storenm /tmp/change-ownership-storenpm
+    security_opt:
+      - no-new-privileges:true
+    read_only: true
+
   postgres:
     image: postgres:14
     restart: always
@@ -51,9 +87,16 @@ services:
       - 5432:5432
     volumes: 
       - db:/var/lib/postgresql/data
+      - varrunpg:/var/run/postgresql
     security_opt:
       - no-new-privileges:true
     read_only: true
+
 volumes:
   db:
-    driver: local
+  varrunpg:
+  app:
+  apinm:
+  apinpm:
+  storenm:
+  storenpm:
