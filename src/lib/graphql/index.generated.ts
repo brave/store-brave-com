@@ -1,5 +1,5 @@
 import { GraphQLClient } from 'graphql-request';
-import * as Dom from 'graphql-request/dist/types.dom';
+import { GraphQLClientRequestHeaders } from 'graphql-request/build/cjs/types';
 import gql from 'graphql-tag';
 export type FeaturedProductsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -7,32 +7,32 @@ export type FeaturedProductsQueryVariables = Exact<{ [key: string]: never; }>;
 export type FeaturedProductsQuery = { __typename?: 'Query', products?: Array<{ __typename?: 'Product', id: string, name?: string | null, priceRange?: Array<number | null> | null, filters?: any | null, firstVariant?: { __typename?: 'Variant', permalink?: string | null, details?: any | null } | null, variants?: Array<{ __typename?: 'Variant', id: string, permalink?: string | null, printfulVariantId?: string | null, details?: any | null }> | null, category?: { __typename?: 'Category', name?: string | null, slug?: string | null } | null }> | null };
 
 export type ProductsQueryVariables = Exact<{
-  limit?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
 }>;
 
 
 export type ProductsQuery = { __typename?: 'Query', productsCount?: number | null, products?: Array<{ __typename?: 'Product', id: string, name?: string | null, priceRange?: Array<number | null> | null, filters?: any | null, firstVariant?: { __typename?: 'Variant', permalink?: string | null, details?: any | null } | null, variants?: Array<{ __typename?: 'Variant', id: string, permalink?: string | null, printfulVariantId?: string | null, details?: any | null }> | null, category?: { __typename?: 'Category', name?: string | null, slug?: string | null } | null }> | null };
 
 export type ProductsByCategoryQueryVariables = Exact<{
-  categorySlug?: InputMaybe<Scalars['String']>;
-  limit?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  categorySlug?: InputMaybe<Scalars['String']['input']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
 }>;
 
 
 export type ProductsByCategoryQuery = { __typename?: 'Query', category?: { __typename?: 'Category', name?: string | null, slug?: string | null, productsCount?: number | null, products?: Array<{ __typename?: 'Product', id: string, name?: string | null, priceRange?: Array<number | null> | null, filters?: any | null, firstVariant?: { __typename?: 'Variant', permalink?: string | null, details?: any | null } | null, variants?: Array<{ __typename?: 'Variant', id: string, permalink?: string | null, printfulVariantId?: string | null, details?: any | null }> | null, category?: { __typename?: 'Category', name?: string | null, slug?: string | null } | null }> | null } | null };
 
 export type VariantQueryVariables = Exact<{
-  printfulId?: InputMaybe<Scalars['String']>;
-  productSlug?: InputMaybe<Scalars['String']>;
+  printfulId?: InputMaybe<Scalars['String']['input']>;
+  productSlug?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
 export type VariantQuery = { __typename?: 'Query', variants?: Array<{ __typename?: 'Variant', id: string, permalink?: string | null, printfulVariantId?: string | null, details?: any | null, product?: { __typename?: 'Product', name?: string | null, slug?: string | null, description?: string | null, thumbnail?: string | null, filters?: any | null, sizingCharts?: any | null, variants?: Array<{ __typename?: 'Variant', id: string, permalink?: string | null, printfulVariantId?: string | null, details?: any | null }> | null, category?: { __typename?: 'Category', name?: string | null, slug?: string | null } | null } | null }> | null };
 
 export type VariantsQueryVariables = Exact<{
-  variantIds?: InputMaybe<Array<Scalars['ID']> | Scalars['ID']>;
+  variantIds?: InputMaybe<Array<Scalars['ID']['input']> | Scalars['ID']['input']>;
 }>;
 
 
@@ -44,28 +44,28 @@ export type CategoriesQueryVariables = Exact<{ [key: string]: never; }>;
 export type CategoriesQuery = { __typename?: 'Query', categories?: Array<{ __typename?: 'Category', id: string, name?: string | null, slug?: string | null, productsCount?: number | null }> | null };
 
 export type ShippingDataKeyQueryVariables = Exact<{
-  id?: InputMaybe<Scalars['ID']>;
+  id?: InputMaybe<Scalars['ID']['input']>;
 }>;
 
 
 export type ShippingDataKeyQuery = { __typename?: 'Query', shippingDataKey?: { __typename?: 'ShippingDataKey', key?: string | null } | null };
 
 export type AddProcessedOrderMutationVariables = Exact<{
-  idempotencyKey?: InputMaybe<Scalars['String']>;
+  idempotencyKey?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
 export type AddProcessedOrderMutation = { __typename?: 'Mutation', createProcessedOrder?: { __typename?: 'ProcessedOrder', id: string } | null };
 
 export type AddShippingDataKeyMutationVariables = Exact<{
-  key?: InputMaybe<Scalars['String']>;
+  key?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
 export type AddShippingDataKeyMutation = { __typename?: 'Mutation', createShippingDataKey?: { __typename?: 'ShippingDataKey', id: string } | null };
 
 export type DeleteShippingDataKeyMutationVariables = Exact<{
-  id?: InputMaybe<Scalars['ID']>;
+  id?: InputMaybe<Scalars['ID']['input']>;
 }>;
 
 
@@ -215,34 +215,34 @@ const defaultWrapper: SdkFunctionWrapper = (action, _operationName, _operationTy
 
 export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = defaultWrapper) {
   return {
-    FeaturedProducts(variables?: FeaturedProductsQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<FeaturedProductsQuery> {
+    FeaturedProducts(variables?: FeaturedProductsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<FeaturedProductsQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<FeaturedProductsQuery>(FeaturedProductsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'FeaturedProducts', 'query');
     },
-    Products(variables?: ProductsQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<ProductsQuery> {
+    Products(variables?: ProductsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<ProductsQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<ProductsQuery>(ProductsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'Products', 'query');
     },
-    ProductsByCategory(variables?: ProductsByCategoryQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<ProductsByCategoryQuery> {
+    ProductsByCategory(variables?: ProductsByCategoryQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<ProductsByCategoryQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<ProductsByCategoryQuery>(ProductsByCategoryDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'ProductsByCategory', 'query');
     },
-    Variant(variables?: VariantQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<VariantQuery> {
+    Variant(variables?: VariantQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<VariantQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<VariantQuery>(VariantDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'Variant', 'query');
     },
-    Variants(variables?: VariantsQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<VariantsQuery> {
+    Variants(variables?: VariantsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<VariantsQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<VariantsQuery>(VariantsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'Variants', 'query');
     },
-    Categories(variables?: CategoriesQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<CategoriesQuery> {
+    Categories(variables?: CategoriesQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<CategoriesQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<CategoriesQuery>(CategoriesDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'Categories', 'query');
     },
-    ShippingDataKey(variables?: ShippingDataKeyQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<ShippingDataKeyQuery> {
+    ShippingDataKey(variables?: ShippingDataKeyQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<ShippingDataKeyQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<ShippingDataKeyQuery>(ShippingDataKeyDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'ShippingDataKey', 'query');
     },
-    AddProcessedOrder(variables?: AddProcessedOrderMutationVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<AddProcessedOrderMutation> {
+    AddProcessedOrder(variables?: AddProcessedOrderMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<AddProcessedOrderMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<AddProcessedOrderMutation>(AddProcessedOrderDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'AddProcessedOrder', 'mutation');
     },
-    AddShippingDataKey(variables?: AddShippingDataKeyMutationVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<AddShippingDataKeyMutation> {
+    AddShippingDataKey(variables?: AddShippingDataKeyMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<AddShippingDataKeyMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<AddShippingDataKeyMutation>(AddShippingDataKeyDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'AddShippingDataKey', 'mutation');
     },
-    DeleteShippingDataKey(variables?: DeleteShippingDataKeyMutationVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<DeleteShippingDataKeyMutation> {
+    DeleteShippingDataKey(variables?: DeleteShippingDataKeyMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<DeleteShippingDataKeyMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<DeleteShippingDataKeyMutation>(DeleteShippingDataKeyDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'DeleteShippingDataKey', 'mutation');
     }
   };
