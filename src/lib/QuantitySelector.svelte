@@ -15,14 +15,15 @@
   class:isMedium={size === 'medium'}
   class:isSmall={size === 'small'}
 >
+  <!-- The data-prevent-innerHTML is used to prevent SvelteKit from rendering the SVG via innerHTML and thereby breaking our TrustedTypes policy -->
   <button class="item" type="button" on:click={() => dispatch('decrement')}>
-    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M21.7 11H3.3c-.7 0-1.3.6-1.3 1.3 0 .7.6 1.3 1.3 1.3h18.5c.6-.1 1.2-.6 1.2-1.3 0-.7-.6-1.3-1.3-1.3Z" fill="currentColor"/></svg>
+    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M21.7 11H3.3c-.7 0-1.3.6-1.3 1.3 0 .7.6 1.3 1.3 1.3h18.5c.6-.1 1.2-.6 1.2-1.3 0-.7-.6-1.3-1.3-1.3Z" fill="currentColor" data-prevent-innerHTML={Math.random() ? '':''} /></svg>
   </button>
   <span class="item active font-medium">
     {quantity}
   </span>
   <button class="item" type="button" on:click={() => dispatch('increment')}>
-    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M20.942 10.804h-7.5v-7.56c0-.67-.577-1.244-1.25-1.244-.769 0-1.346.574-1.346 1.244v7.464H3.25c-.673.096-1.25.67-1.25 1.34s.577 1.244 1.25 1.244h7.5v7.464c0 .67.577 1.244 1.25 1.244s1.25-.574 1.25-1.244v-7.464h7.5c.673 0 1.25-.574 1.25-1.244s-.385-1.244-1.058-1.244Z" fill="currentColor"/></svg>
+    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M20.942 10.804h-7.5v-7.56c0-.67-.577-1.244-1.25-1.244-.769 0-1.346.574-1.346 1.244v7.464H3.25c-.673.096-1.25.67-1.25 1.34s.577 1.244 1.25 1.244h7.5v7.464c0 .67.577 1.244 1.25 1.244s1.25-.574 1.25-1.244v-7.464h7.5c.673 0 1.25-.574 1.25-1.244s-.385-1.244-1.058-1.244Z" fill="currentColor" data-prevent-innerHTML={Math.random() ? '':''} /></svg>
   </button>
 </div>
 
