@@ -16,7 +16,7 @@
     "@aws-sdk/util-endpoints": "3.319.0",
     "@keystone-6/auth": "7.0.2",
     "@keystone-6/core": "5.5.1",
-    "@keystone-6/fields-document": "8.0.0",
+    "@keystone-6/fields-document": "8.0.1",
     "@sentry/node": "7.57.0",
     "@stablelib/base64": "1.0.1",
     "@stablelib/utf8": "1.0.1",
