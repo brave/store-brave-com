@@ -29,7 +29,7 @@ export default withAuth(
     db: {
       provider: 'postgresql',
       useMigrations: true,
-      url: `postgresql://${DB_URL}/keystone`,
+      url: `postgresql://${DB_URL}/keystone?connect_timeout=10`,
       onConnect: async (context) => {
         if (process.argv.includes('--seed-db')) {
           seedDB(context);

@@ -5,6 +5,7 @@
 		"dev": "vite dev",
 		"build": "vite build",
 		"start": "node build",
+		"dev:with-codegen": "concurrently \"npm:gen -- --watch \"src/**/*.graphql\"\" \"vite dev\"",
 		"package": "svelte-kit package",
 		"preview": "vite preview",
 		"check": "svelte-check --tsconfig ./jsconfig.json",
@@ -49,5 +50,8 @@
 		"tweetnacl": "1.0.3",
 		"typescript": "4.9.5",
 		"vite": "4.4.9"
+	},
+	"devDependencies": {
+		"concurrently": "7.6.0"
 	}
 }
