@@ -2,7 +2,7 @@
 	"name": "store-brave-com",
 	"version": "0.0.1",
 	"scripts": {
-		"dev": "vite dev",
+		"dev": "concurrently \"npm:gen -- --watch \"src/**/*.graphql\"\" \"vite dev\"",
 		"build": "vite build",
 		"start": "node build",
 		"package": "svelte-kit package",
@@ -49,5 +49,8 @@
 		"tweetnacl": "1.0.3",
 		"typescript": "4.9.5",
 		"vite": "4.4.9"
+	},
+	"devDependencies": {
+		"concurrently": "7.6.0"
 	}
 }
