@@ -112,7 +112,8 @@
     <section id="total" class="cart-total">
       <div class="shadow-04 lg:rounded-8 p-6 sticky top-5 bg-container-background border border-divider-subtle">
         <button on:click={() => showShippingAddress = !showShippingAddress} class="lg:hidden absolute top-4 right-4 focus-visible:shadow-focus-state outline-none rounded-4 transition-transform duration-200" class:hidden={!showShippingAddress} type="button">
-          <svg width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M5.992 5.992a.85.85 0 0 0 0 1.202L10.798 12l-4.81 4.81a.85.85 0 1 0 1.202 1.202l4.81-4.81 4.806 4.806a.85.85 0 0 0 1.202-1.202L13.202 12l4.81-4.81a.85.85 0 1 0-1.202-1.202L12 10.798 7.194 5.992a.85.85 0 0 0-1.202 0Z" fill="#6B7084"/></svg>
+          <!-- The data-prevent-innerHTML is used to prevent SvelteKit from rendering the SVG via innerHTML and thereby breaking our TrustedTypes policy -->
+          <svg width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M5.992 5.992a.85.85 0 0 0 0 1.202L10.798 12l-4.81 4.81a.85.85 0 1 0 1.202 1.202l4.81-4.81 4.806 4.806a.85.85 0 0 0 1.202-1.202L13.202 12l4.81-4.81a.85.85 0 1 0-1.202-1.202L12 10.798 7.194 5.992a.85.85 0 0 0-1.202 0Z" fill="#6B7084" data-prevent-innerHTML={Math.random() ? '':''}/></svg>
         </button>
         <p class="pb-2">
           <strong>Subtotal ({totalItems} items):</strong>
