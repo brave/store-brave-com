@@ -4,6 +4,7 @@
 
   import { onMount, setContext } from 'svelte';
   import { writable } from 'svelte/store';
+  import DOMPurify from 'isomorphic-dompurify';
   import { env } from '$env/dynamic/public';
   import { browser } from '$app/environment';
   import { page } from '$app/stores';
@@ -18,7 +19,7 @@
   let matomoPolicy;
   if (browser) {
     // @ts-ignore
-    if(typeof window.trustedTypes == 'undefined')window.trustedTypes={createPolicy:(n, rules) => rules};
+    if (typeof window.trustedTypes == 'undefined') window.trustedTypes={createPolicy:(n, rules) => rules};
 
     const matomoOrigin = "https://analytics.brave.com";
     // @ts-ignore
@@ -31,6 +32,11 @@
         // e.g. if url = "//mali.cio.us" or "https://ev.il" or "javascript://blah"
         throw new TypeError();
       }
+    });
+
+    // @ts-ignore
+    trustedTypes.createPolicy('default', {
+      createHTML: (dirty: string) => DOMPurify.sanitize(dirty, {RETURN_TRUSTED_TYPE: true})
     });
   }
 
