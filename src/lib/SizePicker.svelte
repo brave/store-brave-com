@@ -29,8 +29,8 @@
       'iPhone 11 Pro Max',
       '3-6M',
       '6-12M',
-      '18-24M',
       '12-18M',
+      '18-24M',
       'XS',
       'S',
       'M',
@@ -42,8 +42,23 @@
       '5XL'
     ];
 
-    const aSizeOrder = sizeOrder.indexOf(a.details.size.toUpperCase());
-    const bSizeOrder = sizeOrder.indexOf(b.details.size.toUpperCase());
+    const aSize = a.details.size.toUpperCase();
+    const bSize = b.details.size.toUpperCase();
+
+    // Attempt to use order from array
+    const aSizeOrder = sizeOrder.indexOf(aSize);
+    const bSizeOrder = sizeOrder.indexOf(bSize);
+
+    // If size not accounted for in array, compare against each other
+    if ([aSizeOrder, bSizeOrder].includes(-1)) {
+      if (aSize > bSize) {
+        return 1;
+      } else if (bSize > aSize) {
+        return -1;
+      } else {
+        return 0;
+      }
+    }
 
     return aSizeOrder - bSizeOrder;
   };
