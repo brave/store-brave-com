@@ -31,7 +31,7 @@
 		"@sveltejs/kit": "1.24.1",
 		"@types/marked": "5.0.1",
 		"autoprefixer": "10.4.15",
-		"graphql": "16.8.0",
+		"graphql": "16.8.1",
 		"graphql-request": "6.1.0",
 		"isomorphic-dompurify": "1.8.0",
 		"libphonenumber-js": "1.10.44",
