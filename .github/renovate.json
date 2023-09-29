@@ -1,6 +1,6 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["config:base"],
+  "extends": ["local>brave/renovate-config"],
   "labels": ["dependencies", "renovate"],
   "prConcurrentLimit": 4,
   "rangeStrategy": "pin",
