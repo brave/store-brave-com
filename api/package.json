@@ -17,7 +17,7 @@
     "@keystone-6/auth": "7.0.2",
     "@keystone-6/core": "5.7.1",
     "@keystone-6/fields-document": "8.0.2",
-    "@sentry/node": "7.81.1",
+    "@sentry/node": "7.93.0",
     "@stablelib/base64": "1.0.1",
     "@stablelib/utf8": "1.0.2",
     "dotenv": "16.3.1",
