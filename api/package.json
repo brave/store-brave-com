@@ -11,9 +11,9 @@
     "start": "keystone start"
   },
   "dependencies": {
-    "@aws-sdk/client-s3": "3.490.0",
-    "@aws-sdk/lib-storage": "3.490.0",
-    "@aws-sdk/util-endpoints": "3.489.0",
+    "@aws-sdk/client-s3": "3.511.0",
+    "@aws-sdk/lib-storage": "3.511.0",
+    "@aws-sdk/util-endpoints": "3.511.0",
     "@keystone-6/auth": "7.0.2",
     "@keystone-6/core": "5.7.1",
     "@keystone-6/fields-document": "8.0.2",
