@@ -33,7 +33,7 @@
 		"autoprefixer": "10.4.17",
 		"graphql": "16.8.1",
 		"graphql-request": "6.1.0",
-		"isomorphic-dompurify": "1.9.0",
+		"isomorphic-dompurify": "1.13.0",
 		"libphonenumber-js": "1.10.55",
 		"marked": "9.1.6",
 		"postcss": "8.4.35",
