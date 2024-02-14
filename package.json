@@ -37,7 +37,7 @@
 		"libphonenumber-js": "1.10.55",
 		"marked": "9.1.6",
 		"postcss": "8.4.35",
-		"prettier": "3.0.3",
+		"prettier": "3.2.5",
 		"prettier-plugin-svelte": "3.0.3",
 		"qs": "6.11.2",
 		"sass": "1.69.7",
