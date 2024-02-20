@@ -6,7 +6,7 @@ import * as printfulApi from '$lib/printful-api';
 import { CustomError, decrypt, blockedCountryCodes, ValidationError } from '$lib/utils';
 import { sdk } from '$lib/graphql/sdk';
 
-import * as Sentry from "@sentry/node";
+import * as Sentry from '@sentry/node';
 
 Sentry.init({
   dsn: env.SENTRY_DSN,
@@ -16,7 +16,7 @@ Sentry.init({
       delete event.user;
     }
     return event;
-  },
+  }
 });
 
 export const POST: RequestHandler = async ({ request }) => {
@@ -37,7 +37,7 @@ export const POST: RequestHandler = async ({ request }) => {
       await sdk.AddProcessedOrder({ idempotencyKey: session.payment_intent });
       fulfillOrder(session);
     } catch (e: any) {
-      if (e.response?.errors[0]?.extensions?.prisma?.code === "P2002") {
+      if (e.response?.errors[0]?.extensions?.prisma?.code === 'P2002') {
         console.log(`Order for ${session.payment_intent} has already been processed.`);
       }
     }
@@ -74,7 +74,7 @@ async function fulfillOrder(session: Stripe.Checkout.Session): Promise<void> {
     if (encryptedShippingData && shippingDataKey && shippingDataKey.key) {
       shippingData = decrypt(encryptedShippingData, shippingDataKey.key);
     } else {
-      throw new CustomError("Could not find encrypted shippingData or shippingDataKey.");
+      throw new CustomError('Could not find encrypted shippingData or shippingDataKey.');
     }
 
     const newOrder = {
@@ -101,6 +101,9 @@ async function fulfillOrder(session: Stripe.Checkout.Session): Promise<void> {
     await sdk.DeleteShippingDataKey({ id: metadata?.keyId });
   } catch (e: any) {
     console.log(e);
-    Sentry.captureMessage(`Customer order not submitted to Printful ${session.payment_intent}`, 'error');
+    Sentry.captureMessage(
+      `Customer order not submitted to Printful ${session.payment_intent}`,
+      'error'
+    );
   }
 }

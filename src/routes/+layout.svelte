@@ -5,7 +5,7 @@
   import { onMount, setContext } from 'svelte';
   import { writable } from 'svelte/store';
   import DOMPurify from 'isomorphic-dompurify';
-  import { env } from '$env/dynamic/public';
+  import { PUBLIC_ASSETS_PATH } from '$env/static/public';
   import { browser } from '$app/environment';
   import { page } from '$app/stores';
   import { afterNavigate } from '$app/navigation';
@@ -127,7 +127,7 @@
 
 <svelte:head>
   <title>{$page.error ? $page.status : $page.data.title} | Brave Merch Store</title>
-  <link rel="preconnect" crossorigin="anonymous" href={env.PUBLIC_ASSETS_PATH} />
+  <link rel="preconnect" crossorigin="anonymous" href={PUBLIC_ASSETS_PATH} />
 </svelte:head>
 
 {#if showNewItemToast}

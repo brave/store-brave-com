@@ -8,16 +8,16 @@ export const load: PageServerLoad = async function load({ params, url }) {
   const basePath = url.pathname.split("page/")[0];
 
   if (params.pagination === 'page/' && !pagination) {
-    throw redirect(307, basePath);
+    redirect(307, basePath);
   } else if (params.pagination && !pagination) {
-    throw error(404);
+    error(404);
   }
 
   const limit = 9;
   const page = parseInt((pagination && pagination?.groups?.pageNum) ?? '') || 1;
   
   if (pagination && page === 1) {
-    throw redirect(307, basePath);
+    redirect(307, basePath);
   }
 
   const pageIndex = page ? page - 1 : 0;
@@ -41,7 +41,7 @@ export const load: PageServerLoad = async function load({ params, url }) {
   const { products, productsCount, ...category } = results || {};
 
   if (!products || (products && products?.length <= 0)) {
-    throw error(404, 'No products found.');
+    error(404, 'No products found.');
   }
 
   return {

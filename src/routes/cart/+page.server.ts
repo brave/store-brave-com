@@ -29,15 +29,15 @@ type Address = {
 };
 
 type ShippingRate = {
-  id: string,
-  name: string,
-  rate: string,
-  currency: string,
-  minDeliveryDays?: number,
-  maxDeliveryDays?: number,
-  minDeliveryDate?: string,
-  maxDeliveryDate?: string
-}
+  id: string;
+  name: string;
+  rate: string;
+  currency: string;
+  minDeliveryDays?: number;
+  maxDeliveryDays?: number;
+  minDeliveryDate?: string;
+  maxDeliveryDate?: string;
+};
 
 interface StrongVariant extends Omit<Variant, 'details'> {
   printfulVariantId: string;
@@ -84,7 +84,6 @@ function sortStateCountryAlphabetically(a: StateCountry, b: StateCountry) {
 const canceledSessionQueryParam = 'session_id';
 
 export const load: PageServerLoad = async ({ url }) => {
-
   /**
    * If this page load is from a canceled session then delete
    * the shipping data key from DB.
@@ -188,10 +187,7 @@ export const actions: Actions = {
       errors.shippingAddress.hasErrors = true;
       errors.shippingAddress.state_code = { missing: true };
     }
-    if (
-      shippingAddress.phone &&
-      !isValidPhoneNumber(shippingAddress.phone, callingCodeCountry)
-    ) {
+    if (shippingAddress.phone && !isValidPhoneNumber(shippingAddress.phone, callingCodeCountry)) {
       errors.shippingAddress.hasErrors = true;
       errors.shippingAddress.phone = { invalid: true };
     }
@@ -270,31 +266,34 @@ export const actions: Actions = {
       })
     });
 
-    const formatDate = (date: Date) => date.toLocaleString("en-US", { month: "short", day: "numeric" });
+    const formatDate = (date: Date) =>
+      date.toLocaleString('en-US', { month: 'short', day: 'numeric' });
 
     const getCustomShippingName = (shippingRate: ShippingRate) => {
       const shippingNameMappings: Record<string, string> = {
-        STANDARD: "Standard",
-        PRINTFUL_FAST: "Express"
+        STANDARD: 'Standard',
+        PRINTFUL_FAST: 'Express'
       };
 
       let shippingName = shippingNameMappings[shippingRate.id] || shippingRate.name;
 
-      const minDate = shippingRate?.minDeliveryDate && new Date(shippingRate.minDeliveryDate + "T00:00:00");
-      const maxDate = shippingRate?.maxDeliveryDate && new Date(shippingRate.maxDeliveryDate + "T00:00:00");
+      const minDate =
+        shippingRate?.minDeliveryDate && new Date(shippingRate.minDeliveryDate + 'T00:00:00');
+      const maxDate =
+        shippingRate?.maxDeliveryDate && new Date(shippingRate.maxDeliveryDate + 'T00:00:00');
 
       if (minDate && maxDate && minDate.getDate() === maxDate.getDate()) {
-        shippingName += ` (Estimated delivery: ${formatDate(maxDate)})`
+        shippingName += ` (Estimated delivery: ${formatDate(maxDate)})`;
       } else if (minDate && maxDate) {
-        shippingName += ` (Estimated delivery: ${formatDate(minDate)}-${formatDate(maxDate)})`
+        shippingName += ` (Estimated delivery: ${formatDate(minDate)}-${formatDate(maxDate)})`;
       } else if (minDate) {
-        shippingName += ` (Estimated delivery: ${formatDate(minDate)})`
+        shippingName += ` (Estimated delivery: ${formatDate(minDate)})`;
       } else if (maxDate) {
-        shippingName += ` (Estimated delivery: ${formatDate(maxDate)})`
+        shippingName += ` (Estimated delivery: ${formatDate(maxDate)})`;
       }
 
       return shippingName;
-    }
+    };
 
     const stripeShippingOptions: Array<Stripe.Checkout.SessionCreateParams.ShippingOption> =
       shippingRates.map(
@@ -325,7 +324,7 @@ export const actions: Actions = {
               shippingOption.shipping_rate_data.delivery_estimate.minimum = {
                 unit: 'day',
                 value: shippingRate.minDeliveryDays
-              }
+              };
             }
 
             // Add the maximum estimate if Printful provided one
@@ -333,7 +332,7 @@ export const actions: Actions = {
               shippingOption.shipping_rate_data.delivery_estimate.maximum = {
                 unit: 'day',
                 value: shippingRate.maxDeliveryDays
-              }
+              };
             }
           }
 
@@ -346,10 +345,12 @@ export const actions: Actions = {
       const encryptionKey = generateKey();
       const encryptedShippingData = encrypt(recipientInformation, encryptionKey);
 
-      const { createShippingDataKey: shippingDataKey } = await sdk.AddShippingDataKey({ key: encryptionKey });
+      const { createShippingDataKey: shippingDataKey } = await sdk.AddShippingDataKey({
+        key: encryptionKey
+      });
 
       if (!shippingDataKey?.id) {
-        throw new CustomError("Could not get shipping data key id.");
+        throw new CustomError('Could not get shipping data key id.');
       }
 
       session = await stripe.checkout.sessions.create({
@@ -373,7 +374,7 @@ export const actions: Actions = {
     }
 
     if (session.url) {
-      throw redirect(303, session.url);
+      redirect(303, session.url);
     }
   }
 };

@@ -24,9 +24,9 @@ export async function load({ params }) {
    * should redirect to the first variant.
    */
   if (!variants || variants.length < 1) {
-    throw error(404, 'Product not found.');
+    error(404, 'Product not found.');
   } else if (variants.length > 1) {
-    throw redirect(303, variants[0]?.permalink ?? '');
+    redirect(303, variants[0]?.permalink ?? '');
   }
 
   const { product, ...variant } = variants[0];

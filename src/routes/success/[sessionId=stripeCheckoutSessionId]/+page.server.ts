@@ -65,6 +65,6 @@ export const load: PageServerLoad = async function load({ params }) {
       purchaseItems: items
     };
   } catch (e) {
-    throw redirect(307, '/');
+    redirect(307, '/');
   }
 };
