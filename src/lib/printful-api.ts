@@ -16,24 +16,27 @@ export async function printfulApi (resourcePath: string, options?: RequestInit) 
   const responseBody = await response.json();
 
   if (response.status !== 200) {
-    throw error(400, responseBody.result);
+    error(400, responseBody.result);
   }
 
   return responseBody.result;
 }
 
 interface CreateOrderOptions {
-  draft: boolean
+  draft: boolean;
 }
 
-export async function createOrder (order: App.Order, { draft = true }: CreateOrderOptions): Promise<void> {
-  let url = "/orders";
+export async function createOrder(
+  order: App.Order,
+  { draft = true }: CreateOrderOptions
+): Promise<void> {
+  let url = '/orders';
   if (!draft) {
-    url += "?confirm=true";
+    url += '?confirm=true';
   }
 
   await printfulApi(url, {
-    method: "POST",
+    method: 'POST',
     body: JSON.stringify(order)
   });
 }

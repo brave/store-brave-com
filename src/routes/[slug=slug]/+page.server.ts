@@ -18,7 +18,7 @@ export const load: PageServerLoad = async ({ params }) => {
   }, new Map());
 
   if (!pageMap.has(params.slug)) {
-    throw error(404, "Page not found.");
+    error(404, "Page not found.");
   }
 
   const pageData = await readFile(`${BASE_DIR}/${pageMap.get(params.slug)}`, "utf-8");
