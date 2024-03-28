@@ -152,6 +152,6 @@
       <a class="link" href="/refunds-and-returns/">Refunds & Returns</a>
       <p class="not-italic text-text-secondary">Email: <a class="link" href="mailto:merch@brave.com" target="_blank" rel="noreferrer noopener">merch@brave.com</a></p>
     </div>
-    <p class="text-x-small-regular xs:text-small-regular md:text-large-regular text-text-secondary md:order-first">© 2015 - 2023 Brave Software, Inc. | All rights reserved</p>
+    <p class="text-x-small-regular xs:text-small-regular md:text-large-regular text-text-secondary md:order-first">© 2015 - {new Date().getFullYear()} Brave Software, Inc. | All rights reserved</p>
   </div>
 </footer>
