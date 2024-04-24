@@ -16,7 +16,7 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"@brave/leo": "github:brave/leo#beb5bea8b7b5fba16ab052a2fe4ad7d7086269df",
+		"@brave/leo": "github:brave/leo#f82865850c5030b6281e2f5fea567a645d7de0cb",
 		"@graphql-codegen/cli": "5.0.2",
 		"@graphql-codegen/introspection": "4.0.2",
 		"@graphql-codegen/near-operation-file-preset": "3.0.0",
