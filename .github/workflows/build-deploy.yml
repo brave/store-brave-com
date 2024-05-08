@@ -95,7 +95,7 @@ jobs:
           image: ${{ steps.build-image.outputs.image }}
 
       - name: Deploy Amazon ECS task definition
-        uses: aws-actions/amazon-ecs-deploy-task-definition@df9643053eda01f169e64a0e60233aacca83799a # v1
+        uses: aws-actions/amazon-ecs-deploy-task-definition@69e7aed9b8acdd75a6c585ac669c33831ab1b9a3 # v1
         with:
           task-definition: ${{ steps.task-def.outputs.task-definition }}
           service: store
@@ -168,7 +168,7 @@ jobs:
           image: ${{ steps.build-image.outputs.image }}
 
       - name: Register Amazon ECS task definition for DB migration
-        uses: aws-actions/amazon-ecs-deploy-task-definition@df9643053eda01f169e64a0e60233aacca83799a # v1
+        uses: aws-actions/amazon-ecs-deploy-task-definition@69e7aed9b8acdd75a6c585ac669c33831ab1b9a3 # v1
         with:
           task-definition: ${{ steps.task-def.outputs.task-definition }}
 
@@ -184,7 +184,7 @@ jobs:
           exit $terminated_status
 
       - name: Deploy Amazon ECS task definition
-        uses: aws-actions/amazon-ecs-deploy-task-definition@df9643053eda01f169e64a0e60233aacca83799a # v1
+        uses: aws-actions/amazon-ecs-deploy-task-definition@69e7aed9b8acdd75a6c585ac669c33831ab1b9a3 # v1
         with:
           task-definition: ${{ steps.task-def.outputs.task-definition }}
           service: store-backend
