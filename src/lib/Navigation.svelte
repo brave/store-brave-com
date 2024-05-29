@@ -18,7 +18,7 @@
   const closeMobileMenu = () => mobileMenuOpen = false;
 </script>
 
-<div class="max-sm:container max-sm:mx-auto xl:container xl:mx-auto px-6 flex justify-between items-stretch">
+<div class="max-sm:container max-sm:mx-auto xl:container xl:mx-auto px-2xl flex justify-between items-stretch">
   <button aria-label="open mobile menu" class="md:hidden nav-item inline-flex self-center" on:click={openMobileMenu}>
     <svg width="16" height="12" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M14.875 7H1.125a.625.625 0 0 1 0-1.25h13.75a.625.625 0 0 1 0 1.25Zm0-5H1.125a.625.625 0 0 1 0-1.25h13.75a.625.625 0 0 1 0 1.25Zm-13.75 8.75h13.75a.625.625 0 0 1 0 1.25H1.125a.625.625 0 0 1 0-1.25Z" fill="currentColor"/></svg>
   </button>
@@ -30,11 +30,11 @@
       src="/images/brave-logo-dark.svg"
       alt="Brave Merch Store"
     />
-    <span class="logo-tag text-h2 whitespace-nowrap text-text-primary opacity-90 ml-2 font-normal">| merch</span>
+    <span class="logo-tag text-heading-h2 whitespace-nowrap text-text-primary opacity-90 ml-m font-normal">| merch</span>
   </a>
 
-  <nav class="flex gap-x-8">
-    <ul class="hidden md:flex items-center gap-x-8">
+  <nav class="flex gap-x-3xl">
+    <ul class="hidden md:flex items-center gap-x-3xl">
       {#each pages as page}
         <li class="nav-item after:content-[''] h-full flex items-center" class:active={page.permalink === $currentPage.url.pathname}><a class="nav-link" href={page.permalink} target={page.newTab ? "_blank" : null}>{page.name}</a></li>
       {/each}
@@ -47,8 +47,8 @@
 
 <!-- BEGIN mobile nav -->
 <div class="mobile-menu fixed top-0 left-0 min-h-screen w-screen z-10" class:open={mobileMenuOpen}>
-  <nav class="mobile-menu__nav w-4/5 bg-container-background min-h-screen z-10 pl-6 pr-4 py-5">
-    <div class="flex justify-between pb-12">
+  <nav class="mobile-menu__nav w-4/5 bg-container-background min-h-screen z-10 pl-2xl pr-xl py-[20px]">
+    <div class="flex justify-between pb-5xl">
       <a class="flex items-center" href="/" on:click={closeMobileMenu}>
         <img class="logo inline dark:hidden" src="/images/brave-logo.svg" alt="Brave Merch Store" />
         <img
@@ -56,7 +56,7 @@
           src="/images/brave-logo-dark.svg"
           alt="Brave Merch Store"
         />
-        <span class="logo-tag text-h2 whitespace-nowrap text-primary opacity-90 ml-2 font-normal">| merch</span>
+        <span class="logo-tag text-heading-h2 whitespace-nowrap text-primary opacity-90 ml-m font-normal">| merch</span>
       </a>
 
       <button aria-label="open mobile menu" class="nav-item" on:click={closeMobileMenu}>
@@ -64,7 +64,7 @@
       </button>
     </div>
 
-    <ul class="flex flex-col gap-y-8">
+    <ul class="flex flex-col gap-y-3xl">
       {#each pages as page}
         <li class="nav-item h-full flex items-center" class:active={page.permalink === $currentPage.url.pathname}><a on:click={closeMobileMenu} class="nav-link" href={page.permalink}>{page.name}</a></li>
       {/each}
@@ -86,7 +86,7 @@
 
     &.open {
       backdrop-filter: blur(8px);
-      background-color: theme('colors.modal.screen-background/0.35');
+      background-color: theme('colors.dialogs.scrim-background/0.35');
       visibility: visible;
     }
 
@@ -99,8 +99,6 @@
     color: theme('colors.text.secondary');
 
     &.active {
-      --active-indicator-color: theme('colors.interaction.button-primary-background');
-
       position: relative;
       color: theme('colors.text.interactive');
 
@@ -110,16 +108,12 @@
         height: 150%;
         border-top-right-radius: 2px;
         border-bottom-right-radius: 2px;
-        background: var(--active-indicator-color);
+        background: theme('colors.text.interactive');
 
         position: absolute;
           top: 50%;
           left: -1.5rem;
         transform: translateY(-50%);
-      }
-
-      @theme (dark) {
-        --active-indicator-color: theme('colors.dark.icon.interactive');
       }
     }
 
@@ -129,7 +123,7 @@
 
     :global(a),
     :global(button) {
-      @apply text-components-navigation-navbutton;
+      @apply text-components-navbutton;
       color: currentColor;
       display: block;
     }

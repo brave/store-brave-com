@@ -77,7 +77,7 @@
       width: var(--size);
       height: var(--size);
       border: 1px solid transparent;
-      border-radius: theme('borderRadius.full');
+      border-radius: theme('borderRadius.l');
 
       @apply text-default-semibold;
       color: currentColor;

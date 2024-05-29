@@ -23,7 +23,7 @@
 
   {#if itemCount > 0}
     <span
-      class="rounded-full flex items-center justify-center w-4 text-x-small-semibold text-white bg-light-primary-50 absolute -top-[0.45rem] right-1"
+      class="rounded-full flex items-center justify-center w-xl h-xl text-components-label text-white bg-primary-50 absolute -top-[0.45rem] right-s"
       >{itemCount}</span
     >
   {/if}

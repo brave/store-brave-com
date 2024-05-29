@@ -55,7 +55,7 @@
       <a
         class="color-link border border-gray-30 block overflow-hidden"
         class:active-option={activeColor === color.name}
-        href={colorVariant?.permalink}
+        href="{colorVariant?.permalink}"
         data-sveltekit-replacestate={shouldClickReplaceState ? "" : "off"}
         on:mouseenter={() => dispatch('mouseenter', { colorVariant })}
         title={color.name}
@@ -73,29 +73,29 @@
   }
 
   .color-container {
-    gap: theme('gap.2');
+    gap: theme('gap.m');
   }
   .color-link {
-    border-radius: theme('borderRadius.8');
+    border-radius: theme('borderRadius.m');
   }
 
   .color-swatch {
-    height: theme('height.8');
-    width: theme('width.8');
+    height: theme('height.3xl');
+    width: theme('width.3xl');
   }
 
   .is-small {
     &.color-container {
-      gap: theme('gap.1');
+      gap: theme('gap.s');
     }
 
     .color-link {
-      border-radius: theme('borderRadius.4');
+      border-radius: theme('borderRadius.s');
     }
 
     .color-swatch {
-      height: theme('height.4');
-      width: theme('width.4');
+      height: theme('height.xl');
+      width: theme('width.xl');
     }
   }
 </style>

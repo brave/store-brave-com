@@ -1,6 +1,6 @@
 const tailwindcss = require('tailwindcss');
 const autoprefixer = require('autoprefixer');
-const theme = require('@brave/leo/postcss/theme');
+const theme = require('@brave/leo/src/postcss/theme');
 
 module.exports = {
   plugins: [

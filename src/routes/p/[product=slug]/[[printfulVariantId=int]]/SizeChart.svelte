@@ -24,7 +24,7 @@
   <thead>
     <tr class="bg-gray-20">
       {#each labels as label}
-        <th class="font-semibold py-3 px-4">{label}</th>
+        <th class="font-semibold py-l px-xl">{label}</th>
       {/each}
     </tr>
   </thead>
@@ -32,7 +32,7 @@
     {#each rows as row}
       <tr class="even:bg-gray-10">
         {#each row as cell}
-          <td class="py-3 px-4">{cell}</td>
+          <td class="py-l px-xl">{cell}</td>
         {/each}
       </tr>
     {/each}

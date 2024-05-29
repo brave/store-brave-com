@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { PageData } from './$types';
-  import Button from '@brave/leo/web-components/button/button.svelte';
+  import Button from '@brave/leo/src/components/button/button.svelte';
   import ProductList from '$lib/ProductList.svelte';
 
   export let data: PageData;
@@ -8,11 +8,11 @@
 </script>
 
 <section class="hero flex flex-col pt-[3vh]">
-  <h1 class="title text-[4rem] leading-none font-semibold pb-3">Be Brave</h1>
-  <h1 class="subtitle text-[22px] font-medium pb-3">The Brave Merch Store</h1>
+  <p class="title text-[4rem] leading-none font-semibold pb-l">Be Brave</p>
+  <h1 class="subtitle text-[22px] font-medium pb-l">The Brave Merch Store</h1>
   <p class="description font-medium">Community inspired, professionally designed.</p>
 
-  <div class="flex flex-wrap gap-2 pt-12">
+  <div class="flex flex-wrap gap-m pt-5xl">
     {#each categories ?? [] as category}
       {#if category.productsCount}
         <Button size="large" href="/categories/{category.slug}/">{category.name}</Button>
@@ -23,7 +23,7 @@
 </section>
 
 {#if featuredProducts?.length}
-  <h2 class="pt-12 text-[22px] leading-none pb-4 font-medium">Featured items</h2>
+  <h2 class="pt-5xl text-[22px] leading-none pb-xl font-medium">Featured items</h2>
   <ProductList products={featuredProducts} />
 {/if}
 

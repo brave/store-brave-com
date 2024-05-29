@@ -32,7 +32,7 @@
   };
 </script>
 
-<article class="shadow-02 border border-divider-subtle rounded-8 p-4 bg-container-background" on:mouseenter={() => shouldPreloadImages = true}>
+<article class="shadow-02 border border-divider-subtle/40 rounded-m p-xl bg-container-background" on:mouseenter={() => shouldPreloadImages = true}>
   <a href={`${product.firstVariant?.permalink}/`}>
     <img
       in:fade={{ duration: 200 }}
@@ -40,15 +40,15 @@
       alt="Thumbnail for {product.name}"
       class="js-loading aspect-square w-full"
     />
-    <div class="flex flex-col pt-4">
-      <h1 class="text-h3 max-xs:text-center">
+    <div class="flex flex-col pt-s">
+      <h2 class="text-heading-h4 max-xs:text-center">
         {product.name}
-      </h1>
+      </h2>
       <p class="whitespace-nowrap shrink-0 leading-7 max-xs:text-center">{priceRange}</p>
     </div>
   </a>
   {#if product?.filters?.colors?.length > 1}
-    <div class="pt-1 mx-auto">
+    <div class="pt-s mx-auto">
       <ColorPicker
         size="small"
         colors={product?.filters?.colors}

@@ -5,7 +5,7 @@
   import type { CountryCode } from "libphonenumber-js/max"
   import { contextKey } from '$lib/cartStore';
   import { formatPrice } from '$lib/utils';
-  import Button from '@brave/leo/web-components/button/button.svelte';
+  import Button from '@brave/leo/src/components/button/button.svelte';
   import QuantitySelector from '$lib/QuantitySelector.svelte';
   import { slide } from 'svelte/transition';
   import type { PageData } from './$types';
@@ -46,36 +46,36 @@
 
 {#if $cartStore.length <= 0}
   <div class="flex flex-col justify-center items-center pt-[8vh]">
-    <h2 class="text-h2 pb-4">Nothing in your cart</h2>
+    <h2 class="text-heading-h2 pb-xl">Nothing in your cart</h2>
     <Button href="/categories/all/" size="large">Browse products</Button>
   </div>
 {:else}
-  <h1 class="text-h1 pb-6">Shopping cart</h1>
+  <h1 class="text-heading-h1 pb-2xl">Shopping cart</h1>
 
   {#if form?.errors?.cartEmpty}
     <div class="flex flex-col justify-center items-center pt-[8vh]">
-      <h2 class="text-h2 pb-4">Hmm... looks like you haven't put anything in your cart.</h2>
+      <h2 class="text-heading-h2 pb-xl">Hmm... looks like you haven't put anything in your cart.</h2>
       <Button href="/categories/all/" size="large">Browse products</Button>
     </div>
   {/if}
 
   {#if form?.errors?.somethingWentWrong}
     <div class="flex flex-col justify-center items-center pt-[8vh]">
-      <h2 class="text-h2 pb-4">Something went wrong on our end. Please try again later.</h2>
+      <h2 class="text-heading-h2 pb-xl">Something went wrong on our end. Please try again later.</h2>
     </div>
   {/if}
 
-  <form method="post" class="grid max-lg:grid-rows-[1fr_auto] lg:grid-cols-[3fr_2fr] gap-20 h-[stretch]">
+  <form method="post" class="grid max-lg:grid-rows-[1fr_auto] lg:grid-cols-[3fr_2fr] gap-7xl h-[stretch]">
     <section id="cart-items">
       {#each $cartStore as { variant, quantity }, i (variant.id)}
         <article
-          class="grid sm:grid-cols-[165px_1fr] gap-6 border-t last-of-type:border-b border-divider-subtle py-8"
+          class="grid sm:grid-cols-[165px_1fr] gap-2xl border-t last-of-type:border-b border-divider-subtle/40 py-3xl"
         >
           <div class="flex flex-col">
-            <header class="flex flex-col sm:flex-row justify-between">
-              <h1 class="text-h3">
-                <a href={variant.permalink}>{variant.details.name}</a>
-              </h1>
+            <header class="flex flex-col sm:flex-row justify-between gap-x-4xl gap-y-xl">
+              <h2 class="text-heading-h4">
+                <a href="{variant.permalink}">{variant.details.name}</a>
+              </h2>
               <p><strong class="sm:hidden">Price: </strong>{formatPrice(variant.details.price)}</p>
             </header>
             <div class="flex flex-col h-full">
@@ -85,8 +85,8 @@
               {#if variant.details.color}
                 <p><strong>Color:</strong> {variant.details.color}</p>
               {/if}
-              <div class="py-2 flex items-center">
-                <strong class="pr-3">Quantity:</strong>
+              <div class="py-m flex items-center">
+                <strong class="pr-l">Quantity:</strong>
                 <QuantitySelector
                   {quantity}
                   on:increment={() => updateQuantity(variant.id, quantity + 1)}
@@ -94,12 +94,12 @@
                 />
               </div>
               <span class="block mt-auto">
-                <Button kind="tertiary" type="button" on:click={() => removeFromCart(variant.id)}>Remove</Button>
+                <Button kind="plain" type="button" onClick={() => removeFromCart(variant.id)}>Remove</Button>
               </span>
             </div>
           </div>
           <img
-            class="order-first rounded-8 w-full max-w-sm sm:max-w-[150px] shadow-gray-20 shadow-04"
+            class="order-first rounded-m w-full max-w-sm sm:max-w-[150px] shadow-gray-20 shadow-04"
             src={variant.details.files.at(-1).preview_url}
             alt="Thumbnail for {variant.details.name}"
           />
@@ -110,19 +110,19 @@
     </section>
 
     <section id="total" class="cart-total">
-      <div class="shadow-04 lg:rounded-8 p-6 sticky top-5 bg-container-background border border-divider-subtle">
-        <button on:click={() => showShippingAddress = !showShippingAddress} class="lg:hidden absolute top-4 right-4 focus-visible:shadow-focus-state outline-none rounded-4 transition-transform duration-200" class:hidden={!showShippingAddress} type="button">
+      <div class="shadow-04 lg:rounded-m p-2xl sticky top-[20px] bg-container-background border border-divider-subtle/40">
+        <button on:click={() => showShippingAddress = !showShippingAddress} class="lg:hidden absolute top-xl right-xl focus-visible:shadow-focus-state outline-none rounded-s transition-transform duration-200" class:hidden={!showShippingAddress} type="button">
           <!-- The data-prevent-innerHTML is used to prevent SvelteKit from rendering the SVG via innerHTML and thereby breaking our TrustedTypes policy -->
           <svg width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M5.992 5.992a.85.85 0 0 0 0 1.202L10.798 12l-4.81 4.81a.85.85 0 1 0 1.202 1.202l4.81-4.81 4.806 4.806a.85.85 0 0 0 1.202-1.202L13.202 12l4.81-4.81a.85.85 0 1 0-1.202-1.202L12 10.798 7.194 5.992a.85.85 0 0 0-1.202 0Z" fill="#6B7084" data-prevent-innerHTML={Math.random() ? '':''}/></svg>
         </button>
-        <p class="pb-2">
+        <p class="pb-m">
           <strong>Subtotal ({totalItems} items):</strong>
           {formatPrice(cartTotal)}
         </p>
 
         {#if showShippingAddress}
           <div transition:slide|local class="shipping_address">
-            <h3 class="text-default-semibold pb-4">Shipping address</h3>
+            <h3 class="text-default-semibold pb-xl">Shipping address</h3>
             <div class="form-control">
               <label for="shippingAddress[name]">Name <span class="label-explanation">(if different from billing name)</span></label>
               <input value={form?.values?.name || ''} name="shippingAddress[name]" id="shippingAddress[name]" type="text" placeholder="Jane Smith" />
@@ -186,16 +186,16 @@
               </div>
               <input bind:value={phoneNumber} class="phone-number__number" name="shippingAddress[phone]" id="shippingAddress[phone]" type="text" placeholder={phoneExample} />
               {#if form?.errors?.shippingAddress?.phone?.invalid}
-                <p class="text-systemfeedback-error-icon text-small-regular pt-1">Your phone number is invalid.</p>
+                <p class="text-systemfeedback-error-icon text-small-regular pt-s">Your phone number is invalid.</p>
               {/if}
               <p class="help-text">Providing a telephone number is optional, however if there is a failure to ship on account of the carrier being unable to reach the recipient, you could incur reshipment costs after the package is returned.</p>
             </div>
           </div>
         {/if}
 
-        <div class="pt-4">
+        <div class="pt-xl">
           {#if !showShippingAddress}
-            <Button size="large" type="button" on:click={() => (showShippingAddress = true)}>Enter shipping address</Button>
+            <Button size="large" type="button" onClick={() => (showShippingAddress = true)}>Enter shipping address</Button>
           {:else}
             <Button size="large" type="submit">Proceed to checkout</Button>
           {/if}
@@ -246,13 +246,13 @@
     &.required label::after {
       @apply text-small-regular;
       content: '*';
-      color: theme('colors.systemfeedback.error.icon');
+      color: theme('colors.systemfeedback.error-icon');
       padding-left: 4px;
     }
 
     &.errors input[type=text],
     &.errors select {
-      --bg: theme('colors.systemfeedback.error.background');
+      --bg: theme('colors.systemfeedback.error-background');
     }
 
     &.disabled {
@@ -317,9 +317,9 @@
     @apply text-default-regular;
 
     --text-color: theme('colors.text.primary');
-    --placeholder-text-color: theme('colors.text.secondary');
-    --bg: theme('colors.container.highlight');
-    --radius: theme('borderRadius.8');
+    --placeholder-text-color: theme('colors.text.tertiary');
+    --bg: theme('colors.page.background');
+    --radius: theme('borderRadius.m');
     --padding-y: 10px;
     --padding-x: 8px;
     --border-color: transparent;
@@ -337,7 +337,7 @@
     }
 
     &:hover {
-      --border-color: theme('colors.divider.subtle');
+      --border-color: theme('colors.divider.subtle/40%');
       --box-shadow: theme('boxShadow.02');
     }
 

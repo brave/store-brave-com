@@ -50,17 +50,17 @@
     }
 
     &:first-child {
-      border-top-left-radius: 9999px;
-      border-bottom-left-radius: 9999px;
+      border-top-left-radius: theme('borderRadius.l');
+      border-bottom-left-radius: theme('borderRadius.l');
     }
     &:last-child {
-      border-top-right-radius: 9999px;
-      border-bottom-right-radius: 9999px;
+      border-top-right-radius: theme('borderRadius.l');
+      border-bottom-right-radius: theme('borderRadius.l');
     }
 
     // States
     &:hover {
-      --bg: theme('colors.container.interactive-background');
+      --bg: theme('colors.container.interactive');
     }
     &:active,
     &.active {
@@ -75,12 +75,12 @@
 
     // Sizes
     .button-group.isLarge & {
-      @apply text-longtext-large-semibold;
+      @apply text-large-semibold;
       font-weight: 600;
       padding: 12px 20px;
     }
     .button-group.isMedium & {
-      @apply text-longtext-default-semibold;
+      @apply text-default-semibold;
       font-weight: 600;
       padding: 10px 16px;
     }
