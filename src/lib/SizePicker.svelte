@@ -74,13 +74,13 @@
   {/if}
 </svelte:head>
 
-<ul class="flex flex-wrap gap-2">
+<ul class="flex flex-wrap gap-m">
   {#each sizeVariants as sizeVariant}
     <li>
       <a
         href={sizeVariant.permalink}
         data-sveltekit-replacestate
-        class="border-dashed border rounded-8 p-2 min-w-[40px] inline-block text-center"
+        class="border-dashed border rounded-m p-m min-w-[40px] inline-block text-center"
         class:active-option={sizeVariant.details.size === activeSize}
       >
         {sizeVariant.details.size}

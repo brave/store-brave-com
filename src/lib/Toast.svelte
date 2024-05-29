@@ -31,7 +31,7 @@
     align-items: center;
     column-gap: 16px;
     padding: 16px;
-    border-radius: theme('borderRadius.8');
+    border-radius: theme('borderRadius.m');
 
     @apply text-default-regular;
 
@@ -43,8 +43,8 @@
     }
 
     &.success {
-      --bg: theme('colors.systemfeedback.success.background');
-      --icon-color: theme('colors.systemfeedback.success.icon');
+      --bg: theme('colors.systemfeedback.success-background');
+      --icon-color: theme('colors.systemfeedback.success-icon');
       --color: theme('colors.text.primary');
     }
   }

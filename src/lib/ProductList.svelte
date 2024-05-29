@@ -5,7 +5,7 @@
   export let products: Array<ProductSummaryFragment> = [];
 </script>
 
-<section class="grid xs:grid-cols-[repeat(auto-fill,_minmax(350px,_1fr))] grid-flow-row gap-5 items-stretch">
+<section class="grid xs:grid-cols-[repeat(auto-fill,_minmax(350px,_1fr))] grid-flow-row gap-[20px] items-stretch">
   {#each products as product (product.id)}
     <ProductCard {product} />
   {/each}
