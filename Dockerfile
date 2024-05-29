@@ -6,13 +6,13 @@ WORKDIR /app
 
 COPY ["package.json", "package-lock.json*", "./"]
 
-RUN npm ci --omit=dev --ignore-scripts
+RUN npm ci --ignore-scripts
 
 COPY . .
 
 ARG PUBLIC_ASSETS_PATH
 
-RUN npm ci --omit=dev
+RUN npm run postinstall
 
 RUN npm run build
 

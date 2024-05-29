@@ -26,7 +26,7 @@ export const load: PageServerLoad = async ({ params }) => {
 
   return {
     title: metadata.title,
-    body: marked.parse(body)
+    body: await marked.parse(body)
   };
 };
 

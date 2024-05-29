@@ -28,7 +28,7 @@
   <Breadcrumbs crumbs={breadcrumbs} />
 {/if}
 
-<h1 class="text-display-display1 pb-6">{category?.name}</h1>
+<h1 class="text-heading-h1 pb-2xl">{category?.name}</h1>
 
 <ProductList {products} />
 
