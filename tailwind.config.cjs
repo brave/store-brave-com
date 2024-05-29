@@ -1,7 +1,7 @@
 module.exports = {
   darkMode: ['class', `[data-theme="dark"]`],
   content: ['./src/**/*.{html,js,svelte,ts}'],
-  presets: [require('@brave/leo/build/tailwind')],
+  presets: [require('@brave/leo/tokens/tailwind')],
   theme: {
     screens: {
       xxs: '360px',

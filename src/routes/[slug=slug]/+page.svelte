@@ -8,7 +8,7 @@
 </script>
 
 <article class="page max-w-screen-lg mx-auto">
-  <h1 class="text-display-display1 mb-6">{data.title}</h1>
+  <h1 class="text-heading-h1 mb-2xl">{data.title}</h1>
 
   {@html sanitizedBody}
 </article>
@@ -19,7 +19,7 @@
   }
 
   article.page :global(h2) {
-    @apply text-h2;
+    @apply text-heading-h2;
     margin-bottom: 0.5rem;
   }
 </style>
