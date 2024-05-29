@@ -1,6 +1,7 @@
 <script lang="ts">
-  import { page } from "$app/stores";
-  
+  import { page } from '$app/stores';
+  import Icon from '@brave/leo/src/components/icon/icon.svelte';
+
   export let itemCount: number;
   export let perPageLimit: number;
   export let currentPage: number;
@@ -18,13 +19,23 @@
 
 <div class="pagination">
   <span class="page-item page-first">
-    <svelte:element this={canGoBackward ? 'a' : 'span'} class="page-link" class:disabled={!canGoBackward} href={canGoBackward ? `${basePagePath}/1/`: undefined}>
-      <svg width="18" height="18" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M4.432 8.576a.6.6 0 0 0 0 .848l4.125 4.125a.6.6 0 0 0 .848-.848L5.705 9l3.7-3.7a.6.6 0 0 0-.848-.85L4.432 8.577ZM12.72 4.45 8.595 8.576a.6.6 0 0 0 0 .848l4.125 4.125a.6.6 0 1 0 .848-.848L9.868 9l3.7-3.7a.6.6 0 0 0-.848-.85Z" fill="currentColor"/></svg>
+    <svelte:element
+      this={canGoBackward ? 'a' : 'span'}
+      class="page-link"
+      class:disabled={!canGoBackward}
+      href={canGoBackward ? `${basePagePath}/1/` : undefined}
+    >
+      <Icon name="carat-first" />
     </svelte:element>
   </span>
   <span class="page-item">
-    <svelte:element this={canGoBackward ? 'a' : 'span'} class="page-link" class:disabled={!canGoBackward} href={canGoBackward ? `${basePagePath}/${currentPage - 1}/`: undefined}>
-      <svg width="18" height="18" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M6.513 9.424a.6.6 0 0 1 0-.848l4.125-4.125a.6.6 0 1 1 .849.848L7.786 9l3.7 3.702a.6.6 0 1 1-.848.848L6.513 9.424Z" fill="currentColor"/></svg>
+    <svelte:element
+      this={canGoBackward ? 'a' : 'span'}
+      class="page-link"
+      class:disabled={!canGoBackward}
+      href={canGoBackward ? `${basePagePath}/${currentPage - 1}/` : undefined}
+    >
+      <Icon name="carat-left" />
     </svelte:element>
   </span>
   <ol class="pagination-pages">
@@ -35,13 +46,23 @@
     {/each}
   </ol>
   <span class="page-item">
-    <svelte:element this={canGoForward ? 'a' : 'span'} class="page-link" class:disabled={!canGoForward} href={canGoForward ? `${basePagePath}/${currentPage + 1}/`: undefined}>
-      <svg class="rotate-180" width="18" height="18" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M6.513 9.424a.6.6 0 0 1 0-.848l4.125-4.125a.6.6 0 1 1 .849.848L7.786 9l3.7 3.702a.6.6 0 1 1-.848.848L6.513 9.424Z" fill="currentColor"/></svg>
+    <svelte:element
+      this={canGoForward ? 'a' : 'span'}
+      class="page-link"
+      class:disabled={!canGoForward}
+      href={canGoForward ? `${basePagePath}/${currentPage + 1}/` : undefined}
+    >
+    <Icon name="carat-right" />
     </svelte:element>
   </span>
   <span class="page-item page-last">
-    <svelte:element this={canGoForward ? 'a' : 'span'} class="page-link" class:disabled={!canGoForward} href={canGoForward ? `${basePagePath}/${pages.length}/`: undefined}>
-      <svg class="rotate-180" width="18" height="18" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M4.432 8.576a.6.6 0 0 0 0 .848l4.125 4.125a.6.6 0 0 0 .848-.848L5.705 9l3.7-3.7a.6.6 0 0 0-.848-.85L4.432 8.577ZM12.72 4.45 8.595 8.576a.6.6 0 0 0 0 .848l4.125 4.125a.6.6 0 1 0 .848-.848L9.868 9l3.7-3.7a.6.6 0 0 0-.848-.85Z" fill="currentColor"/></svg>
+    <svelte:element
+      this={canGoForward ? 'a' : 'span'}
+      class="page-link"
+      class:disabled={!canGoForward}
+      href={canGoForward ? `${basePagePath}/${pages.length}/` : undefined}
+    >
+      <Icon name="carat-last" />
     </svelte:element>
   </span>
 </div>
@@ -77,7 +98,7 @@
       width: var(--size);
       height: var(--size);
       border: 1px solid transparent;
-      border-radius: theme('borderRadius.full');
+      border-radius: theme('borderRadius.l');
 
       @apply text-default-semibold;
       color: currentColor;
