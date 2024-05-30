@@ -28,7 +28,9 @@ export async function transformProduct(productId, options) {
   const { allColors, allSizes, variants, productDetails } =
     await getAllVariantDetailsAndExtractProductDetails(sync_variants);
 
-  const sizingCharts = !options.existingProductIds.includes(productId) && await printfulApi(`/products/${productDetails.id}/sizes`);
+  const sizingCharts =
+    !options.existingProductIds.includes(productId) &&
+    (await printfulApi(`/products/${productDetails.id}/sizes`));
 
   /** @type {Product} */
   const product = {
@@ -119,7 +121,7 @@ export async function transformProduct(productId, options) {
             }
           };
         } catch (e) {
-          console.log(`Product: /store/products/${productId}`)
+          console.log(`Product: /store/products/${productId}`);
           console.log(`Variant: /products/variant/${variant.variant_id}`);
           console.log(e.message);
 

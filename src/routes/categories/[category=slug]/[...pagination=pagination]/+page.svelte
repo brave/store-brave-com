@@ -2,7 +2,7 @@
   import Breadcrumbs from '$lib/Breadcrumbs.svelte';
   import Pagination from '$lib/Pagination.svelte';
   import ProductList from '$lib/ProductList.svelte';
-    import Button from '@brave/leo/src/components/button/button.svelte';
+  import Button from '@brave/leo/src/components/button/button.svelte';
 
   /** @type {import('./$types').PageData} */
   export let data;
@@ -17,11 +17,14 @@
   /** @type {Array<{ label: string, link?: string }>} */
   let breadcrumbs;
   $: {
-    breadcrumbs = [{ label: "All products", link: "/categories/all/" }]
-    if (category?.name && category?.slug !== "all") {
-      breadcrumbs = [...breadcrumbs, {
-        label: category.name
-      }];
+    breadcrumbs = [{ label: 'All products', link: '/categories/all/' }];
+    if (category?.name && category?.slug !== 'all') {
+      breadcrumbs = [
+        ...breadcrumbs,
+        {
+          label: category.name
+        }
+      ];
     }
   }
 </script>
@@ -33,10 +36,10 @@
 <h1 class="text-heading-h1 pb-2xl [view-transition-name:page-name]">{category?.name}</h1>
 
 <div class="flex flex-wrap gap-m pb-4xl [view-transition-name:category-nav]">
-  {#each [{ name: "All products", slug: "all", productsCount: 1 }, ...(categories ?? [])] as c}
+  {#each [{ name: 'All products', slug: 'all', productsCount: 1 }, ...(categories ?? [])] as c}
     {@const cPermalink = `/categories/${c.slug}/`}
     {#if c.productsCount}
-      <Button size="tiny" kind={c.slug === category?.slug ? "filled" : "outline"} href={cPermalink}>
+      <Button size="tiny" kind={c.slug === category?.slug ? 'filled' : 'outline'} href={cPermalink}>
         {c.name}
       </Button>
     {/if}

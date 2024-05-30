@@ -39,7 +39,7 @@
 <svelte:head>
   {#if shouldPreloadImages}
     {#each colorVariants as colorVariant}
-      <link rel="preload" href="{colorVariant.details?.files.at(-1).preview_url}" as="image">
+      <link rel="preload" href={colorVariant.details?.files.at(-1).preview_url} as="image" />
     {/each}
   {/if}
 </svelte:head>
@@ -55,8 +55,8 @@
       <a
         class="color-link border border-gray-30 block overflow-hidden"
         class:active-option={activeColor === color.name}
-        href="{colorVariant?.permalink}"
-        data-sveltekit-replacestate={shouldClickReplaceState ? "" : "off"}
+        href={colorVariant?.permalink}
+        data-sveltekit-replacestate={shouldClickReplaceState ? '' : 'off'}
         on:mouseenter={() => dispatch('mouseenter', { colorVariant })}
         title={color.name}
       >
