@@ -6,6 +6,7 @@
   import { contextKey } from '$lib/cartStore';
   import { formatPrice } from '$lib/utils';
   import Button from '@brave/leo/src/components/button/button.svelte';
+  import Icon from '@brave/leo/src/components/icon/icon.svelte';
   import QuantitySelector from '$lib/QuantitySelector.svelte';
   import { slide } from 'svelte/transition';
   import type { PageData } from './$types';
@@ -293,13 +294,30 @@
           </div>
         {/if}
 
-        <div class="pt-xl">
+        <div class="pt-xl flex gap-m">
           {#if !showShippingAddress}
-            <Button size="large" type="button" onClick={() => (showShippingAddress = true)}
-              >Enter shipping address</Button
-            >
+            <Button size="large" type="button" onClick={() => (showShippingAddress = true)}>
+              Enter shipping address
+            </Button>
           {:else}
-            <Button size="large" type="submit">Proceed to checkout</Button>
+            <Button kind="outline" type="submit">
+              <Icon
+                --leo-icon-size="var(--leo-icon-xl)"
+                --leo-icon-height="100%"
+                name="payment-stripe-color"
+                slot="icon-before"
+              />
+              Credit card
+            </Button>
+            <Button kind="outline" type="submit">
+              <Icon
+                --leo-icon-size="var(--leo-icon-xl)"
+                --leo-icon-height="100%"
+                name="payment-radom-color"
+                slot="icon-before"
+              />
+              Crypto
+            </Button>
           {/if}
         </div>
       </div>
