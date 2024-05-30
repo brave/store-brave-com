@@ -3,6 +3,7 @@
   import { page as currentPage } from "$app/stores";
   import { contextKey } from '$lib/cartStore';
   import CartButton from '$lib/CartButton.svelte';
+  import Icon from "@brave/leo/src/components/icon/icon.svelte";
 
   const { cartStore }: any = getContext(contextKey);
 
@@ -18,9 +19,15 @@
   const closeMobileMenu = () => mobileMenuOpen = false;
 </script>
 
-<div class="max-sm:container max-sm:mx-auto xl:container xl:mx-auto px-2xl flex justify-between items-stretch">
-  <button aria-label="open mobile menu" class="md:hidden nav-item inline-flex self-center" on:click={openMobileMenu}>
-    <svg width="16" height="12" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M14.875 7H1.125a.625.625 0 0 1 0-1.25h13.75a.625.625 0 0 1 0 1.25Zm0-5H1.125a.625.625 0 0 1 0-1.25h13.75a.625.625 0 0 1 0 1.25Zm-13.75 8.75h13.75a.625.625 0 0 1 0 1.25H1.125a.625.625 0 0 1 0-1.25Z" fill="currentColor"/></svg>
+<div
+  class="max-sm:container max-sm:mx-auto xl:container xl:mx-auto px-2xl flex justify-between items-stretch"
+>
+  <button
+    aria-label="open mobile menu"
+    class="md:hidden nav-item inline-flex self-center"
+    on:click={openMobileMenu}
+  >
+    <Icon name="hamburger-menu" />
   </button>
 
   <a class="inline-flex items-center" href="/">
@@ -60,7 +67,7 @@
       </a>
 
       <button aria-label="open mobile menu" class="nav-item" on:click={closeMobileMenu}>
-        <svg width="18" height="19" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M4.494 5.083a.638.638 0 0 0 0 .902l3.604 3.604-3.607 3.608a.638.638 0 0 0 .902.901L9 10.491l3.604 3.604a.637.637 0 1 0 .902-.901L9.902 9.589l3.607-3.607a.637.637 0 1 0-.902-.901L9 8.688 5.396 5.083a.638.638 0 0 0-.902 0Z" fill="currentColor"/></svg>
+        <Icon name="close" />
       </button>
     </div>
 
