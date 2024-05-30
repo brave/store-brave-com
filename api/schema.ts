@@ -180,7 +180,7 @@ export const lists: Lists = {
               where: { id: item.id.toString() },
               query: `product { slug }`
             });
-            return `/p/${product.slug}/${item.printfulVariantId}`;
+            return `/p/${product.slug}/${item.printfulVariantId}/`;
           }
         })
       }),

@@ -33,7 +33,7 @@
 </script>
 
 <article class="shadow-02 border border-divider-subtle/40 rounded-m p-xl bg-container-background" on:mouseenter={() => shouldPreloadImages = true}>
-  <a href={`${product.firstVariant?.permalink}/`}>
+  <a href={`${product.firstVariant?.permalink}`}>
     <img
       in:fade={{ duration: 200 }}
       src={currentImage}
