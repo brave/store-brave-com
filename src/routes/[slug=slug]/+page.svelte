@@ -8,7 +8,7 @@
 </script>
 
 <article class="page max-w-screen-lg mx-auto">
-  <h1 class="text-heading-h1 mb-2xl">{data.title}</h1>
+  <h1 class="text-heading-h1 mb-2xl [view-transition-name:page-name]">{data.title}</h1>
 
   {@html sanitizedBody}
 </article>

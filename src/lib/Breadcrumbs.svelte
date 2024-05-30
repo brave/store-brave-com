@@ -3,7 +3,7 @@
   export let ref: string | undefined = undefined;
 </script>
 
-<aside data-ref={ref} class="text-small-regular flex items-center gap-x-m pb-m sm:pb-l md:pb-xl">
+<aside data-ref={ref} class="text-small-regular flex items-center gap-x-m pb-m sm:pb-l md:pb-xl [view-transition-name:breadcrumbs]">
   {#each crumbs as crumb, i}
     {#if crumb.link}
       <a class="text-text-secondary hover:text-text-primary transition-colors duration-300" href={crumb.link}>{crumb.label}</a>
