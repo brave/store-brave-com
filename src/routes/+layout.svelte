@@ -1,3 +1,8 @@
+<script context="module" lang="ts">
+  import { setIconBasePath } from "@brave/leo/src/components/icon/icon.svelte";
+  setIconBasePath("/nala-icons");
+</script>
+
 <script lang="ts">
   // TODO: add more info for tracking without javascript in app.html:
   // https://developer.matomo.org/api-reference/tracking-api
