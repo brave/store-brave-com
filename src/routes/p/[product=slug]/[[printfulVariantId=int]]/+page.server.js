@@ -32,7 +32,7 @@ export async function load({ params }) {
   const { product, ...variant } = variants[0];
 
   return {
-    title: product?.name ?? "",
+    title: product?.name ?? '',
     product,
     variant
   };

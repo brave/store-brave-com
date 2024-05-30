@@ -1,9 +1,9 @@
 <script context="module" lang="ts">
   export enum Kind {
-    success = "success",
-    warning = "warning",
-    error = "error"
-  };
+    success = 'success',
+    warning = 'warning',
+    error = 'error'
+  }
 </script>
 
 <script lang="ts">
@@ -43,10 +43,6 @@
 
     background: var(--bg);
     color: var(--text-color);
-
-    .icon path {
-      fill: var(--icon-color);
-    }
 
     &.success {
       --bg: theme('colors.systemfeedback.success-background');

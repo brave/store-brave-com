@@ -38,21 +38,21 @@
 @layer components {
   .link {
     all: unset;
-    color: theme("colors.text.interactive");
+    color: theme('colors.text.interactive');
     cursor: pointer;
     text-decoration: underline;
     &:hover {
-      color: theme("colors.primary.60");
+      color: theme('colors.primary.60');
     }
     &:visited:not(:hover) {
-      color: theme("colors.pink.50");
+      color: theme('colors.pink.50');
     }
     &:focus-visible:not(.disabled) {
-      color: theme("colors.text.interactive");
-      box-shadow: theme("boxShadow.focus-state");
+      color: theme('colors.text.interactive');
+      box-shadow: theme('boxShadow.focus-state');
     }
     &.disabled {
-      color: theme("colors.text.disabled");
+      color: theme('colors.text.disabled');
       pointer-events: none;
     }
   }

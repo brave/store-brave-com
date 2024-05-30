@@ -15,7 +15,7 @@ export const GET = (async () => {
     <description>Community inspired, professionally designed.</description>
     <language>en-us</language>
     <atom:link href="${env.BASE_URL}/feed" rel="self" type="application/rss+xml"/>
-    ${allProducts?.map(product => {
+    ${allProducts?.map((product) => {
       let priceRange = product.priceRange
         ?.map((p) => {
           return p && formatPrice(p);
@@ -26,9 +26,9 @@ export const GET = (async () => {
         <link>${env.BASE_URL}${product.firstVariant?.permalink}</link>
         <guid>${env.BASE_URL}${product.firstVariant?.permalink}</guid>
         <description>${priceRange}</description>
-        ${product.category ? `<category>${product.category?.name}</category>` : ""}
+        ${product.category ? `<category>${product.category?.name}</category>` : ''}
         <media:content url="${product.firstVariant?.details.files.at(-1).preview_url}"/>
-      </item>`
+      </item>`;
     }).join(`
       `)}
   </channel>

@@ -69,7 +69,7 @@
 <svelte:head>
   {#if shouldPreloadImages}
     {#each sizeVariants as sizeVariant}
-      <link rel="preload" href="{sizeVariant.details?.files.at(-1).preview_url}" as="image">
+      <link rel="preload" href={sizeVariant.details?.files.at(-1).preview_url} as="image" />
     {/each}
   {/if}
 </svelte:head>

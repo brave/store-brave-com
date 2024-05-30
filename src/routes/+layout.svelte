@@ -1,6 +1,6 @@
 <script context="module" lang="ts">
-  import { setIconBasePath } from "@brave/leo/src/components/icon/icon.svelte";
-  setIconBasePath("/nala-icons");
+  import { setIconBasePath } from '@brave/leo/src/components/icon/icon.svelte';
+  setIconBasePath('/nala-icons');
 
   export const viewTransition = writable(null);
 </script>
@@ -21,18 +21,19 @@
   import Toast, { Kind as ToastKind } from '$lib/Toast.svelte';
   import Navigation from '$lib/Navigation.svelte';
 
-  import '@fontsource/poppins/400.css'
-  import '@fontsource/poppins/500.css'
-  import '@fontsource/poppins/600.css'
-  import '@fontsource-variable/inter'
+  import '@fontsource/poppins/400.css';
+  import '@fontsource/poppins/500.css';
+  import '@fontsource/poppins/600.css';
+  import '@fontsource-variable/inter';
   import '../app.scss';
 
   let matomoPolicy;
   if (browser) {
-    // @ts-ignore
-    if (typeof window.trustedTypes == 'undefined') window.trustedTypes={createPolicy:(n, rules) => rules};
+    if (typeof window.trustedTypes == 'undefined')
+      // @ts-ignore
+      window.trustedTypes = { createPolicy: (n, rules) => rules };
 
-    const matomoOrigin = "https://analytics.brave.com";
+    const matomoOrigin = 'https://analytics.brave.com';
     // @ts-ignore
     matomoPolicy = trustedTypes.createPolicy('matomo-policy', {
       createScriptURL: (url: string) => {
@@ -47,7 +48,7 @@
 
     // @ts-ignore
     trustedTypes.createPolicy('default', {
-      createHTML: (dirty: string) => DOMPurify.sanitize(dirty, {RETURN_TRUSTED_TYPE: true})
+      createHTML: (dirty: string) => DOMPurify.sanitize(dirty, { RETURN_TRUSTED_TYPE: true })
     });
   }
 
@@ -180,13 +181,26 @@
   data-theme="dark"
   class="text-text-primary bg-page-background py-4xl border-t border-divider-subtle/40 [view-transition-name:footer]"
 >
-  <div class="max-sm:container max-sm:mx-auto xl:container xl:mx-auto flex max-md:flex-col md:items-center px-2xl gap-l">
+  <div
+    class="max-sm:container max-sm:mx-auto xl:container xl:mx-auto flex max-md:flex-col md:items-center px-2xl gap-l"
+  >
     <div class="md:ml-auto flex flex-col gap-m text-large-regular">
       <a class="link" href="/faq/">FAQ</a>
       <a class="link" href="/refunds-and-returns/">Refunds & Returns</a>
-      <p class="not-italic text-text-secondary">Email: <a class="link" href="mailto:merch@brave.com" target="_blank" rel="noreferrer noopener">merch@brave.com</a></p>
+      <p class="not-italic text-text-secondary">
+        Email: <a
+          class="link"
+          href="mailto:merch@brave.com"
+          target="_blank"
+          rel="noreferrer noopener">merch@brave.com</a
+        >
+      </p>
     </div>
-    <p class="text-x-small-regular xs:text-small-regular md:text-large-regular text-text-secondary md:order-first">© 2015 - {new Date().getFullYear()} Brave Software, Inc. | All rights reserved</p>
+    <p
+      class="text-x-small-regular xs:text-small-regular md:text-large-regular text-text-secondary md:order-first"
+    >
+      © 2015 - {new Date().getFullYear()} Brave Software, Inc. | All rights reserved
+    </p>
   </div>
 </footer>
 

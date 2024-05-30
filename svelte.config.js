@@ -1,7 +1,7 @@
 import adapter from '@sveltejs/adapter-node';
 import preprocess from 'svelte-preprocess';
 import sass from 'sass';
-import { readdirSync } from "fs";
+import { readdirSync } from 'fs';
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
@@ -15,12 +15,12 @@ const config = {
   kit: {
     adapter: adapter(),
     prerender: {
-      entries: readdirSync("./src/pages").map(v => `/${v.replace(".md", "")}`)
+      entries: readdirSync('./src/pages').map((v) => `/${v.replace('.md', '')}`)
     },
     csp: {
       directives: {
         'require-trusted-types-for': ['script'],
-        "trusted-types": ['matomo-policy', 'dompurify', 'default'],
+        'trusted-types': ['matomo-policy', 'dompurify', 'default'],
         'default-src': ['none'],
         'frame-ancestors': ['none'],
         'base-uri': ['none'],

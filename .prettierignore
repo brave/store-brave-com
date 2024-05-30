@@ -5,7 +5,11 @@ node_modules
 /package
 .env
 .env.*
-!.env.example
+*.generated.*
+src/lib/graphql/*
+!src/lib/graphql/*.graphql
+api/.keystone/**/*
+api/schema.graphql
 
 # Ignore files for PNPM, NPM and YARN
 pnpm-lock.yaml

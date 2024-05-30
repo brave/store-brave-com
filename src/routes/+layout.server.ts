@@ -5,6 +5,6 @@ export async function load() {
   const { categories } = await sdk.Categories();
 
   return {
-    categories,
+    categories
   };
 }
