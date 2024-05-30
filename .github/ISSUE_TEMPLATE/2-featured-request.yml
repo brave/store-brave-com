@@ -1,7 +1,7 @@
 name: Feature request
 description: Suggest something that you think would improve the store.
 labels:
- - feature-request
+  - feature-request
 body:
   - type: textarea
     id: problem

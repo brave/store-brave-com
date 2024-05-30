@@ -5,7 +5,7 @@ import type { PageServerLoad } from './$types';
 export const load: PageServerLoad = async function load({ params, url }) {
   const pagination = params.pagination.match(/^page\/(?<pageNum>\d+)/);
 
-  const basePath = url.pathname.split("page/")[0];
+  const basePath = url.pathname.split('page/')[0];
 
   if (params.pagination === 'page/' && !pagination) {
     redirect(307, basePath);
@@ -15,7 +15,7 @@ export const load: PageServerLoad = async function load({ params, url }) {
 
   const limit = 9;
   const page = parseInt((pagination && pagination?.groups?.pageNum) ?? '') || 1;
-  
+
   if (pagination && page === 1) {
     redirect(307, basePath);
   }
@@ -45,7 +45,7 @@ export const load: PageServerLoad = async function load({ params, url }) {
   }
 
   return {
-    title: category.name ?? "",
+    title: category.name ?? '',
     category,
     products,
     productsCount,

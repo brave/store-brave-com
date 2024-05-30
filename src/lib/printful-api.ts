@@ -1,7 +1,7 @@
 import { env } from '$env/dynamic/private';
 import { error } from '@sveltejs/kit';
 
-export async function printfulApi (resourcePath: string, options?: RequestInit) {
+export async function printfulApi(resourcePath: string, options?: RequestInit) {
   const url = `${env.PRINTFUL_BASE_URL}${resourcePath}`;
   console.log(`Calling... ${url}`);
 

@@ -7,9 +7,9 @@ export const prerender = true;
 
 const BASE_DIR = './src/pages';
 
-export const load: PageServerLoad = async ({ params }) => {  
+export const load: PageServerLoad = async ({ params }) => {
   const pageMap = (await readdir(BASE_DIR)).reduce((pageAggregator, page) => {
-    if (page.endsWith(".md")) {
+    if (page.endsWith('.md')) {
       const slug = page.replace('.md', '');
       return new Map([...pageAggregator, [slug, page]]);
     } else {
@@ -18,10 +18,10 @@ export const load: PageServerLoad = async ({ params }) => {
   }, new Map());
 
   if (!pageMap.has(params.slug)) {
-    error(404, "Page not found.");
+    error(404, 'Page not found.');
   }
 
-  const pageData = await readFile(`${BASE_DIR}/${pageMap.get(params.slug)}`, "utf-8");
+  const pageData = await readFile(`${BASE_DIR}/${pageMap.get(params.slug)}`, 'utf-8');
   const { metadata, body } = extract_frontmatter(pageData);
 
   return {
@@ -35,15 +35,15 @@ export const load: PageServerLoad = async ({ params }) => {
  * https://github.com/sveltejs/kit/blob/master/sites/kit.svelte.dev/src/lib/docs/server/markdown.js#L174-L187
  */
 function extract_frontmatter(markdown: string) {
-	const match = /---\r?\n([\s\S]+?)\r?\n---/.exec(markdown) || ["", markdown];
-	const frontmatter = match[1]
-	const body = markdown.slice(match[0].length);
+  const match = /---\r?\n([\s\S]+?)\r?\n---/.exec(markdown) || ['', markdown];
+  const frontmatter = match[1];
+  const body = markdown.slice(match[0].length);
 
-	const metadata: Record<string, string> = {};
-	frontmatter.split(/\r?\n/).forEach((pair) => {
-		const i = pair.indexOf(':');
-		metadata[pair.slice(0, i).trim()] = pair.slice(i + 1).trim();
-	});
+  const metadata: Record<string, string> = {};
+  frontmatter.split(/\r?\n/).forEach((pair) => {
+    const i = pair.indexOf(':');
+    metadata[pair.slice(0, i).trim()] = pair.slice(i + 1).trim();
+  });
 
-	return { metadata, body };
+  return { metadata, body };
 }

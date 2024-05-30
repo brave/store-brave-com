@@ -1,4 +1,4 @@
 <script>
 </script>
 
-<input type="text">
+<input type="text" />

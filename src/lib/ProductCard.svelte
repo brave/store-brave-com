@@ -44,9 +44,9 @@
         productImage && (productImage.style.viewTransitionName = '');
       });
     }
-  })
+  });
 
-  onNavigate((navigation) => { 
+  onNavigate((navigation) => {
     if (product.slug === navigation.to?.params?.product) {
       // @ts-ignore
       productImage.style.viewTransitionName = 'product-image';

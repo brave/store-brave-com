@@ -5,7 +5,7 @@ export async function load() {
   const { products } = await sdk.FeaturedProducts();
 
   return {
-    title: "Home",
+    title: 'Home',
     featuredProducts: products
   };
 }
