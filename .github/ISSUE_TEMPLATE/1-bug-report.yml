@@ -32,8 +32,8 @@ body:
           - **OS**: (e.g. iOS 16.3.1, macOS 13.2.1, Android 13, etc.)
           - **Browser**: (e.g. Brave, Firefox, Safari)
       value: |
-          - OS:
-          - Browser:
+        - OS:
+        - Browser:
       placeholder: Platform details
     validations:
       required: true
