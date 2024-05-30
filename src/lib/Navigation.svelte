@@ -11,6 +11,7 @@
 
   const pages = [
     { name: 'Home', permalink: '/' },
+    { name: 'Products', permalink: '/categories/all/', isActive: () => $currentPage.url.pathname.startsWith("/categories/") },
     { name: 'Privacy', permalink: 'https://brave.com/privacy/website/#brave-merch-store', newTab: true }
   ];
 
@@ -43,7 +44,7 @@
   <nav class="flex gap-x-3xl">
     <ul class="hidden md:flex items-center gap-x-3xl">
       {#each pages as page}
-        <li class="nav-item after:content-[''] h-full flex items-center" class:active={page.permalink === $currentPage.url.pathname}><a class="nav-link" href={page.permalink} target={page.newTab ? "_blank" : null}>{page.name}</a></li>
+        <li class="nav-item after:content-[''] h-full flex items-center" class:active={page.isActive?.() || page.permalink === $currentPage.url.pathname}><a class="nav-link" href={page.permalink} target={page.newTab ? "_blank" : null}>{page.name}</a></li>
       {/each}
     </ul>
     <span class="nav-item after:content-none md:after:content-[''] flex items-center" class:active={"/cart/" === $currentPage.url.pathname}>
@@ -110,6 +111,7 @@
       color: theme('colors.text.interactive');
 
       &::after {
+        view-transition-name: active-page;
         display: block;
         width: 4px;
         height: 150%;

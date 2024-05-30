@@ -30,8 +30,9 @@
   <Breadcrumbs crumbs={breadcrumbs} />
 {/if}
 
-<h1 class="text-heading-h1 pb-2xl">{category?.name}</h1>
-<div class="flex flex-wrap gap-m pb-4xl">
+<h1 class="text-heading-h1 pb-2xl [view-transition-name:page-name]">{category?.name}</h1>
+
+<div class="flex flex-wrap gap-m pb-4xl [view-transition-name:category-nav]">
   {#each [{ name: "All products", slug: "all", productsCount: 1 }, ...(categories ?? [])] as c}
     {@const cPermalink = `/categories/${c.slug}/`}
     {#if c.productsCount}
