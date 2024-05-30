@@ -14,7 +14,7 @@
 </script>
 
 <div class="max-w-xl mx-auto">
-  <h1 class="text-[50px] sm:text-[80px] font-semibold pb-m">Congrats!</h1>
+  <h1 class="text-[50px] sm:text-[80px] font-semibold pb-m [view-transition-name:page-name]">Congrats!</h1>
   <p class="text-[22px] font-medium pb-5xl">Your order should be shipping soon!</p>
 
   <h2 class="text-[22px] font-medium pb-xl">Your order</h2>

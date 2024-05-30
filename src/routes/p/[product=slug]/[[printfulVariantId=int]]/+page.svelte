@@ -62,7 +62,7 @@
   <Breadcrumbs ref="product-layout__breadcrumbs" crumbs={breadcrumbs} />
 
   <img
-    class="w-full shadow-02 rounded-xs max-w-screen-xs product-layout__image mx-auto md:mx-0"
+    class="w-full shadow-02 rounded-xs max-w-screen-xs product-layout__image mx-auto md:mx-0 [view-transition-name:product-image]"
     src={currentImage}
     alt="{product?.name} product image"
   />
