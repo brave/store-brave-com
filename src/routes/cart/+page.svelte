@@ -50,7 +50,7 @@
     <Button href="/categories/all/" size="large">Browse products</Button>
   </div>
 {:else}
-  <h1 class="text-heading-h1 pb-2xl">Shopping cart</h1>
+  <h1 class="text-heading-h1 pb-2xl [view-transition-name:page-name]">Shopping cart</h1>
 
   {#if form?.errors?.cartEmpty}
     <div class="flex flex-col justify-center items-center pt-[8vh]">

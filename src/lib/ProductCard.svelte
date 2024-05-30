@@ -1,8 +1,9 @@
 <script lang="ts">
-  import { fade } from 'svelte/transition';
   import type { ProductSummaryFragment } from './graphql/index.generated';
-  import { formatPrice } from './utils';
+  import { formatPrice, isInViewport } from './utils';
   import ColorPicker from './ColorPicker.svelte';
+  import { afterNavigate, onNavigate } from '$app/navigation';
+  import { viewTransition } from '../routes/+layout.svelte';
 
   export let product: ProductSummaryFragment;
   $: colorVariants =
@@ -30,15 +31,44 @@
       currentImage = e.detail.colorVariant?.details.files.at(-1).preview_url;
     }
   };
+
+  let productImage: HTMLImageElement;
+  afterNavigate((navigation) => {
+    // @ts-ignore
+    if (isInViewport(productImage) && product.slug === navigation.from?.params?.product) {
+      // @ts-ignore
+      productImage.style.viewTransitionName = 'product-image';
+      // @ts-ignore
+      $viewTransition?.finished.finally(() => {
+        // @ts-ignore
+        productImage && (productImage.style.viewTransitionName = '');
+      });
+    }
+  })
+
+  onNavigate((navigation) => { 
+    if (product.slug === navigation.to?.params?.product) {
+      // @ts-ignore
+      productImage.style.viewTransitionName = 'product-image';
+      // @ts-ignore
+      $viewTransition?.finished.finally(() => {
+        // @ts-ignore
+        productImage && (productImage.style.viewTransitionName = '');
+      });
+    }
+  });
 </script>
 
-<article class="shadow-02 border border-divider-subtle/40 rounded-m p-xl bg-container-background" on:mouseenter={() => shouldPreloadImages = true}>
+<article
+  class="shadow-02 border border-divider-subtle/40 rounded-m p-xl bg-container-background"
+  on:mouseenter={() => (shouldPreloadImages = true)}
+>
   <a href={`${product.firstVariant?.permalink}`}>
     <img
-      in:fade={{ duration: 200 }}
       src={currentImage}
       alt="Thumbnail for {product.name}"
       class="js-loading aspect-square w-full"
+      bind:this={productImage}
     />
     <div class="flex flex-col pt-s">
       <h2 class="text-heading-h4 max-xs:text-center">
