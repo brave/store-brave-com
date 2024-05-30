@@ -2,7 +2,15 @@ import { list, graphql } from '@keystone-6/core';
 import slugify from 'slugify';
 
 import { allowAll } from '@keystone-6/core/access';
-import { text, relationship, password, json, virtual, checkbox, timestamp } from '@keystone-6/core/fields';
+import {
+  text,
+  relationship,
+  password,
+  json,
+  virtual,
+  checkbox,
+  timestamp
+} from '@keystone-6/core/fields';
 
 import { Lists, Context } from '.keystone/types';
 import { findAndDownloadImages } from './utils';
@@ -100,25 +108,26 @@ export const lists: Lists = {
           itemView: { fieldMode: 'hidden' },
           listView: { fieldMode: 'hidden' }
         },
-        field: (lists) => graphql.field({
-          type: graphql.list(graphql.Float),
-          async resolve(item, args, _context) {
-            const context = _context as Context;
-            const { variants } = await context.query.Product.findOne({
-              where: { id: item.id.toString() },
-              query: `variants { details }`
-            });
+        field: (lists) =>
+          graphql.field({
+            type: graphql.list(graphql.Float),
+            async resolve(item, args, _context) {
+              const context = _context as Context;
+              const { variants } = await context.query.Product.findOne({
+                where: { id: item.id.toString() },
+                query: `variants { details }`
+              });
 
-            const variantPrices = variants.map((v: Lists.Variant.Item) => {
-              const details = v.details as any;
-              return parseFloat(details.price);
-            });
+              const variantPrices = variants.map((v: Lists.Variant.Item) => {
+                const details = v.details as any;
+                return parseFloat(details.price);
+              });
 
-            const range = new Set([Math.min(...variantPrices), Math.max(...variantPrices)]);
+              const range = new Set([Math.min(...variantPrices), Math.max(...variantPrices)]);
 
-            return Array.from(range);
-          }
-        })
+              return Array.from(range);
+            }
+          })
       }),
       firstVariant: virtual({
         ui: {
@@ -161,7 +170,7 @@ export const lists: Lists = {
             where: { product: { id: { equals: item.id } } }
           });
           await context.query.Variant.deleteMany({
-            where: variants.map(v => ({ id: v.id }))
+            where: variants.map((v) => ({ id: v.id }))
           });
         }
       }
