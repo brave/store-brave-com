@@ -27,6 +27,6 @@
     "typescript": "5.3.3"
   },
   "overrides": {
-    "next": "14.2.3"
+    "next": "14.2.4"
   }
 }
