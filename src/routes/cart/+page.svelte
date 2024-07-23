@@ -9,7 +9,8 @@
   import Icon from '@brave/leo/src/components/icon/icon.svelte';
   import QuantitySelector from '$lib/QuantitySelector.svelte';
   import { slide } from 'svelte/transition';
-  import type { PageData } from './$types';
+  import { enhance } from '$app/forms';
+  import type { ActionData, PageData } from './$types';
 
   const { cartStore, removeFromCart, updateQuantity }: any = getContext(contextKey);
 
@@ -26,7 +27,7 @@
 
   export let data: PageData;
   $: ({ countries, statesByCountry, countryCallingCodes } = data);
-  export let form: import('./$types').ActionData;
+  export let form: ActionData;
 
   let showShippingAddress = form?.errors?.shippingAddress?.hasErrors;
   let shippingCountryChoice: string = form?.values?.country_code || '';
@@ -74,6 +75,8 @@
     method="post"
     class="grid max-lg:grid-rows-[1fr_auto] lg:grid-cols-[3fr_2fr] gap-7xl h-[stretch]"
   >
+    <!-- Disable submit on 'Enter' since user needs to choose between payment options -->
+    <button type="submit" disabled style="display: none" aria-hidden="true"></button>
     <section id="cart-items">
       {#each $cartStore as { variant, quantity }, i (variant.id)}
         <article
@@ -300,7 +303,7 @@
               Enter shipping address
             </Button>
           {:else}
-            <Button kind="outline" type="submit">
+            <Button kind="outline" type="submit" formaction="?/purchaseCreditCard">
               <Icon
                 --leo-icon-size="var(--leo-icon-xl)"
                 --leo-icon-height="100%"
@@ -309,7 +312,7 @@
               />
               Credit card
             </Button>
-            <Button kind="outline" type="submit">
+            <Button kind="outline" type="submit" formaction="?/purchaseCrypto">
               <Icon
                 --leo-icon-size="var(--leo-icon-xl)"
                 --leo-icon-height="100%"
