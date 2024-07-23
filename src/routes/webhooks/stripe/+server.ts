@@ -1,7 +1,7 @@
 import type { RequestHandler } from './$types';
 import type { Stripe } from 'stripe';
 import { env } from '$env/dynamic/private';
-import { stripe } from '$lib/stripe-api';
+import { stripe } from '$lib/payment-processing/providers/stripe';
 import * as printfulApi from '$lib/printful-api';
 import { CustomError, decrypt, blockedCountryCodes, ValidationError } from '$lib/utils';
 import { sdk } from '$lib/graphql/sdk';

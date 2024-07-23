@@ -1,0 +1,1 @@
+export const CANCELED_SESSION_QUERY_PARAM = 'session_id';
