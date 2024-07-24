@@ -16,9 +16,9 @@ export type ShippingAddress = {
 };
 
 export type EncryptedShippingAddress = {
-  encryptionKeyId: string,
-  encryptedData: string
-}
+  encryptionKeyId: string;
+  encryptedData: string;
+};
 
 export interface StrongVariant extends Omit<Variant, 'details'> {
   printfulVariantId: string;
@@ -35,4 +35,8 @@ export type HydratedCartItem = StrongVariant & {
   quantity: number;
 };
 
-export type ProviderDataAdapter<ProviderCheckoutData> = (items: HydratedCartItem[], encryptedShippingData: EncryptedShippingAddress, shippingRates: ShippingRate[]) => ProviderCheckoutData
+export type ProviderDataAdapter<ProviderCheckoutData> = (
+  items: HydratedCartItem[],
+  encryptedShippingData: EncryptedShippingAddress,
+  shippingRates: ShippingRate[]
+) => ProviderCheckoutData;

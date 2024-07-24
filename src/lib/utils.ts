@@ -26,25 +26,15 @@ export const sleep = (seconds: number): Promise<void> => {
   });
 };
 
-export class CustomError extends Error {
+export class ValidationError extends Error {
   name: string;
   data?: Record<string, unknown>;
 
   constructor(message: string, data?: Record<string, unknown>) {
     super(message);
-    this.name = 'CustomError';
+    this.name = 'ValidationError';
 
     if (data) this.data = data;
-  }
-}
-
-export class ValidationError {
-  name: string;
-  message: string;
-
-  constructor(message: string) {
-    this.name = 'ValidationError';
-    this.message = message;
   }
 }
 

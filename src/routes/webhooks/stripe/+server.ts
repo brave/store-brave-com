@@ -3,7 +3,7 @@ import type { Stripe } from 'stripe';
 import { env } from '$env/dynamic/private';
 import { stripe } from '$lib/payment-processing/providers/stripe';
 import * as printfulApi from '$lib/printful-api';
-import { CustomError, decrypt, blockedCountryCodes, ValidationError } from '$lib/utils';
+import { decrypt, blockedCountryCodes, ValidationError } from '$lib/utils';
 import { sdk } from '$lib/graphql/sdk';
 
 import * as Sentry from '@sentry/node';
@@ -74,7 +74,7 @@ async function fulfillOrder(session: Stripe.Checkout.Session): Promise<void> {
     if (encryptedShippingData && shippingDataKey && shippingDataKey.key) {
       shippingData = decrypt(encryptedShippingData, shippingDataKey.key);
     } else {
-      throw new CustomError('Could not find encrypted shippingData or shippingDataKey.');
+      throw new Error('Could not find encrypted shippingData or shippingDataKey.');
     }
 
     const newOrder = {
