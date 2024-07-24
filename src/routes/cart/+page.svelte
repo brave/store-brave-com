@@ -1,16 +1,17 @@
 <script lang="ts">
-  import { getContext } from 'svelte';
-  import examples from 'libphonenumber-js/mobile/examples';
-  import { getExampleNumber } from 'libphonenumber-js/max';
-  import type { CountryCode } from 'libphonenumber-js/max';
   import { contextKey } from '$lib/cartStore';
+  import QuantitySelector from '$lib/QuantitySelector.svelte';
   import { formatPrice } from '$lib/utils';
+  import type { IconName } from '@brave/leo/icons/meta';
   import Button from '@brave/leo/src/components/button/button.svelte';
   import Icon from '@brave/leo/src/components/icon/icon.svelte';
-  import QuantitySelector from '$lib/QuantitySelector.svelte';
+  import type { CountryCode } from 'libphonenumber-js/max';
+  import { getExampleNumber } from 'libphonenumber-js/max';
+  import examples from 'libphonenumber-js/mobile/examples';
+  import { getContext } from 'svelte';
   import { slide } from 'svelte/transition';
+  import type { ActionData, PageData, SubmitFunction } from './$types';
   import { enhance } from '$app/forms';
-  import type { ActionData, PageData } from './$types';
 
   const { cartStore, removeFromCart, updateQuantity }: any = getContext(contextKey);
 
@@ -28,6 +29,39 @@
   export let data: PageData;
   $: ({ countries, statesByCountry, countryCallingCodes } = data);
   export let form: ActionData;
+
+  const submitFunction: SubmitFunction = ({ submitter }) => {
+    const id = submitter.id as Provider;
+    submitButtons[id].isLoading = true;
+
+    return ({ update }) => {
+      submitButtons[id].isLoading = true;
+      update();
+    };
+  };
+
+  const providers = ['stripe', 'radom'] as const;
+  type Provider = (typeof providers)[number];
+  type SubmitButton = {
+    text: string;
+    action: string;
+    icon: IconName;
+    isLoading: boolean;
+  };
+  const submitButtons: Record<Provider, SubmitButton> = {
+    stripe: {
+      text: 'Credit card',
+      action: '?/purchaseCreditCard',
+      icon: 'payment-stripe-color',
+      isLoading: false
+    },
+    radom: {
+      text: 'Crypto',
+      action: '?/purchaseCrypto',
+      icon: 'payment-radom-color',
+      isLoading: false
+    }
+  };
 
   let showShippingAddress = form?.errors?.shippingAddress?.hasErrors;
   let shippingCountryChoice: string = form?.values?.country_code || '';
@@ -112,7 +146,7 @@
             </div>
           </div>
           <img
-            class="order-first rounded-m w-full max-w-sm sm:max-w-[150px] shadow-gray-20 shadow-04"
+            class="order-first rounded-m w-full max-w-sm sm:max-w-[150px] shadow-gray-20 drop-shadow-02"
             src={variant.details.files.at(-1).preview_url}
             alt="Thumbnail for {variant.details.name}"
           />
@@ -124,7 +158,7 @@
 
     <section id="total" class="cart-total">
       <div
-        class="shadow-04 lg:rounded-m p-2xl sticky top-[20px] bg-container-background border border-divider-subtle/40"
+        class="shadow-02 lg:rounded-m p-2xl sticky top-[20px] bg-container-background border border-divider-subtle/40"
       >
         <button
           on:click={() => (showShippingAddress = !showShippingAddress)}
@@ -303,24 +337,23 @@
               Enter shipping address
             </Button>
           {:else}
-            <Button kind="outline" type="submit" formaction="?/purchaseCreditCard">
-              <Icon
-                --leo-icon-size="var(--leo-icon-xl)"
-                --leo-icon-height="100%"
-                name="payment-stripe-color"
-                slot="icon-before"
-              />
-              Credit card
-            </Button>
-            <Button kind="outline" type="submit" formaction="?/purchaseCrypto">
-              <Icon
-                --leo-icon-size="var(--leo-icon-xl)"
-                --leo-icon-height="100%"
-                name="payment-radom-color"
-                slot="icon-before"
-              />
-              Crypto
-            </Button>
+            {#each Object.entries(submitButtons) as [name, submitButton]}
+              <Button
+                id={name}
+                kind="outline"
+                type="submit"
+                formaction={submitButton.action}
+                isLoading={submitButton.isLoading}
+              >
+                <Icon
+                  --leo-icon-size="var(--leo-icon-xl)"
+                  --leo-icon-height="100%"
+                  name={submitButton.icon}
+                  slot="icon-before"
+                />
+                {submitButton.text}
+              </Button>
+            {/each}
           {/if}
         </div>
       </div>

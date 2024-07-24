@@ -7,11 +7,11 @@ import {
 import { createRadomCheckoutSession, radomAdapter } from '$lib/payment-processing/providers/radom';
 import { stripe, stripeAdapter } from '$lib/payment-processing/providers/stripe';
 import { printfulApi } from '$lib/printful-api';
-import { blockedCountryCodes, CustomError } from '$lib/utils';
+import { blockedCountryCodes, sleep } from '$lib/utils';
 import { fail, redirect } from '@sveltejs/kit';
 import type { CountryCallingCode, CountryCode } from 'libphonenumber-js';
 import { getCountryCallingCode, isSupportedCountry } from 'libphonenumber-js/max';
-import { parse } from 'qs';
+import { parse, stringify } from 'qs';
 import type { Actions, PageServerLoad } from './$types';
 
 export type CartRequestBody = {
@@ -105,13 +105,19 @@ export const load: PageServerLoad = async ({ url }) => {
 
 export const actions: Actions = {
   purchaseCrypto: async ({ request }) => {
-    const requestBody = parse(await request.text()) as unknown as CartRequestBody;
+    /**
+     * NOTE: this bit of craziness is because SvelteKit enhanced forms sends as FormData,
+     * which doesn't play nice with complex form data (e.g. items[0][quantity], etc.)
+     */
+    const data = await request.text();
+    return console.log(data)
+    const requestBody = parse(stringify(Object.fromEntries(data))) as unknown as CartRequestBody;
 
     let session;
     try {
       const checkoutSessionData = await formatCheckoutSessionData(requestBody, radomAdapter);
       session = await createRadomCheckoutSession(checkoutSessionData);
-    } catch (e: typeof CustomError | any) {
+    } catch (e: any) {
       console.log(`Error creating checkout session: ${e.message}`);
       return handlePurchaseErrors(e);
     }
@@ -121,13 +127,18 @@ export const actions: Actions = {
     }
   },
   purchaseCreditCard: async ({ request }) => {
-    const requestBody = parse(await request.text()) as unknown as CartRequestBody;
+    /**
+     * NOTE: this bit of craziness is because SvelteKit enhanced forms sends as FormData,
+     * which doesn't play nice with complex form data (e.g. items[0][quantity], etc.)
+     */
+    const data = await request.formData();
+    const requestBody = parse(stringify(Object.fromEntries(data))) as unknown as CartRequestBody;
 
     let session;
     try {
       const checkoutSessionData = await formatCheckoutSessionData(requestBody, stripeAdapter);
       session = await stripe.checkout.sessions.create(checkoutSessionData);
-    } catch (e: typeof CustomError | any) {
+    } catch (e) {
       console.log(`Error creating checkout session: ${e.message}`);
       return handlePurchaseErrors(e);
     }
