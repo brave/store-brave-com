@@ -1,6 +1,12 @@
 import { sdk } from '$lib/graphql/sdk';
 import { printfulApi, type PrintfulShippingRate } from '$lib/printful-api';
-import { blockedCountryCodes, CustomError, encrypt, formatDate, generateKey } from '$lib/utils';
+import {
+  blockedCountryCodes,
+  encrypt,
+  formatDate,
+  generateKey,
+  ValidationError
+} from '$lib/utils';
 import type { CountryCode } from 'libphonenumber-js';
 import { isValidPhoneNumber, parsePhoneNumber } from 'libphonenumber-js/max';
 import type { CartRequestBody } from '../../routes/cart/+page.server';
@@ -72,7 +78,10 @@ const validateShippingAddress = (address: ShippingAddress) => {
   }
 
   if (errors.shippingAddress?.hasErrors) {
-    throw new CustomError(CreateCheckoutSessionError.INVALID_SHIPPING_ADDRESS, { errors, values: address });
+    throw new ValidationError(CreateCheckoutSessionError.INVALID_SHIPPING_ADDRESS, {
+      errors,
+      values: address
+    });
   }
 };
 
@@ -192,7 +201,7 @@ const encryptShippingData = async (
   });
 
   if (!shippingDataKey?.id) {
-    throw new CustomError(CreateCheckoutSessionError.SHIPPING_DATA_KEY_DOES_NOT_EXIST);
+    throw new Error(CreateCheckoutSessionError.SHIPPING_DATA_KEY_DOES_NOT_EXIST);
   }
 
   return {
@@ -208,16 +217,12 @@ export async function formatCheckoutSessionData<ProviderCheckoutData>(
   let { items, shippingAddress } = requestBody;
 
   if (!items?.length) {
-    throw new CustomError(CreateCheckoutSessionError.EMPTY_CART);
+    throw new ValidationError(CreateCheckoutSessionError.EMPTY_CART);
   }
 
   const cleanedShippingAddress = cleanShippingAddress(shippingAddress);
 
-  try {
-    validateShippingAddress(cleanedShippingAddress);
-  } catch (e) {
-    throw e;
-  }
+  validateShippingAddress(cleanedShippingAddress);
 
   const recipientInformation = formatRecipientInfo(cleanedShippingAddress);
 
@@ -225,15 +230,7 @@ export async function formatCheckoutSessionData<ProviderCheckoutData>(
 
   const shippingRates = await getShippingRates(hydratedItems, recipientInformation);
 
-  try {
-    const encryptedShippingData = await encryptShippingData(recipientInformation);
+  const encryptedShippingData = await encryptShippingData(recipientInformation);
 
-    return providerAdapter(
-      hydratedItems,
-      encryptedShippingData,
-      shippingRates
-    ) as ProviderCheckoutData;
-  } catch (e: any) {
-    throw e;
-  }
+  return providerAdapter(hydratedItems, encryptedShippingData, shippingRates);
 }
