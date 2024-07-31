@@ -1,18 +1,27 @@
 import { sdk } from '$lib/graphql/sdk';
 import type { ShippingAddress } from '$lib/payment-processing';
+import { initCheckoutSession } from '$lib/payment-processing/checkoutSession';
 import {
-  CreateCheckoutSessionError,
-  formatCheckoutSessionData
-} from '$lib/payment-processing/checkoutSession';
-import { createRadomCheckoutSession, radomAdapter } from '$lib/payment-processing/providers/radom';
-import { stripe, stripeAdapter } from '$lib/payment-processing/providers/stripe';
+  CANCELED_SESSION_QUERY_PARAM,
+  PROVIDER_QUERY_PARAM
+} from '$lib/payment-processing/constants';
+import {
+  createRadomCheckoutSession,
+  PROVIDER_NAME as RADOM_PROVIDER_NAME,
+  radomAdapter,
+  radomApi
+} from '$lib/payment-processing/providers/radom';
+import {
+  stripe,
+  PROVIDER_NAME as STRIPE_PROVIDER_NAME,
+  stripeAdapter
+} from '$lib/payment-processing/providers/stripe';
 import { printfulApi } from '$lib/printful-api';
-import { blockedCountryCodes, sleep } from '$lib/utils';
-import { fail, redirect } from '@sveltejs/kit';
+import { blockedCountryCodes } from '$lib/utils';
 import type { CountryCallingCode, CountryCode } from 'libphonenumber-js';
 import { getCountryCallingCode, isSupportedCountry } from 'libphonenumber-js/max';
-import { parse, stringify } from 'qs';
 import type { Actions, PageServerLoad } from './$types';
+import { redirect } from '@sveltejs/kit';
 
 export type CartRequestBody = {
   items: Array<{
@@ -45,18 +54,30 @@ function sortStateCountryAlphabetically(a: StateCountry, b: StateCountry) {
  * in the event that the user cancels the Stripe checkout
  * session by clicking 'Back' on the checkout page.
  */
-const canceledSessionQueryParam = 'session_id';
-
 export const load: PageServerLoad = async ({ url }) => {
   /**
    * If this page load is from a canceled session then delete
    * the shipping data key from DB.
    */
-  const canceledSession = url.searchParams.get(canceledSessionQueryParam);
+  const canceledSession = url.searchParams.get(CANCELED_SESSION_QUERY_PARAM);
+  const provider = url.searchParams.get(PROVIDER_QUERY_PARAM);
+
   if (canceledSession) {
     try {
-      const session = await stripe.checkout.sessions.retrieve(canceledSession);
-      await sdk.DeleteShippingDataKey({ id: session.metadata?.keyId });
+      if (provider === STRIPE_PROVIDER_NAME) {
+        const session = await stripe.checkout.sessions.retrieve(canceledSession);
+        if (session.metadata?.keyId) {
+          await sdk.DeleteShippingDataKey({ id: session.metadata?.keyId });
+        }
+      } else if (provider === RADOM_PROVIDER_NAME) {
+        const session = await radomApi<{ metadata: [{ key: string; value: string }] }>(
+          `/checkout_session/${canceledSession}`
+        );
+        const keyId = session.metadata.find((v) => v.key === 'shippingDataEncryptionKeyId')?.value;
+        if (keyId) {
+          await sdk.DeleteShippingDataKey({ id: keyId });
+        }
+      }
     } catch (e: any) {
       console.log(`Could not delete shipping data key due to error: ${e.message}`);
     }
@@ -105,57 +126,17 @@ export const load: PageServerLoad = async ({ url }) => {
 
 export const actions: Actions = {
   purchaseCrypto: async ({ request }) => {
-    /**
-     * NOTE: this bit of craziness is because SvelteKit enhanced forms sends as FormData,
-     * which doesn't play nice with complex form data (e.g. items[0][quantity], etc.)
-     */
-    const data = await request.text();
-    return console.log(data)
-    const requestBody = parse(stringify(Object.fromEntries(data))) as unknown as CartRequestBody;
-
-    let session;
-    try {
-      const checkoutSessionData = await formatCheckoutSessionData(requestBody, radomAdapter);
-      session = await createRadomCheckoutSession(checkoutSessionData);
-    } catch (e: any) {
-      console.log(`Error creating checkout session: ${e.message}`);
-      return handlePurchaseErrors(e);
-    }
-
-    if (session.url) {
-      redirect(303, session.url);
-    }
+    return initCheckoutSession(request, radomAdapter, createRadomCheckoutSession);
   },
   purchaseCreditCard: async ({ request }) => {
     /**
-     * NOTE: this bit of craziness is because SvelteKit enhanced forms sends as FormData,
-     * which doesn't play nice with complex form data (e.g. items[0][quantity], etc.)
+     * Stripe `create` function cannot be passed by reference, otherwise
+     * it will break the context for `this` and result in an error. As
+     * such, we must pass a function which calls the `create` method and
+     * returns the result.
      */
-    const data = await request.formData();
-    const requestBody = parse(stringify(Object.fromEntries(data))) as unknown as CartRequestBody;
-
-    let session;
-    try {
-      const checkoutSessionData = await formatCheckoutSessionData(requestBody, stripeAdapter);
-      session = await stripe.checkout.sessions.create(checkoutSessionData);
-    } catch (e) {
-      console.log(`Error creating checkout session: ${e.message}`);
-      return handlePurchaseErrors(e);
-    }
-
-    if (session.url) {
-      redirect(303, session.url);
-    }
+    return initCheckoutSession(request, stripeAdapter, (params) =>
+      stripe.checkout.sessions.create(params)
+    );
   }
 };
-
-function handlePurchaseErrors(e: any) {
-  switch (e.message) {
-    case CreateCheckoutSessionError.EMPTY_CART:
-      return fail(400, { cartEmpty: true });
-    case CreateCheckoutSessionError.INVALID_SHIPPING_ADDRESS:
-      return fail(400, e.data);
-    default:
-      return fail(500, { somethingWentWrong: true });
-  }
-}

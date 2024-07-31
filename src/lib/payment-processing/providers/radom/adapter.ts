@@ -1,16 +1,17 @@
 import { env } from '$env/dynamic/private';
-import { CANCELED_SESSION_QUERY_PARAM } from '$lib/payment-processing/constants';
-import type { ProviderDataAdapter, ShippingRate } from '$lib/payment-processing/types';
-import type { Currency, Radom } from './types';
 import { ENVIRONMENT } from '$env/static/private';
+import { CANCELED_SESSION_QUERY_PARAM, PROVIDER_QUERY_PARAM } from '$lib/payment-processing/constants';
+import type { ProviderParamsAdapter, ShippingRate } from '$lib/payment-processing/types';
+import { PROVIDER_NAME } from '.';
 import { mainnetTokens, testnetTokens } from './tokens';
+import type { Currency, Radom } from './types';
 
-export const radomAdapter: ProviderDataAdapter<Radom.CreateCheckoutSession> = (
+export const radomAdapter: ProviderParamsAdapter<Radom.Checkout.SessionCreateParams> = (
   items,
   encryptedShippingAddress,
   shippingRates
 ) => {
-  const lineItems: Array<Radom.LineItem> = items.map((item) => {
+  const lineItems: Array<Radom.Checkout.LineItem> = items.map((item) => {
     return {
       itemData: {
         name: item.details.name,
@@ -41,8 +42,8 @@ export const radomAdapter: ProviderDataAdapter<Radom.CreateCheckoutSession> = (
         methods: ENVIRONMENT === "production" ? mainnetTokens(0.2) : testnetTokens(0.2)
       }
     },
-    successUrl: `${env.BASE_URL}/success/{CHECKOUT_SESSION_ID}/`,
-    cancelUrl: `${env.BASE_URL}/cart/?${CANCELED_SESSION_QUERY_PARAM}={CHECKOUT_SESSION_ID}`,
+    successUrl: `${env.BASE_URL}/success/{CHECKOUT_SESSION_ID}/?${PROVIDER_QUERY_PARAM}=${PROVIDER_NAME}`,
+    cancelUrl: `${env.BASE_URL}/cart/?${CANCELED_SESSION_QUERY_PARAM}={CHECKOUT_SESSION_ID}&${PROVIDER_QUERY_PARAM}=radom`,
     metadata: [
       {
         key: 'encryptedShippingData',
