@@ -35,8 +35,13 @@ export type HydratedCartItem = StrongVariant & {
   quantity: number;
 };
 
-export type ProviderDataAdapter<ProviderCheckoutData> = (
+export type ProviderParamsAdapter<SessionCreateParams> = (
   items: HydratedCartItem[],
   encryptedShippingData: EncryptedShippingAddress,
   shippingRates: ShippingRate[]
-) => ProviderCheckoutData;
+) => SessionCreateParams;
+
+export type SessionDetails = {
+  id: string;
+  url: string;
+};

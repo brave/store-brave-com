@@ -1,9 +1,10 @@
 import { env } from '$env/dynamic/private';
 import type { Stripe } from 'stripe';
-import { CANCELED_SESSION_QUERY_PARAM } from '../../constants';
-import type { ProviderDataAdapter } from '../../types';
+import { PROVIDER_NAME } from '.';
+import { CANCELED_SESSION_QUERY_PARAM, PROVIDER_QUERY_PARAM } from '../../constants';
+import type { ProviderParamsAdapter } from '../../types';
 
-export const stripeAdapter: ProviderDataAdapter<Stripe.Checkout.SessionCreateParams> = (
+export const stripeAdapter: ProviderParamsAdapter<Stripe.Checkout.SessionCreateParams> = (
   items,
   encryptedShippingAddress,
   shippingRates
@@ -75,8 +76,8 @@ export const stripeAdapter: ProviderDataAdapter<Stripe.Checkout.SessionCreatePar
   return {
     line_items,
     mode: 'payment',
-    success_url: `${env.BASE_URL}/success/{CHECKOUT_SESSION_ID}/`,
-    cancel_url: `${env.BASE_URL}/cart/?${CANCELED_SESSION_QUERY_PARAM}={CHECKOUT_SESSION_ID}`,
+    success_url: `${env.BASE_URL}/success/{CHECKOUT_SESSION_ID}/?${PROVIDER_QUERY_PARAM}=${PROVIDER_NAME}`,
+    cancel_url: `${env.BASE_URL}/cart/?${CANCELED_SESSION_QUERY_PARAM}={CHECKOUT_SESSION_ID}&${PROVIDER_QUERY_PARAM}=${PROVIDER_NAME}`,
     allow_promotion_codes: true,
     shipping_options: stripeShippingOptions,
     invoice_creation: {
