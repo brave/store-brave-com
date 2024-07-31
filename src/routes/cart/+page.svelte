@@ -30,16 +30,6 @@
   $: ({ countries, statesByCountry, countryCallingCodes } = data);
   export let form: ActionData;
 
-  const submitFunction: SubmitFunction = ({ submitter }) => {
-    const id = submitter.id as Provider;
-    submitButtons[id].isLoading = true;
-
-    return ({ update }) => {
-      submitButtons[id].isLoading = true;
-      update();
-    };
-  };
-
   const providers = ['stripe', 'radom'] as const;
   type Provider = (typeof providers)[number];
   type SubmitButton = {
@@ -61,6 +51,16 @@
       icon: 'payment-radom-color',
       isLoading: false
     }
+  };
+
+  const submitFunction: SubmitFunction = ({ submitter }) => {
+    const id = submitter.id as Provider;
+    submitButtons[id].isLoading = true;
+
+    return ({ update }) => {
+      submitButtons[id].isLoading = false;
+      update();
+    };
   };
 
   let showShippingAddress = form?.errors?.shippingAddress?.hasErrors;
@@ -106,6 +106,7 @@
   {/if}
 
   <form
+    use:enhance={submitFunction}
     method="post"
     class="grid max-lg:grid-rows-[1fr_auto] lg:grid-cols-[3fr_2fr] gap-7xl h-[stretch]"
   >

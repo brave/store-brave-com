@@ -1,19 +1,16 @@
 import { sdk } from '$lib/graphql/sdk';
 import { printfulApi, type PrintfulShippingRate } from '$lib/printful-api';
-import {
-  blockedCountryCodes,
-  encrypt,
-  formatDate,
-  generateKey,
-  ValidationError
-} from '$lib/utils';
+import { blockedCountryCodes, encrypt, formatDate, generateKey, ValidationError } from '$lib/utils';
+import { fail, redirect } from '@sveltejs/kit';
 import type { CountryCode } from 'libphonenumber-js';
 import { isValidPhoneNumber, parsePhoneNumber } from 'libphonenumber-js/max';
+import { parse } from 'qs';
 import type { CartRequestBody } from '../../routes/cart/+page.server';
 import type {
   EncryptedShippingAddress,
   HydratedCartItem,
-  ProviderDataAdapter,
+  ProviderParamsAdapter,
+  SessionDetails,
   ShippingAddress,
   ShippingRate,
   StrongVariant
@@ -210,10 +207,10 @@ const encryptShippingData = async (
   };
 };
 
-export async function formatCheckoutSessionData<ProviderCheckoutData>(
+export async function formatCheckoutSessionParams<SessionCreateParams>(
   requestBody: CartRequestBody,
-  providerAdapter: ProviderDataAdapter<ProviderCheckoutData>
-): Promise<ProviderCheckoutData> {
+  providerAdapter: ProviderParamsAdapter<SessionCreateParams>
+): Promise<SessionCreateParams> {
   let { items, shippingAddress } = requestBody;
 
   if (!items?.length) {
@@ -233,4 +230,33 @@ export async function formatCheckoutSessionData<ProviderCheckoutData>(
   const encryptedShippingData = await encryptShippingData(recipientInformation);
 
   return providerAdapter(hydratedItems, encryptedShippingData, shippingRates);
+}
+
+// TODO: write tests for initCheckoutSession
+export async function initCheckoutSession<SessionCreateParams>(
+  request: Request,
+  providerAdapter: ProviderParamsAdapter<SessionCreateParams>,
+  createCheckoutSession: (params: SessionCreateParams) => Promise<SessionDetails>
+) {
+  const requestBody = parse(await request.text()) as unknown as CartRequestBody;
+
+  let session: SessionDetails | undefined;
+  try {
+    const checkoutSessionParams = await formatCheckoutSessionParams(requestBody, providerAdapter);
+    session = await createCheckoutSession(checkoutSessionParams);
+  } catch (e: any) {
+    console.log(`Error creating checkout session: ${e.message}`);
+    switch (e.message) {
+      case CreateCheckoutSessionError.EMPTY_CART:
+        return fail(400, { cartEmpty: true });
+      case CreateCheckoutSessionError.INVALID_SHIPPING_ADDRESS:
+        return fail(400, e.data);
+      default:
+        return fail(500, { somethingWentWrong: true });
+    }
+  }
+
+  if (session?.url) {
+    redirect(303, session.url);
+  }
 }

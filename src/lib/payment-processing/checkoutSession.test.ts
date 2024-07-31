@@ -1,6 +1,6 @@
 import { PUBLIC_ASSETS_PATH } from '$env/static/public';
 import { describe, expect, test } from 'vitest';
-import { CreateCheckoutSessionError, formatCheckoutSessionData } from './checkoutSession';
+import { CreateCheckoutSessionError, formatCheckoutSessionParams } from './checkoutSession';
 import { radomAdapter } from './providers/radom';
 import { stripeAdapter } from './providers/stripe';
 
@@ -26,7 +26,7 @@ test('Fails when no order items are included in request body', async () => {
   improperRequestBody.items = [];
 
   await expect(async () =>
-    formatCheckoutSessionData(improperRequestBody, stripeAdapter)
+    formatCheckoutSessionParams(improperRequestBody, stripeAdapter)
   ).rejects.toThrowError(CreateCheckoutSessionError.EMPTY_CART);
 });
 
@@ -35,7 +35,7 @@ test('Fails when shipping data is malformed', async () => {
   delete improperRequestBody.shippingAddress.address1;
 
   await expect(async () =>
-    formatCheckoutSessionData(improperRequestBody, stripeAdapter)
+    formatCheckoutSessionParams(improperRequestBody, stripeAdapter)
   ).rejects.toThrowError(CreateCheckoutSessionError.INVALID_SHIPPING_ADDRESS);
 });
 
@@ -93,7 +93,7 @@ describe('Stripe', () => {
   };
 
   test('Converts request body to Stripe checkout session data', async () => {
-    expect(await formatCheckoutSessionData(requestBody, stripeAdapter)).toMatchObject(
+    expect(await formatCheckoutSessionParams(requestBody, stripeAdapter)).toMatchObject(
       expectedStripeCheckoutSessionData
     );
   });
@@ -159,7 +159,7 @@ describe('Radom', () => {
   };
 
   test('Converts request body to Radom checkout session data', async () => {
-    expect(await formatCheckoutSessionData(requestBody, radomAdapter)).toMatchObject(
+    expect(await formatCheckoutSessionParams(requestBody, radomAdapter)).toMatchObject(
       expectedRadomCheckoutSessionData
     );
   });
