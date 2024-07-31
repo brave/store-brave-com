@@ -25,9 +25,11 @@ export async function syncStore(req: Request, res: Response) {
   const { context } = req as typeof req & { context: Context };
 
   try {
-    const products = (await context.query.Product.findMany({
-      query: 'name printfulProductId description thumbnail filters sizingCharts variants { printfulVariantId }'
-    })) ?? [];
+    const products =
+      (await context.query.Product.findMany({
+        query:
+          'name printfulProductId description thumbnail filters sizingCharts variants { printfulVariantId }'
+      })) ?? [];
     const existingProductIds: Array<any> = [];
     const existingProducts: Map<string, any> = new Map();
     products.map((product) => product.printfulProductId);
@@ -44,7 +46,7 @@ export async function syncStore(req: Request, res: Response) {
     /**
      * Remove any products which no longer exist in Printful store,
      * or have been marked as "ignored"
-     * 
+     *
      * TODO: ensure that products aren't accidentally removed due to
      * failed API responses returning null
      */
@@ -113,7 +115,8 @@ interface ExistingIds {
 async function getProductsAndVariants({ existingProductIds }: ExistingIds) {
   const response = await printfulApi('/store/products?limit=100');
 
-  console.log("Total products and variants count:",
+  console.log(
+    'Total products and variants count:',
     response.reduce((sum: number, p: any) => {
       return !p.is_ignored ? sum + p.variants : sum;
     }, 0)

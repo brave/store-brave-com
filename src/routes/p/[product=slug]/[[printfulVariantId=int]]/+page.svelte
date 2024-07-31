@@ -1,7 +1,7 @@
 <script>
   import { getContext } from 'svelte';
   import { contextKey } from '$lib/cartStore';
-  import Button from '@brave/leo/web-components/button/button.svelte';
+  import Button from '@brave/leo/src/components/button/button.svelte';
   import MeasurementDetails from './MeasurementDetails.svelte';
   import QuantitySelector from '$lib/QuantitySelector.svelte';
   import Breadcrumbs from '$lib/Breadcrumbs.svelte';
@@ -19,8 +19,7 @@
   $: price = formatPrice(variant.details.price, currency);
 
   $: sizeVariants =
-    product?.variants?.filter((v) => v.details.color === variant.details.color) ||
-    [];
+    product?.variants?.filter((v) => v.details.color === variant.details.color) || [];
   $: colorVariants =
     product?.variants?.filter((v) => v.details.size === variant.details.size) || [];
 
@@ -40,21 +39,27 @@
     } else if (e.type === 'mouseenter') {
       currentImage = e.detail.colorVariant?.details.files.at(-1).preview_url;
     }
-  }
+  };
 
   /** @type {Array<{ label: string, link?: string }>} */
   let breadcrumbs;
   $: {
-    breadcrumbs = [{ label: "All products", link: "/categories/all/" }]
+    breadcrumbs = [{ label: 'All products', link: '/categories/all/' }];
     if (product?.category?.name) {
-      breadcrumbs = [...breadcrumbs, {
-        label: product.category.name,
-        link: `/categories/${product.category.slug}/`
-      }];
+      breadcrumbs = [
+        ...breadcrumbs,
+        {
+          label: product.category.name,
+          link: `/categories/${product.category.slug}/`
+        }
+      ];
     }
-    breadcrumbs = [...breadcrumbs, {
-      label: product?.name ?? ""
-    }];
+    breadcrumbs = [
+      ...breadcrumbs,
+      {
+        label: product?.name ?? ''
+      }
+    ];
   }
 </script>
 
@@ -62,22 +67,22 @@
   <Breadcrumbs ref="product-layout__breadcrumbs" crumbs={breadcrumbs} />
 
   <img
-    class="w-full shadow-02 rounded-2 max-w-screen-xs product-layout__image mx-auto md:mx-0"
+    class="w-full rounded-xs drop-shadow-02 max-w-screen-xs product-layout__image mx-auto md:mx-0 [view-transition-name:product-image]"
     src={currentImage}
     alt="{product?.name} product image"
   />
 
   <header class="product-layout__header flex flex-wrap items-center">
-    <h1 class="text-h1 pb-2 w-full">{product?.name}</h1>
-    <p class="text-h3 pr-6">{price}</p>
+    <h1 class="text-heading-h2 pb-m w-full">{product?.name}</h1>
+    <p class="text-heading-h3 pr-2xl">{price}</p>
   </header>
 
   <section class="product-layout__body flex flex-col md:items-start">
     {#if (product?.variants?.length ?? 0) > 1}
-      <div class="pb-5 space-y-4">
+      <div class="pb-[20px] space-y-xl">
         {#if product?.filters?.colors?.length > 1}
           <div>
-            <h2 class="text-x-large font-normal pb-2">
+            <h2 class="text-x-large font-normal pb-m">
               Color: <strong class="font-semibold">{variant.details.color}</strong>
             </h2>
             <ColorPicker
@@ -93,7 +98,7 @@
 
         {#if sizeVariants?.length > 1}
           <div>
-            <h2 class="text-x-large font-normal pb-2">
+            <h2 class="text-x-large font-normal pb-m">
               Size: <strong class="font-semibold">{variant.details.size}</strong>
             </h2>
             <SizePicker
@@ -109,23 +114,28 @@
     <QuantitySelector
       ref="product-quantity-selector"
       quantity={purchaseQuantity}
-      on:increment={() => purchaseQuantity += 1}
-      on:decrement={() => purchaseQuantity > 1 ? purchaseQuantity -= 1 : 0}
+      on:increment={() => (purchaseQuantity += 1)}
+      on:decrement={() => (purchaseQuantity > 1 ? (purchaseQuantity -= 1) : 0)}
     />
 
-    <Button size="large" on:click={() => addToCart({ variant, product, quantity: purchaseQuantity })}>
+    <Button
+      size="large"
+      onClick={() => addToCart({ variant, product, quantity: purchaseQuantity })}
+    >
       Add to cart
     </Button>
 
-    <p class="whitespace-pre-wrap pt-4">
+    <p class="whitespace-pre-wrap pt-xl">
       {product?.description}
     </p>
   </section>
 
   {#if sizeTables.length > 0}
-    <section class="product-layout__sizing border-t border-divider-subtle pt-4 mt-6 grid grid-cols-[repeat(auto-fit,_minmax(290px,_1fr))] gap-8">
+    <section
+      class="product-layout__sizing border-t border-divider-subtle/40 pt-xl mt-2xl grid grid-cols-[repeat(auto-fit,_minmax(290px,_1fr))] gap-3xl"
+    >
       {#each sizeTables as sizeTable, i}
-        <div class="pt-6" class:order-last={i === 0}>
+        <div class="pt-2xl" class:order-last={i === 0}>
           <MeasurementDetails
             heading={i === 0 ? 'Product measurements' : 'Measure yourself'}
             details={sizeTable}
@@ -147,8 +157,8 @@
       'body'
       'sizing';
 
-    :global([data-ref=product-layout__breadcrumbs]) {
-      grid-area: breadcrumbs
+    :global([data-ref='product-layout__breadcrumbs']) {
+      grid-area: breadcrumbs;
     }
     &__image {
       grid-area: image;
@@ -175,7 +185,7 @@
       grid-template-columns: repeat(2, 1fr);
     }
 
-    :global([data-ref="product-quantity-selector"]) {
+    :global([data-ref='product-quantity-selector']) {
       margin-bottom: 16px;
     }
   }

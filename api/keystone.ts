@@ -72,7 +72,7 @@ export default withAuth(
             }
           }
 
-          res.status(400).json({ message: "Could not find key. Please try a different ID." })
+          res.status(400).json({ message: 'Could not find key. Please try a different ID.' });
         });
       }
     },
