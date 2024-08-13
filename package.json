@@ -28,7 +28,7 @@
 		"@stablelib/base64": "1.0.1",
 		"@stablelib/utf8": "1.0.2",
 		"@sveltejs/adapter-node": "5.1.1",
-		"@sveltejs/kit": "2.5.18",
+		"@sveltejs/kit": "2.5.20",
 		"@types/marked": "6.0.0",
 		"autoprefixer": "10.4.20",
 		"graphql": "16.8.2",
