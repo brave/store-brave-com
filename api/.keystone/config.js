@@ -100,8 +100,7 @@ async function downloadImageIfNeeded(imageUrl) {
   try {
     const existingImage = await getImagePathIfExists(imageUrl);
     const imagePath = existingImage || await downloadImage(imageUrl);
-    if (!imagePath)
-      return;
+    if (!imagePath) return;
     return `${PUBLIC_ASSETS_PATH}/${imagePath}`;
   } catch (e) {
     console.log("Error", e.message);
@@ -222,8 +221,7 @@ function upsertProduct(newProductData, existingProductData, context) {
       if (!existingProductData?.variants?.some(
         (v) => v.printfulVariantId === variant.printfulVariantId
       )) {
-        if (!updatedProductData.variants)
-          updatedProductData.variants = { create: [] };
+        if (!updatedProductData.variants) updatedProductData.variants = { create: [] };
         updatedProductData.variants.create = [...updatedProductData.variants.create, variant];
       }
     });

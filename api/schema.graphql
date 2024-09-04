@@ -485,23 +485,23 @@ input CreateInitialUserInput {
 }
 
 type Query {
-  users(where: UserWhereInput! = {}, orderBy: [UserOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserWhereUniqueInput): [User!]
   user(where: UserWhereUniqueInput!): User
+  users(where: UserWhereInput! = {}, orderBy: [UserOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserWhereUniqueInput): [User!]
   usersCount(where: UserWhereInput! = {}): Int
-  products(where: ProductWhereInput! = {}, orderBy: [ProductOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ProductWhereUniqueInput): [Product!]
   product(where: ProductWhereUniqueInput!): Product
+  products(where: ProductWhereInput! = {}, orderBy: [ProductOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ProductWhereUniqueInput): [Product!]
   productsCount(where: ProductWhereInput! = {}): Int
-  variants(where: VariantWhereInput! = {}, orderBy: [VariantOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: VariantWhereUniqueInput): [Variant!]
   variant(where: VariantWhereUniqueInput!): Variant
+  variants(where: VariantWhereInput! = {}, orderBy: [VariantOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: VariantWhereUniqueInput): [Variant!]
   variantsCount(where: VariantWhereInput! = {}): Int
-  categories(where: CategoryWhereInput! = {}, orderBy: [CategoryOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CategoryWhereUniqueInput): [Category!]
   category(where: CategoryWhereUniqueInput!): Category
+  categories(where: CategoryWhereInput! = {}, orderBy: [CategoryOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CategoryWhereUniqueInput): [Category!]
   categoriesCount(where: CategoryWhereInput! = {}): Int
-  processedOrders(where: ProcessedOrderWhereInput! = {}, orderBy: [ProcessedOrderOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ProcessedOrderWhereUniqueInput): [ProcessedOrder!]
   processedOrder(where: ProcessedOrderWhereUniqueInput!): ProcessedOrder
+  processedOrders(where: ProcessedOrderWhereInput! = {}, orderBy: [ProcessedOrderOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ProcessedOrderWhereUniqueInput): [ProcessedOrder!]
   processedOrdersCount(where: ProcessedOrderWhereInput! = {}): Int
-  shippingDataKeys(where: ShippingDataKeyWhereInput! = {}, orderBy: [ShippingDataKeyOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ShippingDataKeyWhereUniqueInput): [ShippingDataKey!]
   shippingDataKey(where: ShippingDataKeyWhereUniqueInput!): ShippingDataKey
+  shippingDataKeys(where: ShippingDataKeyWhereInput! = {}, orderBy: [ShippingDataKeyOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ShippingDataKeyWhereUniqueInput): [ShippingDataKey!]
   shippingDataKeysCount(where: ShippingDataKeyWhereInput! = {}): Int
   keystone: KeystoneMeta!
   authenticatedItem: AuthenticatedItem
@@ -534,6 +534,7 @@ type KeystoneAdminUIListMeta {
   labelField: String!
   fields: [KeystoneAdminUIFieldMeta!]!
   groups: [KeystoneAdminUIFieldGroupMeta!]!
+  graphql: KeystoneAdminUIGraphQL!
   initialSort: KeystoneAdminUISort
   isHidden: Boolean!
   isSingleton: Boolean!
@@ -599,6 +600,33 @@ type KeystoneAdminUIFieldGroupMeta {
   label: String!
   description: String
   fields: [KeystoneAdminUIFieldMeta!]!
+}
+
+type KeystoneAdminUIGraphQL {
+  names: KeystoneAdminUIGraphQLNames!
+}
+
+type KeystoneAdminUIGraphQLNames {
+  outputTypeName: String!
+  whereInputName: String!
+  whereUniqueInputName: String!
+  createInputName: String!
+  createMutationName: String!
+  createManyMutationName: String!
+  relateToOneForCreateInputName: String!
+  relateToManyForCreateInputName: String!
+  itemQueryName: String!
+  listOrderName: String!
+  listQueryCountName: String!
+  listQueryName: String!
+  updateInputName: String!
+  updateMutationName: String!
+  updateManyInputName: String!
+  updateManyMutationName: String!
+  relateToOneForUpdateInputName: String!
+  relateToManyForUpdateInputName: String!
+  deleteMutationName: String!
+  deleteManyMutationName: String!
 }
 
 type KeystoneAdminUISort {
