@@ -207,10 +207,40 @@ export enum KeystoneAdminUiFieldMetaListViewFieldMode {
   Read = 'read'
 }
 
+export type KeystoneAdminUiGraphQl = {
+  __typename?: 'KeystoneAdminUIGraphQL';
+  names: KeystoneAdminUiGraphQlNames;
+};
+
+export type KeystoneAdminUiGraphQlNames = {
+  __typename?: 'KeystoneAdminUIGraphQLNames';
+  createInputName: Scalars['String']['output'];
+  createManyMutationName: Scalars['String']['output'];
+  createMutationName: Scalars['String']['output'];
+  deleteManyMutationName: Scalars['String']['output'];
+  deleteMutationName: Scalars['String']['output'];
+  itemQueryName: Scalars['String']['output'];
+  listOrderName: Scalars['String']['output'];
+  listQueryCountName: Scalars['String']['output'];
+  listQueryName: Scalars['String']['output'];
+  outputTypeName: Scalars['String']['output'];
+  relateToManyForCreateInputName: Scalars['String']['output'];
+  relateToManyForUpdateInputName: Scalars['String']['output'];
+  relateToOneForCreateInputName: Scalars['String']['output'];
+  relateToOneForUpdateInputName: Scalars['String']['output'];
+  updateInputName: Scalars['String']['output'];
+  updateManyInputName: Scalars['String']['output'];
+  updateManyMutationName: Scalars['String']['output'];
+  updateMutationName: Scalars['String']['output'];
+  whereInputName: Scalars['String']['output'];
+  whereUniqueInputName: Scalars['String']['output'];
+};
+
 export type KeystoneAdminUiListMeta = {
   __typename?: 'KeystoneAdminUIListMeta';
   description?: Maybe<Scalars['String']['output']>;
   fields: Array<KeystoneAdminUiFieldMeta>;
+  graphql: KeystoneAdminUiGraphQl;
   groups: Array<KeystoneAdminUiFieldGroupMeta>;
   hideCreate: Scalars['Boolean']['output'];
   hideDelete: Scalars['Boolean']['output'];

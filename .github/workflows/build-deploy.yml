@@ -88,7 +88,7 @@ jobs:
 
       - name: Fill in the new image ID in the Amazon ECS task definition
         id: task-def
-        uses: aws-actions/amazon-ecs-render-task-definition@9933bf0d77b7f6d52e3886fbb8aae95a677db1ab # v1
+        uses: aws-actions/amazon-ecs-render-task-definition@3c975f1cb22919a28755c6541b4ca2656a690f49 # v1
         with:
           task-definition: task-definition.json
           container-name: store
@@ -161,7 +161,7 @@ jobs:
 
       - name: Fill in the new image ID in the Amazon ECS task definition
         id: task-def
-        uses: aws-actions/amazon-ecs-render-task-definition@9933bf0d77b7f6d52e3886fbb8aae95a677db1ab # v1
+        uses: aws-actions/amazon-ecs-render-task-definition@3c975f1cb22919a28755c6541b4ca2656a690f49 # v1
         with:
           task-definition: task-definition.json
           container-name: store-backend
