@@ -12,6 +12,7 @@
         "kind": "UNION",
         "name": "AuthenticatedItem",
         "description": null,
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -28,6 +29,7 @@
         "kind": "SCALAR",
         "name": "Boolean",
         "description": "The `Boolean` scalar type represents `true` or `false`.",
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -38,6 +40,7 @@
         "kind": "INPUT_OBJECT",
         "name": "BooleanFilter",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -73,6 +76,7 @@
         "kind": "OBJECT",
         "name": "Category",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "id",
@@ -254,6 +258,7 @@
         "kind": "INPUT_OBJECT",
         "name": "CategoryCreateInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -301,6 +306,7 @@
         "kind": "INPUT_OBJECT",
         "name": "CategoryOrderByInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -348,6 +354,7 @@
         "kind": "INPUT_OBJECT",
         "name": "CategoryRelateToOneForCreateInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -383,6 +390,7 @@
         "kind": "INPUT_OBJECT",
         "name": "CategoryRelateToOneForUpdateInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -430,6 +438,7 @@
         "kind": "INPUT_OBJECT",
         "name": "CategoryUpdateArgs",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -473,6 +482,7 @@
         "kind": "INPUT_OBJECT",
         "name": "CategoryUpdateInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -520,6 +530,7 @@
         "kind": "INPUT_OBJECT",
         "name": "CategoryWhereInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -639,6 +650,7 @@
         "kind": "INPUT_OBJECT",
         "name": "CategoryWhereUniqueInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -674,6 +686,7 @@
         "kind": "INPUT_OBJECT",
         "name": "CreateInitialUserInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -721,6 +734,7 @@
         "kind": "SCALAR",
         "name": "DateTime",
         "description": null,
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -731,6 +745,7 @@
         "kind": "INPUT_OBJECT",
         "name": "DateTimeFilter",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -854,6 +869,7 @@
         "kind": "SCALAR",
         "name": "Float",
         "description": "The `Float` scalar type represents signed double-precision fractional values as specified by [IEEE 754](https://en.wikipedia.org/wiki/IEEE_floating_point).",
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -864,6 +880,7 @@
         "kind": "SCALAR",
         "name": "ID",
         "description": "The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `\"4\"`) or integer (such as `4`) input value will be accepted as an ID.",
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -874,6 +891,7 @@
         "kind": "INPUT_OBJECT",
         "name": "IDFilter",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -997,6 +1015,7 @@
         "kind": "SCALAR",
         "name": "Int",
         "description": "The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.",
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -1007,6 +1026,7 @@
         "kind": "SCALAR",
         "name": "JSON",
         "description": "The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).",
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -1017,6 +1037,7 @@
         "kind": "OBJECT",
         "name": "KeystoneAdminMeta",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "list",
@@ -1081,6 +1102,7 @@
         "kind": "OBJECT",
         "name": "KeystoneAdminUIFieldGroupMeta",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "description",
@@ -1144,6 +1166,7 @@
         "kind": "OBJECT",
         "name": "KeystoneAdminUIFieldMeta",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "createView",
@@ -1360,6 +1383,7 @@
         "kind": "OBJECT",
         "name": "KeystoneAdminUIFieldMetaCreateView",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "fieldMode",
@@ -1387,6 +1411,7 @@
         "kind": "ENUM",
         "name": "KeystoneAdminUIFieldMetaCreateViewFieldMode",
         "description": null,
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -1410,6 +1435,7 @@
         "kind": "ENUM",
         "name": "KeystoneAdminUIFieldMetaIsNonNull",
         "description": null,
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -1439,6 +1465,7 @@
         "kind": "OBJECT",
         "name": "KeystoneAdminUIFieldMetaItemView",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "fieldMode",
@@ -1474,6 +1501,7 @@
         "kind": "ENUM",
         "name": "KeystoneAdminUIFieldMetaItemViewFieldMode",
         "description": null,
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -1503,6 +1531,7 @@
         "kind": "ENUM",
         "name": "KeystoneAdminUIFieldMetaItemViewFieldPosition",
         "description": null,
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -1526,6 +1555,7 @@
         "kind": "OBJECT",
         "name": "KeystoneAdminUIFieldMetaListView",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "fieldMode",
@@ -1553,6 +1583,7 @@
         "kind": "ENUM",
         "name": "KeystoneAdminUIFieldMetaListViewFieldMode",
         "description": null,
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -1574,8 +1605,369 @@
       },
       {
         "kind": "OBJECT",
+        "name": "KeystoneAdminUIGraphQL",
+        "description": null,
+        "isOneOf": null,
+        "fields": [
+          {
+            "name": "names",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "KeystoneAdminUIGraphQLNames",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "KeystoneAdminUIGraphQLNames",
+        "description": null,
+        "isOneOf": null,
+        "fields": [
+          {
+            "name": "createInputName",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "createManyMutationName",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "createMutationName",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "deleteManyMutationName",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "deleteMutationName",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "itemQueryName",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "listOrderName",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "listQueryCountName",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "listQueryName",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "outputTypeName",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "relateToManyForCreateInputName",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "relateToManyForUpdateInputName",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "relateToOneForCreateInputName",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "relateToOneForUpdateInputName",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "updateInputName",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "updateManyInputName",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "updateManyMutationName",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "updateMutationName",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "whereInputName",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "whereUniqueInputName",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
         "name": "KeystoneAdminUIListMeta",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "description",
@@ -1608,6 +2000,22 @@
                     "ofType": null
                   }
                 }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "graphql",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "KeystoneAdminUIGraphQL",
+                "ofType": null
               }
             },
             "isDeprecated": false,
@@ -1891,6 +2299,7 @@
         "kind": "OBJECT",
         "name": "KeystoneAdminUISort",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "direction",
@@ -1934,6 +2343,7 @@
         "kind": "ENUM",
         "name": "KeystoneAdminUISortDirection",
         "description": null,
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -1957,6 +2367,7 @@
         "kind": "OBJECT",
         "name": "KeystoneMeta",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "adminMeta",
@@ -1984,6 +2395,7 @@
         "kind": "OBJECT",
         "name": "Mutation",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "authenticateUserWithPassword",
@@ -3445,6 +3857,7 @@
         "kind": "INPUT_OBJECT",
         "name": "NestedStringFilter",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -3604,6 +4017,7 @@
         "kind": "ENUM",
         "name": "OrderDirection",
         "description": null,
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -3627,6 +4041,7 @@
         "kind": "OBJECT",
         "name": "PasswordState",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "isSet",
@@ -3654,6 +4069,7 @@
         "kind": "OBJECT",
         "name": "ProcessedOrder",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "id",
@@ -3693,6 +4109,7 @@
         "kind": "INPUT_OBJECT",
         "name": "ProcessedOrderCreateInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -3716,6 +4133,7 @@
         "kind": "INPUT_OBJECT",
         "name": "ProcessedOrderOrderByInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -3751,6 +4169,7 @@
         "kind": "INPUT_OBJECT",
         "name": "ProcessedOrderUpdateArgs",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -3794,6 +4213,7 @@
         "kind": "INPUT_OBJECT",
         "name": "ProcessedOrderUpdateInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -3817,6 +4237,7 @@
         "kind": "INPUT_OBJECT",
         "name": "ProcessedOrderWhereInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -3912,6 +4333,7 @@
         "kind": "INPUT_OBJECT",
         "name": "ProcessedOrderWhereUniqueInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -3947,6 +4369,7 @@
         "kind": "OBJECT",
         "name": "Product",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "category",
@@ -4240,6 +4663,7 @@
         "kind": "INPUT_OBJECT",
         "name": "ProductCreateInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -4371,6 +4795,7 @@
         "kind": "INPUT_OBJECT",
         "name": "ProductManyRelationFilter",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -4418,6 +4843,7 @@
         "kind": "INPUT_OBJECT",
         "name": "ProductOrderByInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -4513,6 +4939,7 @@
         "kind": "INPUT_OBJECT",
         "name": "ProductRelateToManyForCreateInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -4564,6 +4991,7 @@
         "kind": "INPUT_OBJECT",
         "name": "ProductRelateToManyForUpdateInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -4655,6 +5083,7 @@
         "kind": "INPUT_OBJECT",
         "name": "ProductRelateToOneForCreateInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -4690,6 +5119,7 @@
         "kind": "INPUT_OBJECT",
         "name": "ProductRelateToOneForUpdateInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -4737,6 +5167,7 @@
         "kind": "INPUT_OBJECT",
         "name": "ProductUpdateArgs",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -4780,6 +5211,7 @@
         "kind": "INPUT_OBJECT",
         "name": "ProductUpdateInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -4911,6 +5343,7 @@
         "kind": "INPUT_OBJECT",
         "name": "ProductWhereInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -5090,6 +5523,7 @@
         "kind": "INPUT_OBJECT",
         "name": "ProductWhereUniqueInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -5137,6 +5571,7 @@
         "kind": "OBJECT",
         "name": "Query",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "authenticatedItem",
@@ -6130,6 +6565,7 @@
         "kind": "ENUM",
         "name": "QueryMode",
         "description": null,
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -6153,6 +6589,7 @@
         "kind": "OBJECT",
         "name": "ShippingDataKey",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "createdAt",
@@ -6204,6 +6641,7 @@
         "kind": "INPUT_OBJECT",
         "name": "ShippingDataKeyCreateInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -6239,6 +6677,7 @@
         "kind": "INPUT_OBJECT",
         "name": "ShippingDataKeyOrderByInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -6286,6 +6725,7 @@
         "kind": "INPUT_OBJECT",
         "name": "ShippingDataKeyUpdateArgs",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -6329,6 +6769,7 @@
         "kind": "INPUT_OBJECT",
         "name": "ShippingDataKeyUpdateInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -6364,6 +6805,7 @@
         "kind": "INPUT_OBJECT",
         "name": "ShippingDataKeyWhereInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -6471,6 +6913,7 @@
         "kind": "INPUT_OBJECT",
         "name": "ShippingDataKeyWhereUniqueInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -6494,6 +6937,7 @@
         "kind": "SCALAR",
         "name": "String",
         "description": "The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.",
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -6504,6 +6948,7 @@
         "kind": "INPUT_OBJECT",
         "name": "StringFilter",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -6675,6 +7120,7 @@
         "kind": "OBJECT",
         "name": "User",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "email",
@@ -6738,6 +7184,7 @@
         "kind": "OBJECT",
         "name": "UserAuthenticationWithPasswordFailure",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "message",
@@ -6765,6 +7212,7 @@
         "kind": "UNION",
         "name": "UserAuthenticationWithPasswordResult",
         "description": null,
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -6786,6 +7234,7 @@
         "kind": "OBJECT",
         "name": "UserAuthenticationWithPasswordSuccess",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "item",
@@ -6829,6 +7278,7 @@
         "kind": "INPUT_OBJECT",
         "name": "UserCreateInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -6876,6 +7326,7 @@
         "kind": "INPUT_OBJECT",
         "name": "UserOrderByInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -6923,6 +7374,7 @@
         "kind": "INPUT_OBJECT",
         "name": "UserUpdateArgs",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -6966,6 +7418,7 @@
         "kind": "INPUT_OBJECT",
         "name": "UserUpdateInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -7013,6 +7466,7 @@
         "kind": "INPUT_OBJECT",
         "name": "UserWhereInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -7120,6 +7574,7 @@
         "kind": "INPUT_OBJECT",
         "name": "UserWhereUniqueInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -7155,6 +7610,7 @@
         "kind": "OBJECT",
         "name": "Variant",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "details",
@@ -7230,6 +7686,7 @@
         "kind": "INPUT_OBJECT",
         "name": "VariantCreateInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -7277,6 +7734,7 @@
         "kind": "INPUT_OBJECT",
         "name": "VariantManyRelationFilter",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -7324,6 +7782,7 @@
         "kind": "INPUT_OBJECT",
         "name": "VariantOrderByInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -7359,6 +7818,7 @@
         "kind": "INPUT_OBJECT",
         "name": "VariantRelateToManyForCreateInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -7410,6 +7870,7 @@
         "kind": "INPUT_OBJECT",
         "name": "VariantRelateToManyForUpdateInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -7501,6 +7962,7 @@
         "kind": "INPUT_OBJECT",
         "name": "VariantUpdateArgs",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -7544,6 +8006,7 @@
         "kind": "INPUT_OBJECT",
         "name": "VariantUpdateInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -7591,6 +8054,7 @@
         "kind": "INPUT_OBJECT",
         "name": "VariantWhereInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -7698,6 +8162,7 @@
         "kind": "INPUT_OBJECT",
         "name": "VariantWhereUniqueInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -7733,6 +8198,7 @@
         "kind": "OBJECT",
         "name": "__Directive",
         "description": "A Directive provides a way to describe alternate runtime execution and type validation behavior in a GraphQL document.\n\nIn some cases, you need to provide options to alter GraphQL's execution behavior in ways field arguments will not suffice, such as conditionally including or skipping a field. Directives provide this by describing additional information to the executor.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "name",
@@ -7849,6 +8315,7 @@
         "kind": "ENUM",
         "name": "__DirectiveLocation",
         "description": "A Directive can be adjacent to many parts of the GraphQL language, a __DirectiveLocation describes one such possible adjacencies.",
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -7974,6 +8441,7 @@
         "kind": "OBJECT",
         "name": "__EnumValue",
         "description": "One possible value for a given Enum. Enum values are unique values, not a placeholder for a string or numeric value. However an Enum value is returned in a JSON response as a string.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "name",
@@ -8041,6 +8509,7 @@
         "kind": "OBJECT",
         "name": "__Field",
         "description": "Object and Interface types are described by a list of Fields, each of which has a name, potentially a list of arguments, and a return type.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "name",
@@ -8161,6 +8630,7 @@
         "kind": "OBJECT",
         "name": "__InputValue",
         "description": "Arguments provided to Fields or Directives and the input fields of an InputObject are represented as Input Values which describe their type and optionally a default value.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "name",
@@ -8256,6 +8726,7 @@
         "kind": "OBJECT",
         "name": "__Schema",
         "description": "A GraphQL Schema defines the capabilities of a GraphQL server. It exposes all available types and directives on the server, as well as the entry points for query, mutation, and subscription operations.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "description",
@@ -8367,6 +8838,7 @@
         "kind": "OBJECT",
         "name": "__Type",
         "description": "The fundamental unit of any GraphQL Schema is the type. There are many kinds of types in GraphQL as represented by the `__TypeKind` enum.\n\nDepending on the kind of a type, certain fields describe information about that type. Scalar types provide no information beyond a name, description and optional `specifiedByURL`, while Enum types provide their values. Object and Interface types provide the fields they describe. Abstract types, Union and Interface, provide the Object types possible at runtime. List and NonNull types compose other types.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "kind",
@@ -8570,6 +9042,18 @@
             },
             "isDeprecated": false,
             "deprecationReason": null
+          },
+          {
+            "name": "isOneOf",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Boolean",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
           }
         ],
         "inputFields": null,
@@ -8581,6 +9065,7 @@
         "kind": "ENUM",
         "name": "__TypeKind",
         "description": "An enum describing what kind of type a given `__Type` is.",
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -8690,6 +9175,15 @@
             "deprecationReason": null
           }
         ]
+      },
+      {
+        "name": "oneOf",
+        "description": "Indicates exactly one field must be supplied and this field must not be `null`.",
+        "isRepeatable": false,
+        "locations": [
+          "INPUT_OBJECT"
+        ],
+        "args": []
       },
       {
         "name": "skip",
