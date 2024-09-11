@@ -45,7 +45,7 @@
     "sass": "1.78.0",
     "stripe": "13.11.0",
     "svelte": "4.2.19",
-    "svelte-check": "4.0.0",
+    "svelte-check": "4.0.1",
     "svelte-preprocess": "5.1.4",
     "tailwindcss": "3.4.10",
     "tweetnacl": "1.0.3",
