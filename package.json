@@ -38,7 +38,7 @@
     "isomorphic-dompurify": "2.15.0",
     "libphonenumber-js": "1.11.8",
     "marked": "14.1.2",
-    "postcss": "8.4.45",
+    "postcss": "8.4.47",
     "prettier": "3.3.3",
     "prettier-plugin-svelte": "3.2.6",
     "qs": "6.13.0",
