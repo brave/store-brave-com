@@ -1,10 +1,13 @@
 import { redirect } from '@sveltejs/kit';
 import { env } from '$env/dynamic/private';
-import { stripe } from '$lib/stripe-api';
+import { stripe } from '$lib/payment-processing/providers/stripe';
 import type Stripe from 'stripe';
 import type { PageServerLoad } from './$types';
 import { sdk } from '$lib/graphql/sdk';
 import * as Sentry from '@sentry/node';
+
+// TODO: Implement cancel logic
+// Add param to distinguish between Stripe and Radom
 
 Sentry.init({
   dsn: env.SENTRY_DSN,

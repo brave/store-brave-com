@@ -7,6 +7,8 @@ import { decrypt, blockedCountryCodes, ValidationError } from '$lib/utils';
 import { sdk } from '$lib/graphql/sdk';
 
 import * as Sentry from '@sentry/node';
+import { radomApi, type Radom } from '$lib/payment-processing/providers/radom';
+import { RADOM_WEBHOOK_VERIFICATION_KEY } from '$env/static/private';
 
 Sentry.init({
   dsn: env.SENTRY_DSN,
@@ -20,25 +22,24 @@ Sentry.init({
 });
 
 export const POST: RequestHandler = async ({ request }) => {
-  const payload = await request.text();
-  const signature = request.headers.get('stripe-signature') ?? '';
+  const event: Radom.PaymentEvent = await request.json();
+  const verificationKey = request.headers.get('radom-verification-key') ?? '';
 
-  let event;
-  try {
-    event = await stripe.webhooks.constructEvent(payload, signature, env.STRIPE_WEBHOOK_SECRET);
-  } catch (e: any) {
-    return new Response(`Webhook Error: ${e.message}`, { status: 400 });
+  if (verificationKey !== RADOM_WEBHOOK_VERIFICATION_KEY) {
+    return new Response(`Not authorized.`, { status: 401 });
   }
 
-  if (event.type === 'checkout.session.completed') {
-    const session = event.data.object as Stripe.Checkout.Session;
+  if (event.eventType === 'managedPayment') {
+    const session = await radomApi<Radom.Checkout.Session>(
+      `/checkout_session/${event.radomData.checkoutSession.checkoutSessionId}`
+    );
 
     try {
-      await sdk.AddProcessedOrder({ idempotencyKey: session.payment_intent });
+      await sdk.AddProcessedOrder({ idempotencyKey: session.payment.managed.paymentEventId });
       fulfillOrder(session);
     } catch (e: any) {
       if (e.response?.errors[0]?.extensions?.prisma?.code === 'P2002') {
-        console.log(`Order for ${session.payment_intent} has already been processed.`);
+        console.log(`Order for ${session.payment.managed.paymentEventId} has already been processed.`);
       }
     }
   }
@@ -46,7 +47,8 @@ export const POST: RequestHandler = async ({ request }) => {
   return new Response('', { status: 200 });
 };
 
-async function fulfillOrder(session: Stripe.Checkout.Session): Promise<void> {
+async function fulfillOrder(session: Radom.Checkout.Session): Promise<void> {
+  return;
   try {
     const sessionDetails = await stripe.checkout.sessions.retrieve(session.id, {
       expand: ['line_items.data.price.product', 'shipping_cost.shipping_rate']
@@ -56,6 +58,7 @@ async function fulfillOrder(session: Stripe.Checkout.Session): Promise<void> {
     const line_items = sessionDetails.line_items?.data;
     const { customer_details, metadata } = sessionDetails;
 
+    // TODO: is this actually going to work? I think we need to decode the shipping address first...
     if (blockedCountryCodes.includes(metadata?.country_code as string)) {
       throw new ValidationError('Invalid recipient region.');
     }

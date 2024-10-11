@@ -12,7 +12,8 @@
     "lint": "prettier --check --plugin-search-dir=. .",
     "format": "prettier --write --plugin-search-dir=. .",
     "gen": "graphql-codegen --config codegen.yml",
-    "postinstall": "node scripts/copy-dependencies.js && npm run gen"
+    "postinstall": "node scripts/copy-dependencies.js && npm run gen",
+    "test": "vitest"
   },
   "type": "module",
   "dependencies": {
@@ -54,7 +55,9 @@
   },
   "devDependencies": {
     "@sveltejs/vite-plugin-svelte": "3.1.2",
-    "@tsconfig/svelte": "5.0.4"
+    "@tsconfig/svelte": "5.0.4",
+    "msw": "2.3.1",
+    "vitest": "2.0.3"
   },
   "overrides": {
     "svelte": "4.2.19"

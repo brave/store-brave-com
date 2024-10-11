@@ -24,7 +24,7 @@
     {#each purchaseItems ?? [] as item}
       <li class="flex flex-col sm:flex-row gap-[20px] items-center">
         <img
-          class="rounded-m w-full max-w-sm sm:max-w-[150px] shadow-gray-20 shadow-04"
+          class="rounded-m w-full max-w-sm sm:max-w-[150px] shadow-gray-20 drop-shadow-02"
           src={item.product?.details.files.at(-1).preview_url}
           alt="Thumbnail for {item.product?.details.name}"
         />
