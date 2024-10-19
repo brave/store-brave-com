@@ -229,7 +229,7 @@ export async function formatCheckoutSessionParams<SessionCreateParams>(
 
   const encryptedShippingData = await encryptShippingData(recipientInformation);
 
-  return providerAdapter(hydratedItems, encryptedShippingData, shippingRates);
+  return providerAdapter(hydratedItems, recipientInformation, encryptedShippingData, shippingRates);
 }
 
 // TODO: write tests for initCheckoutSession

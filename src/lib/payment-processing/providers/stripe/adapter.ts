@@ -6,6 +6,7 @@ import type { ProviderParamsAdapter } from '../../types';
 
 export const stripeAdapter: ProviderParamsAdapter<Stripe.Checkout.SessionCreateParams> = (
   items,
+  recipient,
   encryptedShippingAddress,
   shippingRates
 ) => {
@@ -74,6 +75,7 @@ export const stripeAdapter: ProviderParamsAdapter<Stripe.Checkout.SessionCreateP
   );
 
   return {
+    customer_email: recipient.email,
     line_items,
     mode: 'payment',
     success_url: `${env.BASE_URL}/success/{CHECKOUT_SESSION_ID}/?${PROVIDER_QUERY_PARAM}=${PROVIDER_NAME}`,

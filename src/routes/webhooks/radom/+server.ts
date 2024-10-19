@@ -1,14 +1,12 @@
-import type { RequestHandler } from './$types';
-import type { Stripe } from 'stripe';
 import { env } from '$env/dynamic/private';
-import { stripe } from '$lib/payment-processing/providers/stripe';
-import * as printfulApi from '$lib/printful-api';
-import { decrypt, blockedCountryCodes, ValidationError } from '$lib/utils';
 import { sdk } from '$lib/graphql/sdk';
+import * as printfulApi from '$lib/printful-api';
+import { blockedCountryCodes, decrypt, ValidationError } from '$lib/utils';
+import type { RequestHandler } from './$types';
 
-import * as Sentry from '@sentry/node';
-import { radomApi, type Radom } from '$lib/payment-processing/providers/radom';
 import { RADOM_WEBHOOK_VERIFICATION_KEY } from '$env/static/private';
+import { metadataKeys, radomApi, type Radom } from '$lib/payment-processing/providers/radom';
+import * as Sentry from '@sentry/node';
 
 Sentry.init({
   dsn: env.SENTRY_DSN,
@@ -39,7 +37,9 @@ export const POST: RequestHandler = async ({ request }) => {
       fulfillOrder(session);
     } catch (e: any) {
       if (e.response?.errors[0]?.extensions?.prisma?.code === 'P2002') {
-        console.log(`Order for ${session.payment.managed.paymentEventId} has already been processed.`);
+        console.log(
+          `Order for ${session.payment.managed.paymentEventId} has already been processed.`
+        );
       }
     }
   }
@@ -48,31 +48,16 @@ export const POST: RequestHandler = async ({ request }) => {
 };
 
 async function fulfillOrder(session: Radom.Checkout.Session): Promise<void> {
-  return;
   try {
-    const sessionDetails = await stripe.checkout.sessions.retrieve(session.id, {
-      expand: ['line_items.data.price.product', 'shipping_cost.shipping_rate']
-    });
+    const shippingRate = session.metadata.find((d) => d.key === metadataKeys.SHIPPING_RATE_ID);
 
-    const shippingRate = sessionDetails.shipping_cost?.shipping_rate as Stripe.ShippingRate;
-    const line_items = sessionDetails.line_items?.data;
-    const { customer_details, metadata } = sessionDetails;
-
-    // TODO: is this actually going to work? I think we need to decode the shipping address first...
-    if (blockedCountryCodes.includes(metadata?.country_code as string)) {
-      throw new ValidationError('Invalid recipient region.');
-    }
-
-    const items = line_items?.map((li): App.OrderItem => {
-      const product = li.price?.product as Stripe.Product;
-      return {
-        quantity: li.quantity ?? 1,
-        sync_variant_id: parseInt(product.metadata.printfulVariantId)
-      };
-    });
-
-    const encryptedShippingData = metadata?.shippingData;
-    const { shippingDataKey } = await sdk.ShippingDataKey({ id: metadata?.keyId });
+    const encryptedShippingData = session.metadata.find(
+      (d) => d.key === metadataKeys.ENCRYPTED_SHIPPING_DATA
+    ).value;
+    const shippingDataEncryptionKeyId = session.metadata.find(
+      (d) => d.key === metadataKeys.SHIPPING_DATA_ENCRYPTION_KEY_ID
+    ).value;
+    const { shippingDataKey } = await sdk.ShippingDataKey({ id: shippingDataEncryptionKeyId });
     let shippingData: App.Recipient;
     if (encryptedShippingData && shippingDataKey && shippingDataKey.key) {
       shippingData = decrypt(encryptedShippingData, shippingDataKey.key);
@@ -80,10 +65,24 @@ async function fulfillOrder(session: Radom.Checkout.Session): Promise<void> {
       throw new Error('Could not find encrypted shippingData or shippingDataKey.');
     }
 
+    if (blockedCountryCodes.includes(shippingData.country_code)) {
+      throw new ValidationError('Invalid recipient region.');
+    }
+
+    const items = session.metadata
+      .filter((d) => d.key === metadataKeys.ITEM)
+      .map((li): App.OrderItem => {
+        const { id, quantity } = JSON.parse(li.value);
+        return {
+          quantity: quantity ?? 1,
+          sync_variant_id: parseInt(id)
+        };
+      });
+
     const newOrder = {
       recipient: {
-        name: shippingData?.name || customer_details?.name,
-        email: customer_details?.email,
+        name: shippingData?.name,
+        email: shippingData?.email,
         address1: shippingData?.address1,
         address2: shippingData?.address2,
         city: shippingData?.city,
@@ -92,8 +91,8 @@ async function fulfillOrder(session: Radom.Checkout.Session): Promise<void> {
         country_code: shippingData?.country_code,
         phone: shippingData?.phone
       },
-      shipping: shippingRate?.metadata?.printful_shipping_rate_id,
-      external_id: sessionDetails.payment_intent as string,
+      shipping: shippingRate.value,
+      external_id: session.payment.managed.paymentEventId.replaceAll('-', ''), // External ID can only be 32 characters
       items
     };
 
@@ -101,11 +100,11 @@ async function fulfillOrder(session: Radom.Checkout.Session): Promise<void> {
     const isProduction = env.BASE_URL.replace(/\/$/, '').endsWith('brave.com');
     const shouldBeDraft = !isProduction;
     await printfulApi.createOrder(newOrder, { draft: shouldBeDraft });
-    await sdk.DeleteShippingDataKey({ id: metadata?.keyId });
+    await sdk.DeleteShippingDataKey({ id: shippingDataEncryptionKeyId });
   } catch (e: any) {
     console.log(e);
     Sentry.captureMessage(
-      `Customer order not submitted to Printful ${session.payment_intent}`,
+      `Customer order not submitted to Printful ${session.payment.managed.paymentEventId}`,
       'error'
     );
   }

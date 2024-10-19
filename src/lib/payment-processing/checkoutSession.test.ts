@@ -72,8 +72,8 @@ describe('Stripe', () => {
       }
     ],
     mode: 'payment',
-    success_url: 'http://localhost:5173/success/{CHECKOUT_SESSION_ID}/',
-    cancel_url: 'http://localhost:5173/cart/?session_id={CHECKOUT_SESSION_ID}',
+    success_url: 'http://localhost:5173/success/{CHECKOUT_SESSION_ID}/?provider=stripe',
+    cancel_url: 'http://localhost:5173/cart/?session_id={CHECKOUT_SESSION_ID}&provider=stripe',
     allow_promotion_codes: true,
     shipping_options: [
       {
@@ -152,8 +152,8 @@ describe('Radom', () => {
         ]
       }
     },
-    successUrl: 'http://localhost:5173/success/{CHECKOUT_SESSION_ID}/',
-    cancelUrl: 'http://localhost:5173/cart/?session_id={CHECKOUT_SESSION_ID}',
+    successUrl: 'http://localhost:5173/success/{CHECKOUT_SESSION_ID}/?provider=radom',
+    cancelUrl: 'http://localhost:5173/cart/?session_id={CHECKOUT_SESSION_ID}&provider=radom',
     chargeCustomerNetworkFee: true,
     customizations: { allowDiscountCodes: true }
   };

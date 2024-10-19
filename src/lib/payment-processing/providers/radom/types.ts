@@ -14,9 +14,11 @@ export namespace Radom {
   };
 
   export namespace Checkout {
+    export type SessionStatus = 'pending' | 'success' | 'cancelled' | 'expired' | 'refunded';
+
     export type Session = {
       id: string;
-      sessionStatus: Status;
+      sessionStatus: SessionStatus;
       organizationId: string;
       products?: Product[];
       items?: ItemData[];
@@ -59,8 +61,6 @@ export namespace Radom {
       chargeCustomerNetworkFee?: boolean;
     };
   }
-
-  type Status = 'pending' | 'success' | 'cancelled' | 'expired' | 'refunded';
 
   type Product = {
     id: string;

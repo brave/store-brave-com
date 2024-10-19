@@ -9,7 +9,8 @@ import {
   createRadomCheckoutSession,
   PROVIDER_NAME as RADOM_PROVIDER_NAME,
   radomAdapter,
-  radomApi
+  radomApi,
+  type Radom
 } from '$lib/payment-processing/providers/radom';
 import {
   stripe,
@@ -21,7 +22,6 @@ import { blockedCountryCodes } from '$lib/utils';
 import type { CountryCallingCode, CountryCode } from 'libphonenumber-js';
 import { getCountryCallingCode, isSupportedCountry } from 'libphonenumber-js/max';
 import type { Actions, PageServerLoad } from './$types';
-import { redirect } from '@sveltejs/kit';
 
 export type CartRequestBody = {
   items: Array<{
@@ -66,20 +66,35 @@ export const load: PageServerLoad = async ({ url }) => {
     try {
       if (provider === STRIPE_PROVIDER_NAME) {
         const session = await stripe.checkout.sessions.retrieve(canceledSession);
+        if (session.status === 'open') {
+          await stripe.checkout.sessions.expire(canceledSession);
+        }
         if (session.metadata?.keyId) {
           await sdk.DeleteShippingDataKey({ id: session.metadata?.keyId });
         }
       } else if (provider === RADOM_PROVIDER_NAME) {
-        const session = await radomApi<{ metadata: [{ key: string; value: string }] }>(
-          `/checkout_session/${canceledSession}`
-        );
+        const session = await radomApi<{
+          metadata: [{ key: string; value: string }];
+          sessionStatus: Radom.Checkout.SessionStatus;
+        }>(`/checkout_session/${canceledSession}`);
+        if (session.sessionStatus === "pending") {
+          await radomApi(`/checkout_session/${canceledSession}/cancel`, {
+            method: 'POST'
+          });
+        }
         const keyId = session.metadata.find((v) => v.key === 'shippingDataEncryptionKeyId')?.value;
         if (keyId) {
           await sdk.DeleteShippingDataKey({ id: keyId });
         }
       }
     } catch (e: any) {
-      console.log(`Could not delete shipping data key due to error: ${e.message}`);
+      if (e?.message?.includes('ShippingDataKey')) {
+        console.error(
+          `Could not delete shipping data key due to error: ${e?.response?.errors[0]?.message}`
+        );
+      } else {
+        console.error(e);
+      }
     }
   }
 

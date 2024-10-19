@@ -186,16 +186,27 @@
         {#if showShippingAddress}
           <div transition:slide|local class="shipping_address">
             <h3 class="text-default-semibold pb-xl">Shipping address</h3>
-            <div class="form-control">
-              <label for="shippingAddress[name]"
-                >Name <span class="label-explanation">(if different from billing name)</span></label
-              >
+            <div class="form-control required">
+              <label for="shippingAddress[name]">Name</label>
               <input
                 value={form?.values?.name || ''}
                 name="shippingAddress[name]"
                 id="shippingAddress[name]"
                 type="text"
                 placeholder="Jane Smith"
+                required
+              />
+            </div>
+
+            <div class="form-control required">
+              <label for="shippingAddress[email]">Email address</label>
+              <input
+                value={form?.values?.email || ''}
+                name="shippingAddress[email]"
+                id="shippingAddress[email]"
+                type="email"
+                placeholder="janesmith@example.com"
+                required
               />
             </div>
 
@@ -408,6 +419,7 @@
     }
 
     &.errors input[type='text'],
+    &.errors input[type='email'],
     &.errors select {
       --bg: theme('colors.systemfeedback.error-background');
     }
@@ -470,6 +482,7 @@
   }
 
   input[type='text'],
+  input[type='email'],
   select {
     @apply text-default-regular;
 

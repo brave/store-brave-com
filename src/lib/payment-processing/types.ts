@@ -37,6 +37,7 @@ export type HydratedCartItem = StrongVariant & {
 
 export type ProviderParamsAdapter<SessionCreateParams> = (
   items: HydratedCartItem[],
+  recipient: App.Recipient,
   encryptedShippingData: EncryptedShippingAddress,
   shippingRates: ShippingRate[]
 ) => SessionCreateParams;

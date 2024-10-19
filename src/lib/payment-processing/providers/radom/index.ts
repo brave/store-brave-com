@@ -21,7 +21,8 @@ export async function radomApi<T = any>(resourcePath: string, options?: RequestI
     }
   });
 
-  const responseBody = await response.json();
+  const responseBody =
+    parseInt(response.headers.get('content-length')) > 0 ? await response.json() : '';
 
   if (response.status !== 200) {
     error(400, responseBody);

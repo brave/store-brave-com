@@ -56,7 +56,16 @@ async function fulfillOrder(session: Stripe.Checkout.Session): Promise<void> {
     const line_items = sessionDetails.line_items?.data;
     const { customer_details, metadata } = sessionDetails;
 
-    if (blockedCountryCodes.includes(metadata?.country_code as string)) {
+    const encryptedShippingData = metadata?.shippingData;
+    const { shippingDataKey } = await sdk.ShippingDataKey({ id: metadata?.keyId });
+    let shippingData: App.Recipient;
+    if (encryptedShippingData && shippingDataKey && shippingDataKey.key) {
+      shippingData = decrypt(encryptedShippingData, shippingDataKey.key);
+    } else {
+      throw new Error('Could not find encrypted shippingData or shippingDataKey.');
+    }
+
+    if (blockedCountryCodes.includes(shippingData.country_code)) {
       throw new ValidationError('Invalid recipient region.');
     }
 
@@ -67,15 +76,6 @@ async function fulfillOrder(session: Stripe.Checkout.Session): Promise<void> {
         sync_variant_id: parseInt(product.metadata.printfulVariantId)
       };
     });
-
-    const encryptedShippingData = metadata?.shippingData;
-    const { shippingDataKey } = await sdk.ShippingDataKey({ id: metadata?.keyId });
-    let shippingData: App.Recipient;
-    if (encryptedShippingData && shippingDataKey && shippingDataKey.key) {
-      shippingData = decrypt(encryptedShippingData, shippingDataKey.key);
-    } else {
-      throw new Error('Could not find encrypted shippingData or shippingDataKey.');
-    }
 
     const newOrder = {
       recipient: {
