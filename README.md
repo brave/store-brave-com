@@ -54,6 +54,9 @@ PRINTFUL_BASE_URL=https://api.printful.com
 PRINTFUL_STORE_ID=/* store id from printful */
 STRIPE_KEY=/* key for making requests to Stripe */
 STRIPE_WEBHOOK_SECRET=/* key for making listening to Stripe webhooks */
+RADOM_BASE_URL=https://api.radom.com
+RADOM_API_KEY=/* key for making requests to Radom */
+RADOM_WEBHOOK_VERIFICATION_KEY=/* key for verifying webhook events from Radom */
 SENTRY_DSN=/* DSN for Sentry alerts */
 ```
 
