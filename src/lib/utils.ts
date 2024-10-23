@@ -17,29 +17,24 @@ export const formatPrice = (price: string | number, currency = 'USD') => {
   });
 };
 
+export const formatDate = (date: Date) =>
+  date.toLocaleString('en-US', { month: 'short', day: 'numeric' });
+
 export const sleep = (seconds: number): Promise<void> => {
   return new Promise((resolve) => {
     setTimeout(resolve, seconds * 1000);
   });
 };
 
-export class CustomError {
+export class ValidationError extends Error {
   name: string;
-  message: string;
+  data?: Record<string, unknown>;
 
-  constructor(message: string) {
-    this.name = 'CustomError';
-    this.message = message;
-  }
-}
-
-export class ValidationError {
-  name: string;
-  message: string;
-
-  constructor(message: string) {
+  constructor(message: string, data?: Record<string, unknown>) {
+    super(message);
     this.name = 'ValidationError';
-    this.message = message;
+
+    if (data) this.data = data;
   }
 }
 

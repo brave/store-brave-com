@@ -1,14 +1,17 @@
 <script lang="ts">
-  import { getContext } from 'svelte';
-  import examples from 'libphonenumber-js/mobile/examples';
-  import { getExampleNumber } from 'libphonenumber-js/max';
-  import type { CountryCode } from 'libphonenumber-js/max';
   import { contextKey } from '$lib/cartStore';
-  import { formatPrice } from '$lib/utils';
-  import Button from '@brave/leo/src/components/button/button.svelte';
   import QuantitySelector from '$lib/QuantitySelector.svelte';
+  import { formatPrice } from '$lib/utils';
+  import type { IconName } from '@brave/leo/icons/meta';
+  import Button from '@brave/leo/src/components/button/button.svelte';
+  import Icon from '@brave/leo/src/components/icon/icon.svelte';
+  import type { CountryCode } from 'libphonenumber-js/max';
+  import { getExampleNumber } from 'libphonenumber-js/max';
+  import examples from 'libphonenumber-js/mobile/examples';
+  import { getContext } from 'svelte';
   import { slide } from 'svelte/transition';
-  import type { PageData } from './$types';
+  import type { ActionData, PageData, SubmitFunction } from './$types';
+  import { enhance } from '$app/forms';
 
   const { cartStore, removeFromCart, updateQuantity }: any = getContext(contextKey);
 
@@ -25,7 +28,40 @@
 
   export let data: PageData;
   $: ({ countries, statesByCountry, countryCallingCodes } = data);
-  export let form: import('./$types').ActionData;
+  export let form: ActionData;
+
+  const providers = ['stripe', 'radom'] as const;
+  type Provider = (typeof providers)[number];
+  type SubmitButton = {
+    text: string;
+    action: string;
+    icon: IconName;
+    isLoading: boolean;
+  };
+  const submitButtons: Record<Provider, SubmitButton> = {
+    stripe: {
+      text: 'Credit card',
+      action: '?/purchaseCreditCard',
+      icon: 'payment-stripe-color',
+      isLoading: false
+    },
+    radom: {
+      text: 'Crypto',
+      action: '?/purchaseCrypto',
+      icon: 'payment-radom-color',
+      isLoading: false
+    }
+  };
+
+  const submitFunction: SubmitFunction = ({ submitter }) => {
+    const id = submitter.id as Provider;
+    submitButtons[id].isLoading = true;
+
+    return ({ update }) => {
+      submitButtons[id].isLoading = false;
+      update();
+    };
+  };
 
   let showShippingAddress = form?.errors?.shippingAddress?.hasErrors;
   let shippingCountryChoice: string = form?.values?.country_code || '';
@@ -70,9 +106,12 @@
   {/if}
 
   <form
+    use:enhance={submitFunction}
     method="post"
     class="grid max-lg:grid-rows-[1fr_auto] lg:grid-cols-[3fr_2fr] gap-7xl h-[stretch]"
   >
+    <!-- Disable submit on 'Enter' since user needs to choose between payment options -->
+    <button type="submit" disabled style="display: none" aria-hidden="true"></button>
     <section id="cart-items">
       {#each $cartStore as { variant, quantity }, i (variant.id)}
         <article
@@ -108,7 +147,7 @@
             </div>
           </div>
           <img
-            class="order-first rounded-m w-full max-w-sm sm:max-w-[150px] shadow-gray-20 shadow-04"
+            class="order-first rounded-m w-full max-w-sm sm:max-w-[150px] shadow-gray-20 drop-shadow-02"
             src={variant.details.files.at(-1).preview_url}
             alt="Thumbnail for {variant.details.name}"
           />
@@ -120,7 +159,7 @@
 
     <section id="total" class="cart-total">
       <div
-        class="shadow-04 lg:rounded-m p-2xl sticky top-[20px] bg-container-background border border-divider-subtle/40"
+        class="shadow-02 lg:rounded-m p-2xl sticky top-[20px] bg-container-background border border-divider-subtle/40"
       >
         <button
           on:click={() => (showShippingAddress = !showShippingAddress)}
@@ -147,16 +186,27 @@
         {#if showShippingAddress}
           <div transition:slide|local class="shipping_address">
             <h3 class="text-default-semibold pb-xl">Shipping address</h3>
-            <div class="form-control">
-              <label for="shippingAddress[name]"
-                >Name <span class="label-explanation">(if different from billing name)</span></label
-              >
+            <div class="form-control required">
+              <label for="shippingAddress[name]">Name</label>
               <input
                 value={form?.values?.name || ''}
                 name="shippingAddress[name]"
                 id="shippingAddress[name]"
                 type="text"
                 placeholder="Jane Smith"
+                required
+              />
+            </div>
+
+            <div class="form-control required">
+              <label for="shippingAddress[email]">Email address</label>
+              <input
+                value={form?.values?.email || ''}
+                name="shippingAddress[email]"
+                id="shippingAddress[email]"
+                type="email"
+                placeholder="janesmith@example.com"
+                required
               />
             </div>
 
@@ -293,13 +343,29 @@
           </div>
         {/if}
 
-        <div class="pt-xl">
+        <div class="pt-xl flex gap-m">
           {#if !showShippingAddress}
-            <Button size="large" type="button" onClick={() => (showShippingAddress = true)}
-              >Enter shipping address</Button
-            >
+            <Button size="large" type="button" onClick={() => (showShippingAddress = true)}>
+              Enter shipping address
+            </Button>
           {:else}
-            <Button size="large" type="submit">Proceed to checkout</Button>
+            {#each Object.entries(submitButtons) as [name, submitButton]}
+              <Button
+                id={name}
+                kind="outline"
+                type="submit"
+                formaction={submitButton.action}
+                isLoading={submitButton.isLoading}
+              >
+                <Icon
+                  --leo-icon-size="var(--leo-icon-xl)"
+                  --leo-icon-height="100%"
+                  name={submitButton.icon}
+                  slot="icon-before"
+                />
+                {submitButton.text}
+              </Button>
+            {/each}
           {/if}
         </div>
       </div>
@@ -353,6 +419,7 @@
     }
 
     &.errors input[type='text'],
+    &.errors input[type='email'],
     &.errors select {
       --bg: theme('colors.systemfeedback.error-background');
     }
@@ -415,6 +482,7 @@
   }
 
   input[type='text'],
+  input[type='email'],
   select {
     @apply text-default-regular;
 

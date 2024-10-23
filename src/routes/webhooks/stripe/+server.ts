@@ -1,9 +1,9 @@
 import type { RequestHandler } from './$types';
 import type { Stripe } from 'stripe';
 import { env } from '$env/dynamic/private';
-import { stripe } from '$lib/stripe-api';
+import { stripe } from '$lib/payment-processing/providers/stripe';
 import * as printfulApi from '$lib/printful-api';
-import { CustomError, decrypt, blockedCountryCodes, ValidationError } from '$lib/utils';
+import { decrypt, blockedCountryCodes, ValidationError } from '$lib/utils';
 import { sdk } from '$lib/graphql/sdk';
 
 import * as Sentry from '@sentry/node';
@@ -56,7 +56,16 @@ async function fulfillOrder(session: Stripe.Checkout.Session): Promise<void> {
     const line_items = sessionDetails.line_items?.data;
     const { customer_details, metadata } = sessionDetails;
 
-    if (blockedCountryCodes.includes(metadata?.country_code as string)) {
+    const encryptedShippingData = metadata?.shippingData;
+    const { shippingDataKey } = await sdk.ShippingDataKey({ id: metadata?.keyId });
+    let shippingData: App.Recipient;
+    if (encryptedShippingData && shippingDataKey && shippingDataKey.key) {
+      shippingData = decrypt(encryptedShippingData, shippingDataKey.key);
+    } else {
+      throw new Error('Could not find encrypted shippingData or shippingDataKey.');
+    }
+
+    if (blockedCountryCodes.includes(shippingData.country_code)) {
       throw new ValidationError('Invalid recipient region.');
     }
 
@@ -67,15 +76,6 @@ async function fulfillOrder(session: Stripe.Checkout.Session): Promise<void> {
         sync_variant_id: parseInt(product.metadata.printfulVariantId)
       };
     });
-
-    const encryptedShippingData = metadata?.shippingData;
-    const { shippingDataKey } = await sdk.ShippingDataKey({ id: metadata?.keyId });
-    let shippingData: App.Recipient;
-    if (encryptedShippingData && shippingDataKey && shippingDataKey.key) {
-      shippingData = decrypt(encryptedShippingData, shippingDataKey.key);
-    } else {
-      throw new CustomError('Could not find encrypted shippingData or shippingDataKey.');
-    }
 
     const newOrder = {
       recipient: {

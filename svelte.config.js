@@ -27,7 +27,7 @@ const config = {
         'img-src': ['self', process.env.PUBLIC_ASSETS_PATH, 'data:'],
         'font-src': ['self'],
         'style-src': ['self', 'unsafe-inline'],
-        'form-action': ['self', 'https://checkout.stripe.com'],
+        'form-action': ['self', 'https://checkout.stripe.com', 'https://pay.radom.com'],
         'connect-src': ['self', 'https://analytics.brave.com'],
         'script-src': ['self', 'https://analytics.brave.com']
       }
