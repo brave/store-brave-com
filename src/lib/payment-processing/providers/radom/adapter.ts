@@ -76,7 +76,7 @@ export const radomAdapter: ProviderParamsAdapter<Radom.Checkout.SessionCreatePar
         })
       }))
     ],
-    chargeCustomerNetworkFee: true,
+    chargeCustomerNetworkFee: false,
     customizations: {
       allowDiscountCodes: true
     }
