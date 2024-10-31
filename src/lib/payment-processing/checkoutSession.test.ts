@@ -10,12 +10,12 @@ const requestBody = {
     { id: 'clwsmtxrj0004zo6dsqvo4b7t', quantity: '1' }
   ],
   shippingAddress: {
-    name: 'Jacob Lamont',
-    address1: '333 Elm Circle',
-    city: 'Villa Rica',
-    zip: '30180',
+    name: 'John Smith',
+    address1: '123 Main Street',
+    city: 'Springfield',
+    zip: '12345',
     country_code: 'US',
-    state_code: 'GA',
+    state_code: 'IL',
     calling_code: 'US+1',
     phone: ''
   }
