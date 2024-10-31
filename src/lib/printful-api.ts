@@ -1,6 +1,17 @@
 import { env } from '$env/dynamic/private';
 import { error } from '@sveltejs/kit';
 
+export type PrintfulShippingRate = {
+  id: string,
+  name: string,
+  rate: string,
+  currency: string,
+  minDeliveryDays?: number,
+  maxDeliveryDays?: number,
+  minDeliveryDate?: string,
+  maxDeliveryDate?: string
+}
+
 export async function printfulApi(resourcePath: string, options?: RequestInit) {
   const url = `${env.PRINTFUL_BASE_URL}${resourcePath}`;
   console.log(`Calling... ${url}`);
