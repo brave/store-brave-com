@@ -19,7 +19,7 @@
     "@keystone-6/fields-document": "9.1.1",
     "@sentry/node": "8.42.0",
     "@stablelib/base64": "2.0.1",
-    "@stablelib/utf8": "2.0.0",
+    "@stablelib/utf8": "2.0.1",
     "dotenv": "16.4.7",
     "graphql": "16.9.0",
     "slugify": "1.6.6",
