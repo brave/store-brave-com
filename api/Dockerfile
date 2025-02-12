@@ -1,4 +1,4 @@
-FROM public.ecr.aws/docker/library/node:18.20.5
+FROM public.ecr.aws/docker/library/node:18.20.6
 
 ENV NODE_ENV=production
 
