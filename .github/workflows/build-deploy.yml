@@ -8,6 +8,10 @@ permissions:
   id-token: write
   contents: read # This is required for actions/checkout
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   get-environment:
     runs-on: ubuntu-latest
