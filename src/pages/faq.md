@@ -16,13 +16,7 @@ If you've waited longer than three weeks for your order, you can email merch@bra
 
 We ship worldwide, with a few exceptions. These exceptions include countries we can't ship to because of legal restrictions or shipping carrier limitations with our fulfillment company. If we have difficulty shipping your order, customer support will contact you.
 
-Currently, the countries we cannot ship to include:
-
-Belarus, Ecuador, Cuba, Iran, North Korea, Russia, Syria
-
-Currently, certain items are limited for the following destinations:
-
-Afghanistan, Bhutan, Brunei, Chad, Laos, Libya, Mongolia, Samoa, South Sudan, Timor-Leste, Turkmenistan, Ukraine, Yemen
+You can read further details here: https://help.printful.com/hc/en-us/articles/360014066779-Is-Printful-available-in-all-countries
 
 ## Will I receive my order all at once?
 

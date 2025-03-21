@@ -56,7 +56,7 @@ async function fulfillOrder(session: Stripe.Checkout.Session): Promise<void> {
     const line_items = sessionDetails.line_items?.data;
     const { customer_details, metadata } = sessionDetails;
 
-    if (blockedCountryCodes.includes(metadata?.country_code as string)) {
+    if (blockedCountryCodes.has(metadata?.country_code as string)) {
       throw new ValidationError('Invalid recipient region.');
     }
 
