@@ -3,8 +3,19 @@ const { secretbox, randomBytes } = tweetnacl;
 import { encode as encodeUTF8, decode as decodeUTF8 } from '@stablelib/utf8';
 import { encode as encodeBase64, decode as decodeBase64 } from '@stablelib/base64';
 
-const sanctionedCountryCodes: Array<string> = ['CU', 'IR', 'KP', 'SY'];
-export const blockedCountryCodes: Array<string> = ['BY', 'EC', 'RU', ...sanctionedCountryCodes];
+/**
+ * Block lists
+ * NOTE that we're not manually deduping these two lists in order to make it
+ * easier to check them against the source lists. We use Set below to dedupe.
+ */
+// These are Category 3 regions as per https://github.com/brave/devops/wiki/Region%E2%80%90based-sanctions-blocking#category-3
+const sanctionedCountryCodes: Array<string> = ['BY', 'CU', 'IR', 'KP', 'MD', 'RU', 'SY', 'VE'];
+
+// Countries blocked by Printful https://help.printful.com/hc/en-us/articles/360014066779-Is-Printful-available-in-all-countries
+const printfulBlockedCountryCodes: Array<string> = ['BY', 'CU', 'EC', 'IR', 'KP', 'RU', 'SY'];
+
+// Dedupe distinct block lists using Set
+export const blockedCountryCodes: Set<string> = new Set([...printfulBlockedCountryCodes, ...sanctionedCountryCodes]);
 
 export const formatPrice = (price: string | number, currency = 'USD') => {
   if (typeof price === 'string') {

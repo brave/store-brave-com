@@ -104,7 +104,7 @@ export const load: PageServerLoad = async ({ url }) => {
   let statesByCountry: Record<string, Array<StateCountry>> = {};
   for (let country of countryData) {
     const { code, name, states } = country;
-    if (!blockedCountryCodes.includes(code)) {
+    if (!blockedCountryCodes.has(code)) {
       countries = [...countries, { code, name }];
       statesByCountry[code] = states?.sort(sortStateCountryAlphabetically);
     }
@@ -179,7 +179,7 @@ export const actions: Actions = {
       errors.shippingAddress.hasErrors = true;
       errors.shippingAddress.country_code = { missing: true };
     }
-    if (blockedCountryCodes.includes(shippingAddress.country_code)) {
+    if (blockedCountryCodes.has(shippingAddress.country_code)) {
       errors.shippingAddress.hasErrors = true;
       errors.shippingAddress.country_code = { invalidRegion: true };
     }
