@@ -36,7 +36,7 @@
     "graphql": "16.10.0",
     "graphql-request": "6.1.0",
     "isomorphic-dompurify": "2.24.0",
-    "libphonenumber-js": "1.12.6",
+    "libphonenumber-js": "1.12.7",
     "marked": "14.1.4",
     "postcss": "8.5.3",
     "prettier": "3.5.3",
