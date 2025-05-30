@@ -60,6 +60,6 @@
     "cookie": "1.0.2",
     "cross-spawn": "7.0.6",
     "esbuild": "0.25.3",
-    "dompurify": "3.2.5"
+    "dompurify": "3.2.6"
   }
 }
