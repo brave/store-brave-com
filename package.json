@@ -18,7 +18,7 @@
   "dependencies": {
     "@brave/leo": "github:brave/leo#d53a7b197f7e4df3ef0c64c7c5a92764434f9e0b",
     "@fontsource-variable/inter": "5.2.5",
-    "@fontsource/poppins": "5.2.5",
+    "@fontsource/poppins": "5.2.6",
     "@graphql-codegen/cli": "5.0.6",
     "@graphql-codegen/introspection": "4.0.3",
     "@graphql-codegen/near-operation-file-preset": "3.0.0",
