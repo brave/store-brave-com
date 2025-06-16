@@ -2,7 +2,6 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": ["local>brave/renovate-config"],
   "labels": ["dependencies", "renovate"],
-  "prConcurrentLimit": 4,
   "rangeStrategy": "pin",
   "timezone": "America/New_York",
   "schedule": ["before 6:00am on Monday"]
