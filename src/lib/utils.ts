@@ -9,7 +9,7 @@ import { encode as encodeBase64, decode as decodeBase64 } from '@stablelib/base6
  * easier to check them against the source lists. We use Set below to dedupe.
  */
 // These are Category 3 regions as per https://github.com/brave/devops/wiki/Region%E2%80%90based-sanctions-blocking#category-3
-const sanctionedCountryCodes: Array<string> = ['BY', 'CU', 'IR', 'KP', 'MD', 'RU', 'SY', 'TZ', 'VE'];
+const sanctionedCountryCodes: Array<string> = ['BY', 'CU', 'IR', 'KP', 'MD', 'RU', 'SY', 'TZ', 'UA', 'VE'];
 
 // Countries blocked by Printful https://help.printful.com/hc/en-us/articles/360014066779-Is-Printful-available-in-all-countries
 const printfulBlockedCountryCodes: Array<string> = ['BY', 'CU', 'EC', 'IR', 'KP', 'RU', 'SY'];
