@@ -12,7 +12,7 @@ import { encode as encodeBase64, decode as decodeBase64 } from '@stablelib/base6
 const sanctionedCountryCodes: Array<string> = ['BY', 'CU', 'IR', 'KP', 'MD', 'RU', 'SY', 'TZ', 'UA', 'VE'];
 
 // Countries blocked by Printful https://help.printful.com/hc/en-us/articles/360014066779-Is-Printful-available-in-all-countries
-const printfulBlockedCountryCodes: Array<string> = ['BY', 'CU', 'EC', 'IR', 'KP', 'RU', 'SY'];
+const printfulBlockedCountryCodes: Array<string> = ['BY', 'CU', 'EC', 'IR', 'KP', 'PS', 'RU', 'SY', 'UA'];
 
 // Dedupe distinct block lists using Set
 export const blockedCountryCodes: Set<string> = new Set([...printfulBlockedCountryCodes, ...sanctionedCountryCodes]);
