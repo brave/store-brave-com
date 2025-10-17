@@ -125,7 +125,7 @@
   afterNavigate((navigation) => {
     // @ts-ignore
     _paq = window._paq = window._paq || [];
-    _paq.push(['setReferrerUrl', navigation.from?.url.href ?? '']);
+    _paq.push(['setReferrerUrl', navigation.from?.url.href ?? document.referrer ?? '']);
     _paq.push(['setCustomUrl', navigation.to?.url.href]);
     _paq.push(['setDocumentTitle', $page.data.title]);
     _paq.push(['trackPageView']);
