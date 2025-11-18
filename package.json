@@ -16,7 +16,7 @@
   },
   "type": "module",
   "dependencies": {
-    "@brave/leo": "github:brave/leo#64ff09226770281e0036d0916c288b0e528b0978",
+    "@brave/leo": "github:brave/leo#bb0a6590e670a7ae6a8473ce86eba5778361b373",
     "@fontsource-variable/inter": "5.2.5",
     "@fontsource/poppins": "5.2.6",
     "@graphql-codegen/cli": "5.0.7",
