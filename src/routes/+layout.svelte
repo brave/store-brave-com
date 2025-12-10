@@ -167,7 +167,7 @@
   <Toast kind={ToastKind.success} message="Item(s) added to shopping cart." />
 {/if}
 
-<header class="py-[20px] border-b border-divider-subtle/40 [view-transition-name:header]">
+<header class="py-[20px] border-b border-divider-subtle/40 md:[view-transition-name:header]">
   <Navigation />
 </header>
 
