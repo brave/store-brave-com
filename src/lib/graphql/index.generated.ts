@@ -216,35 +216,35 @@ const defaultWrapper: SdkFunctionWrapper = (action, _operationName, _operationTy
 
 export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = defaultWrapper) {
   return {
-    FeaturedProducts(variables?: FeaturedProductsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<FeaturedProductsQuery> {
-      return withWrapper((wrappedRequestHeaders) => client.request<FeaturedProductsQuery>(FeaturedProductsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'FeaturedProducts', 'query', variables);
+    FeaturedProducts(variables?: FeaturedProductsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<FeaturedProductsQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<FeaturedProductsQuery>({ document: FeaturedProductsDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'FeaturedProducts', 'query', variables);
     },
-    Products(variables?: ProductsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<ProductsQuery> {
-      return withWrapper((wrappedRequestHeaders) => client.request<ProductsQuery>(ProductsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'Products', 'query', variables);
+    Products(variables?: ProductsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<ProductsQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<ProductsQuery>({ document: ProductsDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'Products', 'query', variables);
     },
-    ProductsByCategory(variables?: ProductsByCategoryQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<ProductsByCategoryQuery> {
-      return withWrapper((wrappedRequestHeaders) => client.request<ProductsByCategoryQuery>(ProductsByCategoryDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'ProductsByCategory', 'query', variables);
+    ProductsByCategory(variables?: ProductsByCategoryQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<ProductsByCategoryQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<ProductsByCategoryQuery>({ document: ProductsByCategoryDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'ProductsByCategory', 'query', variables);
     },
-    Variant(variables?: VariantQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<VariantQuery> {
-      return withWrapper((wrappedRequestHeaders) => client.request<VariantQuery>(VariantDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'Variant', 'query', variables);
+    Variant(variables?: VariantQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<VariantQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<VariantQuery>({ document: VariantDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'Variant', 'query', variables);
     },
-    Variants(variables?: VariantsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<VariantsQuery> {
-      return withWrapper((wrappedRequestHeaders) => client.request<VariantsQuery>(VariantsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'Variants', 'query', variables);
+    Variants(variables?: VariantsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<VariantsQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<VariantsQuery>({ document: VariantsDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'Variants', 'query', variables);
     },
-    Categories(variables?: CategoriesQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<CategoriesQuery> {
-      return withWrapper((wrappedRequestHeaders) => client.request<CategoriesQuery>(CategoriesDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'Categories', 'query', variables);
+    Categories(variables?: CategoriesQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<CategoriesQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<CategoriesQuery>({ document: CategoriesDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'Categories', 'query', variables);
     },
-    ShippingDataKey(variables?: ShippingDataKeyQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<ShippingDataKeyQuery> {
-      return withWrapper((wrappedRequestHeaders) => client.request<ShippingDataKeyQuery>(ShippingDataKeyDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'ShippingDataKey', 'query', variables);
+    ShippingDataKey(variables?: ShippingDataKeyQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<ShippingDataKeyQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<ShippingDataKeyQuery>({ document: ShippingDataKeyDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'ShippingDataKey', 'query', variables);
     },
-    AddProcessedOrder(variables?: AddProcessedOrderMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<AddProcessedOrderMutation> {
-      return withWrapper((wrappedRequestHeaders) => client.request<AddProcessedOrderMutation>(AddProcessedOrderDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'AddProcessedOrder', 'mutation', variables);
+    AddProcessedOrder(variables?: AddProcessedOrderMutationVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<AddProcessedOrderMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<AddProcessedOrderMutation>({ document: AddProcessedOrderDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'AddProcessedOrder', 'mutation', variables);
     },
-    AddShippingDataKey(variables?: AddShippingDataKeyMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<AddShippingDataKeyMutation> {
-      return withWrapper((wrappedRequestHeaders) => client.request<AddShippingDataKeyMutation>(AddShippingDataKeyDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'AddShippingDataKey', 'mutation', variables);
+    AddShippingDataKey(variables?: AddShippingDataKeyMutationVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<AddShippingDataKeyMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<AddShippingDataKeyMutation>({ document: AddShippingDataKeyDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'AddShippingDataKey', 'mutation', variables);
     },
-    DeleteShippingDataKey(variables?: DeleteShippingDataKeyMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<DeleteShippingDataKeyMutation> {
-      return withWrapper((wrappedRequestHeaders) => client.request<DeleteShippingDataKeyMutation>(DeleteShippingDataKeyDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'DeleteShippingDataKey', 'mutation', variables);
+    DeleteShippingDataKey(variables?: DeleteShippingDataKeyMutationVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<DeleteShippingDataKeyMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<DeleteShippingDataKeyMutation>({ document: DeleteShippingDataKeyDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'DeleteShippingDataKey', 'mutation', variables);
     }
   };
 }

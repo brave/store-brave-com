@@ -245,6 +245,7 @@ export type KeystoneAdminUiListMeta = {
   hideCreate: Scalars['Boolean']['output'];
   hideDelete: Scalars['Boolean']['output'];
   initialColumns: Array<Scalars['String']['output']>;
+  initialSearchFields: Array<Scalars['String']['output']>;
   initialSort?: Maybe<KeystoneAdminUiSort>;
   isHidden: Scalars['Boolean']['output'];
   isSingleton: Scalars['Boolean']['output'];
