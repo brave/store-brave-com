@@ -40,7 +40,7 @@
     "marked": "14.1.4",
     "postcss": "8.5.3",
     "prettier": "3.5.3",
-    "prettier-plugin-svelte": "3.4.0",
+    "prettier-plugin-svelte": "3.4.1",
     "qs": "6.14.1",
     "sass": "1.89.0",
     "stripe": "13.11.0",
