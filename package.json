@@ -54,7 +54,7 @@
   },
   "devDependencies": {
     "@sveltejs/vite-plugin-svelte": "3.1.2",
-    "@tsconfig/svelte": "5.0.5"
+    "@tsconfig/svelte": "5.0.7"
   },
   "overrides": {
     "cookie": "1.0.2",
