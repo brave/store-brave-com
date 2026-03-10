@@ -20,7 +20,7 @@ const config = {
     csp: {
       directives: {
         'require-trusted-types-for': ['script'],
-        'trusted-types': ['matomo-policy', 'dompurify', 'default'],
+        'trusted-types': ['svelte-trusted-html', 'matomo-policy', 'dompurify'],
         'default-src': ['none'],
         'frame-ancestors': ['none'],
         'base-uri': ['none'],
