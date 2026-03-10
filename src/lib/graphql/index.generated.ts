@@ -1,4 +1,4 @@
-import { GraphQLClient, RequestOptions } from 'graphql-request';
+import type { GraphQLClient, RequestOptions } from 'graphql-request';
 import gql from 'graphql-tag';
 type GraphQLClientRequestHeaders = RequestOptions['requestHeaders'];
 export type FeaturedProductsQueryVariables = Exact<{ [key: string]: never; }>;
