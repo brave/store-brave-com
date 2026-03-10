@@ -29,7 +29,7 @@
     "@sentry/node": "8.55.0",
     "@stablelib/base64": "2.0.1",
     "@stablelib/utf8": "2.0.1",
-    "@sveltejs/adapter-node": "5.2.12",
+    "@sveltejs/adapter-node": "5.5.4",
     "@sveltejs/kit": "2.53.4",
     "@types/marked": "6.0.0",
     "autoprefixer": "10.4.22",
@@ -40,21 +40,21 @@
     "marked": "14.1.4",
     "postcss": "8.5.3",
     "prettier": "3.5.3",
-    "prettier-plugin-svelte": "3.4.0",
+    "prettier-plugin-svelte": "3.5.1",
     "qs": "6.14.2",
     "sass": "1.89.0",
     "stripe": "13.11.0",
-    "svelte": "4.2.20",
-    "svelte-check": "4.2.1",
-    "svelte-preprocess": "5.1.4",
+    "svelte": "5.55.0",
+    "svelte-check": "4.4.5",
+    "svelte-preprocess": "6.0.3",
     "tailwindcss": "3.4.17",
     "tweetnacl": "1.0.3",
     "typescript": "5.8.3",
-    "vite": "5.4.21"
+    "vite": "7.3.1"
   },
   "devDependencies": {
-    "@sveltejs/vite-plugin-svelte": "3.1.2",
-    "@tsconfig/svelte": "5.0.5"
+    "@sveltejs/vite-plugin-svelte": "6.2.4",
+    "@tsconfig/svelte": "5.0.8"
   },
   "overrides": {
     "cookie": "1.0.2",

@@ -11,13 +11,13 @@
 
   import { onMount, setContext } from 'svelte';
   import { writable } from 'svelte/store';
-  import DOMPurify from 'isomorphic-dompurify';
   import { PUBLIC_ASSETS_PATH } from '$env/static/public';
   import { browser } from '$app/environment';
   import { page } from '$app/stores';
   import { afterNavigate, onNavigate } from '$app/navigation';
   import type { Variant } from '$lib/graphql/types';
   import { cartStorageKey, contextKey } from '$lib/cartStore';
+  import matomoPolicy from '$lib/matomoPolicy';
   import Toast, { Kind as ToastKind } from '$lib/Toast.svelte';
   import Navigation from '$lib/Navigation.svelte';
 
@@ -26,31 +26,6 @@
   import '@fontsource/poppins/600.css';
   import '@fontsource-variable/inter';
   import '../app.scss';
-
-  let matomoPolicy;
-  if (browser) {
-    if (typeof window.trustedTypes == 'undefined')
-      // @ts-ignore
-      window.trustedTypes = { createPolicy: (n, rules) => rules };
-
-    const matomoOrigin = 'https://analytics.brave.com';
-    // @ts-ignore
-    matomoPolicy = trustedTypes.createPolicy('matomo-policy', {
-      createScriptURL: (url: string) => {
-        const trustedURL = new URL(url, matomoOrigin);
-        if (trustedURL.origin === matomoOrigin) {
-          return trustedURL;
-        }
-        // e.g. if url = "//mali.cio.us" or "https://ev.il" or "javascript://blah"
-        throw new TypeError();
-      }
-    });
-
-    // @ts-ignore
-    trustedTypes.createPolicy('default', {
-      createHTML: (dirty: string) => DOMPurify.sanitize(dirty, { RETURN_TRUSTED_TYPE: true })
-    });
-  }
 
   let cartItems: Array<App.CartItem> = [];
   if (browser) {
@@ -118,6 +93,7 @@
       g = d.createElement('script'),
       s = d.getElementsByTagName('script')[0];
     g.async = true;
+    // @ts-ignore
     g.src = matomoPolicy.createScriptURL('matomo.js');
     s?.parentNode?.insertBefore(g, s);
   }

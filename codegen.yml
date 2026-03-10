@@ -6,6 +6,8 @@ generates:
     plugins:
       - 'typescript'
   src/lib/graphql/index.generated.ts:
+    config:
+      useTypeImports: true
     plugins:
       - 'typescript-operations'
       - 'typescript-graphql-request'
