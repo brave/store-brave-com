@@ -21,7 +21,7 @@
     "@stablelib/base64": "2.0.1",
     "@stablelib/utf8": "2.1.0",
     "dotenv": "17.3.1",
-    "graphql": "16.13.1",
+    "graphql": "16.13.2",
     "slugify": "1.6.8",
     "tweetnacl": "1.0.3",
     "typescript": "5.9.3"
