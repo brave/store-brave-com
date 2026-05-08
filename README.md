@@ -33,13 +33,13 @@ All of the data comes from Printful via their [API](https://developers.printful.
 #### Build
 
 ```bash
-npm install && npm run build
+pnpm install && pnpm run build
 ```
 
 #### Start
 
 ```bash
-npm run start
+pnpm run start
 ```
 
 You'll need the following environment variables:
@@ -62,13 +62,13 @@ SENTRY_DSN=/* DSN for Sentry alerts */
 #### Build
 
 ```bash
-cd api && npm install && npm run build
+cd api && pnpm install && pnpm run build
 ```
 
 #### Start
 
 ```bash
-npm run start
+pnpm run start
 ```
 
 You'll need the following environment variables:
@@ -109,8 +109,8 @@ The files should be populated with the respective sets of variables as described
 Ensure dependencies are installed for both the root director and the `api/` directory.
 
 ```bash
-npm install
-cd api && npm install
+pnpm install
+cd api && pnpm install
 cd ../ # return to root for subsequent commands
 ```
 
@@ -119,7 +119,7 @@ cd ../ # return to root for subsequent commands
 In order to start the API, open a new terminal window, `cd` into `api`, and start the service.
 
 ```bash
-npm run dev
+pnpm run dev
 ```
 
 Running the above command will create the database if necessary and run the migrations to create the necessary tables.
@@ -131,7 +131,7 @@ You can populate the DB by going to `http://localhost:3000/sync-store` and click
 Leaving the terminal window open for the API, start the storefront from the root of the repository. In order to run this, you'll need to provide the `PUBLIC_ASSETS_PATH` environment variable in order for it to be available during the initial build phase. The value should use the staging URL for the image CDN: `https://cdn.store.bravesoftware.com`.
 
 ```bash
-PUBLIC_ASSETS_PATH=https://cdn.store.bravesoftware.com npm run dev
+PUBLIC_ASSETS_PATH=https://cdn.store.bravesoftware.com pnpm run dev
 ```
 
 ### Start watch script for `codegen` (optional)
@@ -141,7 +141,7 @@ The storefront uses an SDK to interact with the API which is automatically gener
 In order to watch for changes to `src/lib/graphql/queries.graphql` and trigger this generation process, you can run the following command **in a new terminal** (this would be the third necessary terminal).
 
 ```bash
-npm run gen -- --watch "src/**/*.graphql"
+pnpm run gen -- --watch "src/**/*.graphql"
 ```
 
 ## Branch promotion

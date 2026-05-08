@@ -41,6 +41,9 @@ jobs:
       - name: Git clone the repository
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
 
+      - name: Read Node version
+        run: echo "NODE_VERSION=$(cat .node-version)" >> $GITHUB_ENV
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@e468171a9de216ec08956ac3ada2f0791b6bd435 # v3.11.1
         with:
@@ -78,7 +81,7 @@ jobs:
           IMAGE_TAG: ${{ github.sha }}
           PUBLIC_ASSETS_PATH: ${{ secrets.PUBLIC_ASSETS_PATH }}
         run: |
-          docker buildx build --push --build-arg PUBLIC_ASSETS_PATH=$PUBLIC_ASSETS_PATH \
+          docker buildx build --push --build-arg NODE_VERSION=$NODE_VERSION --build-arg PUBLIC_ASSETS_PATH=$PUBLIC_ASSETS_PATH \
           --build-arg BUILDKIT_INLINE_CACHE=1 \
           --cache-from=type=registry,ref=$ECR_REGISTRY/$ECR_REPOSITORY:latest \
           -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -t $ECR_REGISTRY/$ECR_REPOSITORY:latest .
@@ -114,6 +117,9 @@ jobs:
     steps:
       - name: Git clone the repository
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Read Node version
+        run: echo "NODE_VERSION=$(cat ./api/.node-version)" >> $GITHUB_ENV
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@e468171a9de216ec08956ac3ada2f0791b6bd435 # v3.11.1
@@ -152,7 +158,7 @@ jobs:
           IMAGE_TAG: ${{ github.sha }}
         run: |
           SESSION_SECRET=$( xxd -u -l 16 -p /dev/urandom )
-          docker buildx build --push --build-arg SESSION_SECRET=$SESSION_SECRET --build-arg BUILDKIT_INLINE_CACHE=1 \
+          docker buildx build --push --build-arg NODE_VERSION=$NODE_VERSION --build-arg SESSION_SECRET=$SESSION_SECRET --build-arg BUILDKIT_INLINE_CACHE=1 \
           --cache-from=type=registry,ref=$ECR_REGISTRY/$ECR_REPOSITORY:latest \
           -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -t $ECR_REGISTRY/$ECR_REPOSITORY:latest api/
           echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
@@ -178,7 +184,7 @@ jobs:
 
       - name: DB migration
         run: |
-          run_result=$(aws ecs run-task --overrides '{ "containerOverrides": [{ "name": "store-backend", "command": [ "npm", "run", "migrate" ] }]}' --task-definition store-backend --cluster store --launch-type="FARGATE" --network-configuration '{ "awsvpcConfiguration": { "subnets": ["${{ secrets.ECS_DB_MIGRATION_SUBNET }}"],"securityGroups": ["${{ secrets.ECS_DB_MIGRATION_SG }}"] }}')
+          run_result=$(aws ecs run-task --overrides '{ "containerOverrides": [{ "name": "store-backend", "command": [ "pnpm", "run", "migrate" ] }]}' --task-definition store-backend --cluster store --launch-type="FARGATE" --network-configuration '{ "awsvpcConfiguration": { "subnets": ["${{ secrets.ECS_DB_MIGRATION_SUBNET }}"],"securityGroups": ["${{ secrets.ECS_DB_MIGRATION_SG }}"] }}')
           container_arn=$(echo $run_result | jq '.tasks[0].taskArn' | sed -e 's/^"//' -e 's/"$//')
           echo "container arn: ${container_arn}"
           aws ecs wait tasks-stopped --cluster store --tasks "${container_arn}"

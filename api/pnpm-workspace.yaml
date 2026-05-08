@@ -1,0 +1,27 @@
+minimumReleaseAge: 10080 # minutes; 7 days = 10080
+
+blockExoticSubdeps: true
+
+trustPolicy: "no-downgrade"
+trustPolicyIgnoreAfter: 43200 # minutes; 30 days
+
+publicHoistPattern:
+  - "@prisma/client"
+  - ".prisma"
+  - "*keystone*"
+  - "@keystone-6/*"
+
+overrides:
+  esbuild@<=0.24.2: '>=0.25.0'
+  file-type@>=13.0.0 <21.3.1: '>=21.3.1'
+
+verifyDepsBeforeRun: install
+
+allowBuilds:
+  '@apollo/protobufjs': false
+  '@prisma/client': true
+  '@prisma/engines': true
+  esbuild: false
+  prisma: true
+
+engineStrict: true

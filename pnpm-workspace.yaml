@@ -1,0 +1,22 @@
+minimumReleaseAge: 10080 # minutes; 7 days = 10080
+
+blockExoticSubdeps: true
+
+trustPolicy: "no-downgrade"
+trustPolicyIgnoreAfter: 43200 # minutes; 30 days
+
+allowBuilds:
+  "@brave/leo": true
+  '@parcel/watcher': false
+  esbuild: false
+  svelte-preprocess: false
+
+publicHoistPattern:
+  - "graphql-tag"
+
+overrides:
+  cookie: 1.0.2
+
+verifyDepsBeforeRun: install
+
+engineStrict: true
