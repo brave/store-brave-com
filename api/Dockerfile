@@ -1,14 +1,19 @@
-FROM public.ecr.aws/docker/library/node:18.20.8
+ARG NODE_VERSION
+FROM public.ecr.aws/docker/library/node:${NODE_VERSION}
 
 ENV NODE_ENV=production
 
+RUN corepack enable
+
 WORKDIR /app
+RUN chown node:node /app
 
-COPY ["package.json", "package-lock.json*", "./"]
+USER node
 
-RUN npm ci --omit=dev --ignore-scripts
+COPY --chown=node:node ["package.json", "pnpm-workspace.yaml", "pnpm-lock.yaml", "./"]
+RUN pnpm ci --prod --ignore-scripts
 
-COPY . .
+COPY --chown=node:node . .
 
 # Keystone telemetry flag
 ENV KEYSTONE_TELEMETRY_DISABLED=1
@@ -22,10 +27,6 @@ ENV NEXT_TELEMETRY_DISABLED=1
 ARG SESSION_SECRET
 
 # Allow scripts, keystone uses that to generate files
-RUN npm ci --omit=dev
+RUN pnpm rebuild
 
-RUN npm run build
-
-RUN npm run postinstall
-
-CMD [ "npm", "run", "start" ]
+CMD [ "pnpm", "run", "start" ]

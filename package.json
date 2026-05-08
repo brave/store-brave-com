@@ -12,11 +12,11 @@
     "lint": "prettier --check --plugin-search-dir=. .",
     "format": "prettier --write --plugin-search-dir=. .",
     "gen": "graphql-codegen --config codegen.yml",
-    "postinstall": "node scripts/copy-dependencies.js && npm run gen"
+    "postinstall": "node scripts/copy-dependencies.js && pnpm gen"
   },
   "type": "module",
   "dependencies": {
-    "@brave/leo": "github:brave/leo#da0b728b07661cc3e5faea90d1f79f2ea029584c",
+    "@brave/leo": "github:brave/leo#55d9ea6e182df22dc046f693576c499aec25166d",
     "@fontsource-variable/inter": "5.2.8",
     "@fontsource/poppins": "5.2.7",
     "@graphql-codegen/cli": "6.2.1",
@@ -31,7 +31,6 @@
     "@stablelib/utf8": "2.1.0",
     "@sveltejs/adapter-node": "5.5.4",
     "@sveltejs/kit": "2.55.0",
-    "@types/marked": "6.0.0",
     "autoprefixer": "10.4.27",
     "graphql": "16.13.1",
     "graphql-request": "7.4.0",
@@ -56,7 +55,9 @@
     "@sveltejs/vite-plugin-svelte": "7.0.0",
     "@tsconfig/svelte": "5.0.8"
   },
-  "overrides": {
-    "cookie": "1.0.2"
-  }
+  "engines": {
+    "npm": "please-use-pnpm",
+    "yarn": "please-use-pnpm"
+  },
+  "packageManager": "pnpm@11.4.0+sha512.f0febc7e37552ab485494a914241b338e0b3580b93d54ce31f00933015880863129038a1b4ae4e414a0ee63ac35bf21197e990172c4a68256450b5636310968f"
 }

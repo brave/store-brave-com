@@ -1,5 +1,6 @@
 node_modules
 .keystone/admin
+prisma-client
 keystone.db
 *.log
 .env

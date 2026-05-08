@@ -30,6 +30,7 @@ export default withAuth(
       provider: 'postgresql',
       useMigrations: true,
       url: `postgresql://${DB_URL}/keystone`,
+      prismaClientPath: './prisma-client',
       onConnect: async (context) => {
         if (process.argv.includes('--seed-db')) {
           seedDB(context);
