@@ -30,7 +30,7 @@
     "@stablelib/base64": "^2.0.1",
     "@stablelib/utf8": "^2.1.0",
     "@sveltejs/adapter-node": "^5.5.4",
-    "@sveltejs/kit": "^2.59.1",
+    "@sveltejs/kit": "^2.60.1",
     "@types/marked": "^6.0.0",
     "autoprefixer": "^10.5.0",
     "graphql": "^16.14.0",
