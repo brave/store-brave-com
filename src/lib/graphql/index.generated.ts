@@ -1,81 +1,85 @@
+/** Internal type. DO NOT USE DIRECTLY. */
+type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+/** Internal type. DO NOT USE DIRECTLY. */
+export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
 import type { GraphQLClient, RequestOptions } from 'graphql-request';
 import gql from 'graphql-tag';
 type GraphQLClientRequestHeaders = RequestOptions['requestHeaders'];
 export type FeaturedProductsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type FeaturedProductsQuery = { __typename?: 'Query', products?: Array<{ __typename?: 'Product', id: string, name?: string | null, slug?: string | null, priceRange?: Array<number | null> | null, filters?: any | null, firstVariant?: { __typename?: 'Variant', permalink?: string | null, details?: any | null } | null, variants?: Array<{ __typename?: 'Variant', id: string, permalink?: string | null, printfulVariantId?: string | null, details?: any | null }> | null, category?: { __typename?: 'Category', name?: string | null, slug?: string | null } | null }> | null };
+export type FeaturedProductsQuery = { products: Array<{ id: string, name: string | null, slug: string | null, priceRange: Array<number | null> | null, filters: unknown, firstVariant: { permalink: string | null, details: unknown } | null, variants: Array<{ id: string, permalink: string | null, printfulVariantId: string | null, details: unknown }> | null, category: { name: string | null, slug: string | null } | null }> | null };
 
 export type ProductsQueryVariables = Exact<{
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
+  limit?: number | null | undefined;
+  offset?: number | null | undefined;
 }>;
 
 
-export type ProductsQuery = { __typename?: 'Query', productsCount?: number | null, products?: Array<{ __typename?: 'Product', id: string, name?: string | null, slug?: string | null, priceRange?: Array<number | null> | null, filters?: any | null, firstVariant?: { __typename?: 'Variant', permalink?: string | null, details?: any | null } | null, variants?: Array<{ __typename?: 'Variant', id: string, permalink?: string | null, printfulVariantId?: string | null, details?: any | null }> | null, category?: { __typename?: 'Category', name?: string | null, slug?: string | null } | null }> | null };
+export type ProductsQuery = { productsCount: number | null, products: Array<{ id: string, name: string | null, slug: string | null, priceRange: Array<number | null> | null, filters: unknown, firstVariant: { permalink: string | null, details: unknown } | null, variants: Array<{ id: string, permalink: string | null, printfulVariantId: string | null, details: unknown }> | null, category: { name: string | null, slug: string | null } | null }> | null };
 
 export type ProductsByCategoryQueryVariables = Exact<{
-  categorySlug?: InputMaybe<Scalars['String']['input']>;
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
+  categorySlug?: string | null | undefined;
+  limit?: number | null | undefined;
+  offset?: number | null | undefined;
 }>;
 
 
-export type ProductsByCategoryQuery = { __typename?: 'Query', category?: { __typename?: 'Category', name?: string | null, slug?: string | null, productsCount?: number | null, products?: Array<{ __typename?: 'Product', id: string, name?: string | null, slug?: string | null, priceRange?: Array<number | null> | null, filters?: any | null, firstVariant?: { __typename?: 'Variant', permalink?: string | null, details?: any | null } | null, variants?: Array<{ __typename?: 'Variant', id: string, permalink?: string | null, printfulVariantId?: string | null, details?: any | null }> | null, category?: { __typename?: 'Category', name?: string | null, slug?: string | null } | null }> | null } | null };
+export type ProductsByCategoryQuery = { category: { name: string | null, slug: string | null, productsCount: number | null, products: Array<{ id: string, name: string | null, slug: string | null, priceRange: Array<number | null> | null, filters: unknown, firstVariant: { permalink: string | null, details: unknown } | null, variants: Array<{ id: string, permalink: string | null, printfulVariantId: string | null, details: unknown }> | null, category: { name: string | null, slug: string | null } | null }> | null } | null };
 
 export type VariantQueryVariables = Exact<{
-  printfulId?: InputMaybe<Scalars['String']['input']>;
-  productSlug?: InputMaybe<Scalars['String']['input']>;
+  printfulId?: string | null | undefined;
+  productSlug?: string | null | undefined;
 }>;
 
 
-export type VariantQuery = { __typename?: 'Query', variants?: Array<{ __typename?: 'Variant', id: string, permalink?: string | null, printfulVariantId?: string | null, details?: any | null, product?: { __typename?: 'Product', name?: string | null, slug?: string | null, description?: string | null, thumbnail?: string | null, filters?: any | null, sizingCharts?: any | null, variants?: Array<{ __typename?: 'Variant', id: string, permalink?: string | null, printfulVariantId?: string | null, details?: any | null }> | null, category?: { __typename?: 'Category', name?: string | null, slug?: string | null } | null } | null }> | null };
+export type VariantQuery = { variants: Array<{ id: string, permalink: string | null, printfulVariantId: string | null, details: unknown, product: { name: string | null, slug: string | null, description: string | null, thumbnail: string | null, filters: unknown, sizingCharts: unknown, variants: Array<{ id: string, permalink: string | null, printfulVariantId: string | null, details: unknown }> | null, category: { name: string | null, slug: string | null } | null } | null }> | null };
 
 export type VariantsQueryVariables = Exact<{
-  variantIds?: InputMaybe<Array<Scalars['ID']['input']> | Scalars['ID']['input']>;
+  variantIds?: Array<string | number> | string | number | null | undefined;
 }>;
 
 
-export type VariantsQuery = { __typename?: 'Query', variants?: Array<{ __typename?: 'Variant', id: string, permalink?: string | null, printfulVariantId?: string | null, details?: any | null }> | null };
+export type VariantsQuery = { variants: Array<{ id: string, permalink: string | null, printfulVariantId: string | null, details: unknown }> | null };
 
 export type CategoriesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type CategoriesQuery = { __typename?: 'Query', categories?: Array<{ __typename?: 'Category', id: string, name?: string | null, slug?: string | null, productsCount?: number | null }> | null };
+export type CategoriesQuery = { categories: Array<{ id: string, name: string | null, slug: string | null, productsCount: number | null }> | null };
 
 export type ShippingDataKeyQueryVariables = Exact<{
-  id?: InputMaybe<Scalars['ID']['input']>;
+  id?: string | number | null | undefined;
 }>;
 
 
-export type ShippingDataKeyQuery = { __typename?: 'Query', shippingDataKey?: { __typename?: 'ShippingDataKey', key?: string | null } | null };
+export type ShippingDataKeyQuery = { shippingDataKey: { key: string | null } | null };
 
 export type AddProcessedOrderMutationVariables = Exact<{
-  idempotencyKey?: InputMaybe<Scalars['String']['input']>;
+  idempotencyKey?: string | null | undefined;
 }>;
 
 
-export type AddProcessedOrderMutation = { __typename?: 'Mutation', createProcessedOrder?: { __typename?: 'ProcessedOrder', id: string } | null };
+export type AddProcessedOrderMutation = { createProcessedOrder: { id: string } | null };
 
 export type AddShippingDataKeyMutationVariables = Exact<{
-  key?: InputMaybe<Scalars['String']['input']>;
+  key?: string | null | undefined;
 }>;
 
 
-export type AddShippingDataKeyMutation = { __typename?: 'Mutation', createShippingDataKey?: { __typename?: 'ShippingDataKey', id: string } | null };
+export type AddShippingDataKeyMutation = { createShippingDataKey: { id: string } | null };
 
 export type DeleteShippingDataKeyMutationVariables = Exact<{
-  id?: InputMaybe<Scalars['ID']['input']>;
+  id?: string | number | null | undefined;
 }>;
 
 
-export type DeleteShippingDataKeyMutation = { __typename?: 'Mutation', deleteShippingDataKey?: { __typename?: 'ShippingDataKey', id: string } | null };
+export type DeleteShippingDataKeyMutation = { deleteShippingDataKey: { id: string } | null };
 
-export type ProductSummaryFragment = { __typename?: 'Product', id: string, name?: string | null, slug?: string | null, priceRange?: Array<number | null> | null, filters?: any | null, firstVariant?: { __typename?: 'Variant', permalink?: string | null, details?: any | null } | null, variants?: Array<{ __typename?: 'Variant', id: string, permalink?: string | null, printfulVariantId?: string | null, details?: any | null }> | null, category?: { __typename?: 'Category', name?: string | null, slug?: string | null } | null };
+export type ProductSummaryFragment = { id: string, name: string | null, slug: string | null, priceRange: Array<number | null> | null, filters: unknown, firstVariant: { permalink: string | null, details: unknown } | null, variants: Array<{ id: string, permalink: string | null, printfulVariantId: string | null, details: unknown }> | null, category: { name: string | null, slug: string | null } | null };
 
-export type ProductDetailsFragment = { __typename?: 'Product', name?: string | null, slug?: string | null, description?: string | null, thumbnail?: string | null, filters?: any | null, sizingCharts?: any | null, category?: { __typename?: 'Category', name?: string | null, slug?: string | null } | null };
+export type ProductDetailsFragment = { name: string | null, slug: string | null, description: string | null, thumbnail: string | null, filters: unknown, sizingCharts: unknown, category: { name: string | null, slug: string | null } | null };
 
-export type VariantDetailsFragment = { __typename?: 'Variant', id: string, permalink?: string | null, printfulVariantId?: string | null, details?: any | null };
+export type VariantDetailsFragment = { id: string, permalink: string | null, printfulVariantId: string | null, details: unknown };
 
 export const VariantDetailsFragmentDoc = gql`
     fragment VariantDetails on Variant {
