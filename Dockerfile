@@ -18,12 +18,13 @@ USER node
 RUN pnpm config set store-dir /pnpm
 
 COPY --chown=node:node ["package.json", "pnpm-workspace.yaml", "pnpm-lock.yaml", "./"]
-RUN pnpm ci --ignore-scripts
+RUN pnpm ci --prod --ignore-scripts
 
 COPY --chown=node:node . .
 
 ARG PUBLIC_ASSETS_PATH
 
 RUN pnpm rebuild
+RUN pnpm run build
 
 CMD [ "pnpm", "run", "start" ]
