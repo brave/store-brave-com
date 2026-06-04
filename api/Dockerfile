@@ -28,5 +28,6 @@ ARG SESSION_SECRET
 
 # Allow scripts, keystone uses that to generate files
 RUN pnpm rebuild
+RUN pnpm run build
 
 CMD [ "pnpm", "run", "start" ]
