@@ -12,7 +12,7 @@
     "lint": "prettier --check --plugin-search-dir=. .",
     "format": "prettier --write --plugin-search-dir=. .",
     "gen": "graphql-codegen --config codegen.yml",
-    "postinstall": "node scripts/copy-dependencies.js && pnpm gen"
+    "postinstall": "node scripts/postinstall.js"
   },
   "type": "module",
   "dependencies": {
