@@ -56,6 +56,12 @@ importers:
       '@sveltejs/kit':
         specifier: 2.60.1
         version: 2.60.1(@opentelemetry/api@1.9.1)(@sveltejs/vite-plugin-svelte@7.1.2(svelte@5.55.9)(vite@8.0.14(@types/node@25.9.1)(esbuild@0.25.12)(jiti@1.21.7)(sass@1.100.0)(yaml@2.9.0)))(svelte@5.55.9)(typescript@5.9.3)(vite@8.0.14(@types/node@25.9.1)(esbuild@0.25.12)(jiti@1.21.7)(sass@1.100.0)(yaml@2.9.0))
+      '@sveltejs/vite-plugin-svelte':
+        specifier: 7.1.2
+        version: 7.1.2(svelte@5.55.9)(vite@8.0.14(@types/node@25.9.1)(esbuild@0.25.12)(jiti@1.21.7)(sass@1.100.0)(yaml@2.9.0))
+      '@tsconfig/svelte':
+        specifier: 5.0.8
+        version: 5.0.8
       autoprefixer:
         specifier: 10.5.0
         version: 10.5.0(postcss@8.5.15)
@@ -113,13 +119,6 @@ importers:
       vite:
         specifier: 8.0.14
         version: 8.0.14(@types/node@25.9.1)(esbuild@0.25.12)(jiti@1.21.7)(sass@1.100.0)(yaml@2.9.0)
-    devDependencies:
-      '@sveltejs/vite-plugin-svelte':
-        specifier: 7.1.2
-        version: 7.1.2(svelte@5.55.9)(vite@8.0.14(@types/node@25.9.1)(esbuild@0.25.12)(jiti@1.21.7)(sass@1.100.0)(yaml@2.9.0))
-      '@tsconfig/svelte':
-        specifier: 5.0.8
-        version: 5.0.8
 
 packages:
 

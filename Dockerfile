@@ -16,7 +16,7 @@ COPY --chown=node:node ["package.json", "pnpm-workspace.yaml", "pnpm-lock.yaml",
 ARG PUBLIC_ASSETS_PATH=""
 
 COPY --chown=node:node ./scripts/postinstall.js ./scripts/
-RUN SKIP_POSTINSTALL=1 pnpm ci
+RUN SKIP_POSTINSTALL=1 pnpm ci --prod
 
 COPY --chown=node:node . .
 
