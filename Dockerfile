@@ -10,7 +10,7 @@ RUN mkdir -p /pnpm && chown -R node:node /app /pnpm
 
 USER node
 
-COPY --chown=node:node --parents package.json pnpm-workspace.yaml pnpm-lock.yaml scripts/ ./
+COPY --chown=node:node --parents package.json pnpm-workspace.yaml pnpm-lock.yaml scripts/postinstall.js ./
 
 # Injected by GitHub Actions (fallback for local builds, gets overridden by an explicit '--build-arg')
 ARG PUBLIC_ASSETS_PATH=""
