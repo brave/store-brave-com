@@ -30,7 +30,7 @@
     "@stablelib/base64": "2.0.1",
     "@stablelib/utf8": "2.1.0",
     "@sveltejs/adapter-node": "5.5.4",
-    "@sveltejs/kit": "2.60.1",
+    "@sveltejs/kit": "2.69.1",
     "@sveltejs/vite-plugin-svelte": "7.1.2",
     "@tsconfig/svelte": "5.0.8",
     "autoprefixer": "10.5.0",
