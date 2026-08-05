@@ -15,8 +15,12 @@ publicHoistPattern:
   - "graphql-tag"
 
 overrides:
+  brace-expansion@>=4.0.0 <5.0.9: ^5.0.9
   cookie: 1.0.2
 
 verifyDepsBeforeRun: install
 
 engineStrict: true
+
+minimumReleaseAgeExclude:
+  - brace-expansion@5.0.9
