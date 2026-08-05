@@ -26,5 +26,6 @@ allowBuilds:
   '@prisma/engines': true
   esbuild: false
   prisma: true
+  sharp: false
 
 engineStrict: true
