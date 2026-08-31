@@ -24,6 +24,7 @@ overrides:
   postcss@<=8.5.22: ^8.5.23
   sharp@<0.35.0: ^0.35.0
   uuid@<11.1.1: ^11.1.1
+  next@<15.5.24: 15.5.24
 
 verifyDepsBeforeRun: install
 
@@ -39,3 +40,13 @@ engineStrict: true
 
 minimumReleaseAgeExclude:
   - fast-uri@3.1.5
+  - '@next/env@15.5.24'
+  - '@next/swc-darwin-arm64@15.5.24'
+  - '@next/swc-darwin-x64@15.5.24'
+  - '@next/swc-linux-arm64-gnu@15.5.24'
+  - '@next/swc-linux-arm64-musl@15.5.24'
+  - '@next/swc-linux-x64-gnu@15.5.24'
+  - '@next/swc-linux-x64-musl@15.5.24'
+  - '@next/swc-win32-arm64-msvc@15.5.24'
+  - '@next/swc-win32-x64-msvc@15.5.24'
+  - next@15.5.24
