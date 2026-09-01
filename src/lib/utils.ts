@@ -11,8 +11,10 @@ import { encode as encodeBase64, decode as decodeBase64 } from '@stablelib/base6
 // These are Category 3 regions as per https://github.com/brave/devops/wiki/Region%E2%80%90based-sanctions-blocking#category-3
 const sanctionedCountryCodes: Array<string> = ['BY', 'CU', 'IR', 'KP', 'RU', 'TZ', 'UA', 'VE'];
 
-// Countries blocked by Printful https://help.printful.com/hc/en-us/articles/360014066779-Is-Printful-available-in-all-countries
-const printfulBlockedCountryCodes: Array<string> = ['BY', 'CU', 'DZ', 'EC', 'IR', 'KP', 'PS', 'RU', 'SY', 'UA', 'VE'];
+// Countries blocked by Printful:
+// 1. https://help.printful.com/hc/en-us/articles/360014066779-Is-Printful-available-in-all-countries
+// 2. https://www.printful.com/recent-updates
+const printfulBlockedCountryCodes: Array<string> = ['AF', 'BY', 'CU', 'DJ', 'DZ', 'EC', 'ER', 'IQ', 'IR', 'KP', 'LY', 'MG', 'PS', 'RU', 'SD', 'SY', 'UA', 'VE', 'YE'];
 
 // Dedupe distinct block lists using Set
 export const blockedCountryCodes: Set<string> = new Set([...printfulBlockedCountryCodes, ...sanctionedCountryCodes]);
