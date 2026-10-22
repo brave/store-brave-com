@@ -6,7 +6,7 @@ trustPolicy: "no-downgrade"
 trustPolicyIgnoreAfter: 43200 # minutes; 30 days
 
 allowBuilds:
-  "@brave/leo": true
+  "@brave/leo@https://codeload.github.com/brave/leo/tar.gz/55d9ea6e182df22dc046f693576c499aec25166d": true
   '@parcel/watcher': false
   esbuild: false
   svelte-preprocess: false
@@ -15,12 +15,11 @@ publicHoistPattern:
   - "graphql-tag"
 
 overrides:
-  brace-expansion@>=4.0.0 <5.0.9: ^5.0.9
-  cookie: 1.0.2
+  '@graphql-tools/utils@<=12.0.0': ^12.0.1
+  '@storybook/core@>=8.0.0 <8.6.19': ^8.6.19
+  cookie@<0.7.0: ^0.7.0
+  postcss-selector-parser@<7.1.6: ^7.1.6
 
 verifyDepsBeforeRun: install
 
 engineStrict: true
-
-minimumReleaseAgeExclude:
-  - brace-expansion@5.0.9
