@@ -32,8 +32,8 @@
     "@graphql-codegen/typescript-operations": "6.2.0",
     "@stablelib/base64": "2.0.1",
     "@stablelib/utf8": "2.1.0",
-    "@sveltejs/adapter-node": "5.5.8",
-    "@sveltejs/kit": "2.70.4",
+    "@sveltejs/adapter-node": "6.0.0",
+    "@sveltejs/kit": "3.0.0",
     "@sveltejs/vite-plugin-svelte": "7.3.1",
     "@tsconfig/svelte": "5.0.8",
     "autoprefixer": "10.6.2",
@@ -52,7 +52,7 @@
     "svelte-preprocess": "6.0.5",
     "tailwindcss": "3.4.19",
     "tweetnacl": "1.0.3",
-    "typescript": "5.9.3",
+    "typescript": "6.0.3",
     "vite": "8.3.6"
   },
   "engines": {
