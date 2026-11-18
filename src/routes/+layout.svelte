@@ -11,8 +11,8 @@
 
   import { onMount, setContext } from 'svelte';
   import { writable } from 'svelte/store';
-  import { PUBLIC_ASSETS_PATH } from '$env/static/public';
-  import { browser } from '$app/environment';
+  import { PUBLIC_ASSETS_PATH } from '$app/env/public';
+  import { browser } from '$app/env';
   import { page } from '$app/stores';
   import { afterNavigate, onNavigate } from '$app/navigation';
   import type { Variant } from '$lib/graphql/types';
@@ -150,7 +150,7 @@
 <main
   class="max-sm:container max-sm:mx-auto xl:container xl:mx-auto px-2xl pt-4xl pb-7xl flex flex-col [view-transition-name:main]"
 >
-  <slot />
+  <slot></slot>
 </main>
 
 <footer

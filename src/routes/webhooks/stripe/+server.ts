@@ -1,6 +1,6 @@
 import type { RequestHandler } from './$types';
 import type { Stripe } from 'stripe';
-import { env } from '$env/dynamic/private';
+import { SENTRY_DSN, STRIPE_WEBHOOK_SECRET, BASE_URL } from '$app/env/private';
 import { stripe } from '$lib/stripe-api';
 import * as printfulApi from '$lib/printful-api';
 import { CustomError, decrypt, blockedCountryCodes, ValidationError } from '$lib/utils';
@@ -9,7 +9,7 @@ import { sdk } from '$lib/graphql/sdk';
 import * as Sentry from '@sentry/node';
 
 Sentry.init({
-  dsn: env.SENTRY_DSN,
+  dsn: SENTRY_DSN,
   maxBreadcrumbs: 5,
   beforeSend(event) {
     if (event.user) {
@@ -25,7 +25,7 @@ export const POST: RequestHandler = async ({ request }) => {
 
   let event;
   try {
-    event = await stripe.webhooks.constructEvent(payload, signature, env.STRIPE_WEBHOOK_SECRET);
+    event = await stripe.webhooks.constructEvent(payload, signature, STRIPE_WEBHOOK_SECRET);
   } catch (e: any) {
     return new Response(`Webhook Error: ${e.message}`, { status: 400 });
   }
@@ -95,7 +95,7 @@ async function fulfillOrder(session: Stripe.Checkout.Session): Promise<void> {
     };
 
     // Normalize by removing potential trailing slash
-    const isProduction = env.BASE_URL.replace(/\/$/, '').endsWith('brave.com');
+    const isProduction = BASE_URL.replace(/\/$/, '').endsWith('brave.com');
     const shouldBeDraft = !isProduction;
     await printfulApi.createOrder(newOrder, { draft: shouldBeDraft });
     await sdk.DeleteShippingDataKey({ id: metadata?.keyId });

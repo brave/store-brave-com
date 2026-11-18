@@ -1,15 +1,15 @@
-import { env } from '$env/dynamic/private';
+import { PRINTFUL_BASE_URL, PRINTFUL_STORE_ID, PRINTFUL_API_TOKEN } from '$app/env/private';
 import { error } from '@sveltejs/kit';
 
 export async function printfulApi(resourcePath: string, options?: RequestInit) {
-  const url = `${env.PRINTFUL_BASE_URL}${resourcePath}`;
+  const url = `${PRINTFUL_BASE_URL}${resourcePath}`;
   console.log(`Calling... ${url}`);
 
   let response = await fetch(url, {
     ...options,
     headers: {
-      'X-PF-Store-Id': env.PRINTFUL_STORE_ID,
-      Authorization: `Bearer ${env.PRINTFUL_API_TOKEN}`
+      'X-PF-Store-Id': PRINTFUL_STORE_ID,
+      Authorization: `Bearer ${PRINTFUL_API_TOKEN}`
     }
   });
 
