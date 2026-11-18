@@ -1,7 +1,7 @@
 # Injected by GitHub Actions; for local builds, use '--build-arg NODE_VERSION=$(cat .node-version)'
 ARG NODE_VERSION
 
-FROM public.ecr.aws/docker/library/node:${NODE_VERSION}
+FROM public.ecr.aws/docker/library/node:${NODE_VERSION} AS build
 
 RUN corepack enable
 
@@ -15,11 +15,27 @@ COPY --chown=node:node --parents package.json pnpm-workspace.yaml pnpm-lock.yaml
 # Injected by GitHub Actions (fallback for local builds, gets overridden by an explicit '--build-arg')
 ARG PUBLIC_ASSETS_PATH=""
 
-RUN SKIP_POSTINSTALL=1 pnpm ci --prod
+RUN SKIP_POSTINSTALL=1 pnpm ci
 
 COPY --chown=node:node . .
 
 RUN node scripts/postinstall.js
 RUN pnpm run build
+
+FROM public.ecr.aws/docker/library/node:${NODE_VERSION}
+
+RUN corepack enable
+
+WORKDIR /app
+RUN mkdir -p /pnpm && chown -R node:node /app /pnpm
+
+USER node
+
+COPY --chown=node:node --parents package.json pnpm-workspace.yaml pnpm-lock.yaml scripts/postinstall.js ./
+
+RUN SKIP_POSTINSTALL=1 pnpm ci --prod
+
+COPY --chown=node:node --from=build /app/build ./build
+COPY --chown=node:node --from=build /app/src/pages ./src/pages
 
 CMD [ "pnpm", "run", "start" ]

@@ -221,9 +221,6 @@ importers:
       '@sveltejs/vite-plugin-svelte':
         specifier: 7.3.1
         version: 7.3.1(svelte@5.57.3)(vite@8.3.6(@types/node@26.6.6)(esbuild@0.25.12)(jiti@1.21.7)(sass@1.108.1)(yaml@2.9.1))
-      '@tsconfig/svelte':
-        specifier: 5.0.8
-        version: 5.0.8
       autoprefixer:
         specifier: 10.6.2
         version: 10.6.2(postcss@8.5.32)
@@ -245,12 +242,6 @@ importers:
       postcss:
         specifier: 8.5.32
         version: 8.5.32
-      prettier:
-        specifier: 3.9.10
-        version: 3.9.10
-      prettier-plugin-svelte:
-        specifier: 4.1.1
-        version: 4.1.1(prettier@3.9.10)(svelte@5.57.3)
       qs:
         specifier: 6.17.1
         version: 6.17.1
@@ -263,9 +254,6 @@ importers:
       svelte:
         specifier: 5.57.3
         version: 5.57.3
-      svelte-check:
-        specifier: 4.7.8
-        version: 4.7.8(picomatch@4.0.7)(svelte@5.57.3)(typescript@5.9.3)
       svelte-preprocess:
         specifier: 6.0.5
         version: 6.0.5(@babel/core@7.29.13(supports-color@7.2.0))(postcss-load-config@6.0.1(jiti@1.21.7)(postcss@8.5.32)(yaml@2.9.1))(postcss@8.5.32)(sass@1.108.1)(svelte@5.57.3)(typescript@5.9.3)
@@ -281,6 +269,19 @@ importers:
       vite:
         specifier: 8.3.6
         version: 8.3.6(@types/node@26.6.6)(esbuild@0.25.12)(jiti@1.21.7)(sass@1.108.1)(yaml@2.9.1)
+    devDependencies:
+      '@tsconfig/svelte':
+        specifier: 5.0.8
+        version: 5.0.8
+      prettier:
+        specifier: 3.9.10
+        version: 3.9.10
+      prettier-plugin-svelte:
+        specifier: 4.1.1
+        version: 4.1.1(prettier@3.9.10)(svelte@5.57.3)
+      svelte-check:
+        specifier: 4.7.8
+        version: 4.7.8(picomatch@4.0.7)(svelte@5.57.3)(typescript@5.9.3)
 
 packages:
 
