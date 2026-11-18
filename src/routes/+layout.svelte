@@ -99,6 +99,8 @@
   }
 
   afterNavigate((navigation) => {
+    if (navigation.shallow && navigation.type === 'goto') return;
+
     // @ts-ignore
     _paq = window._paq = window._paq || [];
     _paq.push(['setReferrerUrl', navigation.from?.url.href ?? document.referrer ?? '']);
@@ -112,7 +114,9 @@
     document.documentElement.classList.remove('preload');
   });
 
-  onNavigate(({ from, to, ...navigation }) => {
+  onNavigate(({ from, to, shallow, type, ...navigation }) => {
+    if (shallow && type === 'goto') return;
+
     const productToProductNav = to?.params?.product && from?.params?.product;
     /*
      * Don't transition if simply switching between variants of same product
