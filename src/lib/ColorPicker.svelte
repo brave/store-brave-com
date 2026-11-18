@@ -1,6 +1,6 @@
 <script lang="ts">
   import { createEventDispatcher } from 'svelte';
-  import type { Variant } from '$lib/graphql/types';
+  import type { Variant } from '#lib/graphql/types.ts';
   type Color = {
     name: string;
     primary: string;

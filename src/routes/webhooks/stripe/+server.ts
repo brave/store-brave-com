@@ -1,10 +1,10 @@
 import type { RequestHandler } from './$types';
 import type { Stripe } from 'stripe';
 import { SENTRY_DSN, STRIPE_WEBHOOK_SECRET, BASE_URL } from '$app/env/private';
-import { stripe } from '$lib/stripe-api';
-import * as printfulApi from '$lib/printful-api';
-import { CustomError, decrypt, blockedCountryCodes, ValidationError } from '$lib/utils';
-import { sdk } from '$lib/graphql/sdk';
+import { stripe } from '#lib/stripe-api.ts';
+import * as printfulApi from '#lib/printful-api.ts';
+import { CustomError, decrypt, blockedCountryCodes, ValidationError } from '#lib/utils.ts';
+import { sdk } from '#lib/graphql/sdk.js';
 
 import * as Sentry from '@sentry/node';
 

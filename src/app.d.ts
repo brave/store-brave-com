@@ -9,8 +9,8 @@ declare namespace App {
   }
 
   interface CartItem {
-    variant: import('$lib/graphql/types').Variant;
-    product: import('$lib/graphql/types').Product;
+    variant: import('#lib/graphql/types.ts').Variant;
+    product: import('#lib/graphql/types.ts').Product;
     quantity: number;
   }
 

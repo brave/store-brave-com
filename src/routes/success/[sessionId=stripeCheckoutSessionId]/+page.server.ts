@@ -1,9 +1,9 @@
 import { redirect } from '@sveltejs/kit';
 import { SENTRY_DSN } from '$app/env/private';
-import { stripe } from '$lib/stripe-api';
+import { stripe } from '#lib/stripe-api.ts';
 import type Stripe from 'stripe';
 import type { PageServerLoad } from './$types';
-import { sdk } from '$lib/graphql/sdk';
+import { sdk } from '#lib/graphql/sdk.js';
 import * as Sentry from '@sentry/node';
 
 Sentry.init({

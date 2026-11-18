@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { PageData } from './$types';
   import Button from '@brave/leo/src/components/button/button.svelte';
-  import ProductList from '$lib/ProductList.svelte';
+  import ProductList from '#lib/ProductList.svelte';
 
   export let data: PageData;
   $: ({ featuredProducts, categories } = data);

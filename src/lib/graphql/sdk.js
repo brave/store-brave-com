@@ -1,5 +1,5 @@
 import { GraphQLClient } from 'graphql-request';
-import { getSdk } from '$lib/graphql/index.generated';
+import { getSdk } from '#lib/graphql/index.generated.ts';
 import { API_URL } from '$app/env/private';
 import { building } from '$app/env';
 

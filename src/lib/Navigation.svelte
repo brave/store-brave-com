@@ -1,8 +1,8 @@
 <script lang="ts">
   import { getContext } from 'svelte';
   import { page as currentPage } from '$app/stores';
-  import { contextKey } from '$lib/cartStore';
-  import CartButton from '$lib/CartButton.svelte';
+  import { contextKey } from '#lib/cartStore.ts';
+  import CartButton from '#lib/CartButton.svelte';
   import Icon from '@brave/leo/src/components/icon/icon.svelte';
 
   const { cartStore }: any = getContext(contextKey);

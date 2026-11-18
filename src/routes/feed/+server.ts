@@ -1,6 +1,6 @@
 import { BASE_URL } from '$app/env/private';
-import { sdk } from '$lib/graphql/sdk';
-import { formatPrice } from '$lib/utils';
+import { sdk } from '#lib/graphql/sdk.js';
+import { formatPrice } from '#lib/utils.ts';
 import type { RequestHandler } from './$types';
 
 export const GET = (async () => {

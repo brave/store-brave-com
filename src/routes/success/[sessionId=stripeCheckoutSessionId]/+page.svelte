@@ -1,6 +1,6 @@
 <script lang="ts">
   import { getContext } from 'svelte';
-  import { contextKey } from '$lib/cartStore';
+  import { contextKey } from '#lib/cartStore.ts';
   import { browser } from '$app/env';
 
   // @ts-ignore

@@ -7,14 +7,14 @@ import {
   isValidPhoneNumber
 } from 'libphonenumber-js/max';
 import type { CountryCode, CountryCallingCode } from 'libphonenumber-js';
-import { stripe } from '$lib/stripe-api';
+import { stripe } from '#lib/stripe-api.ts';
 import type { Stripe } from 'stripe';
 import { BASE_URL } from '$app/env/private';
 import type { Actions, PageServerLoad } from './$types';
-import { printfulApi } from '$lib/printful-api';
-import { CustomError, encrypt, generateKey, blockedCountryCodes } from '$lib/utils';
-import { sdk } from '$lib/graphql/sdk';
-import type { Variant } from '$lib/graphql/types';
+import { printfulApi } from '#lib/printful-api.ts';
+import { CustomError, encrypt, generateKey, blockedCountryCodes } from '#lib/utils.ts';
+import { sdk } from '#lib/graphql/sdk.js';
+import type { Variant } from '#lib/graphql/types.ts';
 
 type Address = {
   name?: string;

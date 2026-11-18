@@ -1,13 +1,13 @@
 <script>
   import { getContext } from 'svelte';
-  import { contextKey } from '$lib/cartStore';
+  import { contextKey } from '#lib/cartStore.ts';
   import Button from '@brave/leo/src/components/button/button.svelte';
   import MeasurementDetails from './MeasurementDetails.svelte';
-  import QuantitySelector from '$lib/QuantitySelector.svelte';
-  import Breadcrumbs from '$lib/Breadcrumbs.svelte';
-  import { formatPrice } from '$lib/utils';
-  import ColorPicker from '$lib/ColorPicker.svelte';
-  import SizePicker from '$lib/SizePicker.svelte';
+  import QuantitySelector from '#lib/QuantitySelector.svelte';
+  import Breadcrumbs from '#lib/Breadcrumbs.svelte';
+  import { formatPrice } from '#lib/utils.ts';
+  import ColorPicker from '#lib/ColorPicker.svelte';
+  import SizePicker from '#lib/SizePicker.svelte';
 
   const { addToCart } = getContext(contextKey);
 

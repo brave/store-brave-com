@@ -1,4 +1,4 @@
-import { sdk } from '$lib/graphql/sdk';
+import { sdk } from '#lib/graphql/sdk.js';
 
 /** @type {import('./$types').LayoutServerLoad} */
 export async function load({ route }) {

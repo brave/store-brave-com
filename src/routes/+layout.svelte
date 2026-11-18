@@ -15,11 +15,11 @@
   import { browser } from '$app/env';
   import { page } from '$app/stores';
   import { afterNavigate, onNavigate } from '$app/navigation';
-  import type { Variant } from '$lib/graphql/types';
-  import { cartStorageKey, contextKey } from '$lib/cartStore';
-  import matomoPolicy from '$lib/matomoPolicy';
-  import Toast, { Kind as ToastKind } from '$lib/Toast.svelte';
-  import Navigation from '$lib/Navigation.svelte';
+  import type { Variant } from '#lib/graphql/types.ts';
+  import { cartStorageKey, contextKey } from '#lib/cartStore.ts';
+  import matomoPolicy from '#lib/matomoPolicy.ts';
+  import Toast, { Kind as ToastKind } from '#lib/Toast.svelte';
+  import Navigation from '#lib/Navigation.svelte';
 
   import '@fontsource/poppins/400.css';
   import '@fontsource/poppins/500.css';

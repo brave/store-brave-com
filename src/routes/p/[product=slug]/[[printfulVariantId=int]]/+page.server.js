@@ -1,4 +1,4 @@
-import { sdk } from '$lib/graphql/sdk';
+import { sdk } from '#lib/graphql/sdk.js';
 import { error, redirect } from '@sveltejs/kit';
 
 /** @type {import('./$types').PageServerLoad} */
