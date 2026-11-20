@@ -23,7 +23,11 @@ export default defineConfig({
           'default-src': ['none'],
           'frame-ancestors': ['none'],
           'base-uri': ['none'],
-          'img-src': /** @type {any} */ (['self', process.env.PUBLIC_ASSETS_PATH ?? '', 'data:']),
+          'img-src': /** @type {any} */ ([
+            'self',
+            ...(process.env.PUBLIC_ASSETS_PATH ? [process.env.PUBLIC_ASSETS_PATH] : []),
+            'data:'
+          ]),
           'font-src': ['self'],
           'style-src': ['self', 'unsafe-inline'],
           'form-action': ['self', 'https://checkout.stripe.com'],
