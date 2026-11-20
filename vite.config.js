@@ -1,18 +1,20 @@
 import adapter from '@sveltejs/adapter-node';
-import preprocess from 'svelte-preprocess';
-import sass from 'sass';
-import { readdirSync } from 'fs';
 import { sveltekit } from '@sveltejs/kit/vite';
+import { readdirSync } from 'fs';
+import { sveltePreprocess as preprocess } from 'svelte-preprocess';
+import { defineConfig } from 'vite';
 
-/** @type {import('vite').UserConfig} */ const config = {
+export default defineConfig({
   plugins: [
     sveltekit({
       // Consult https://github.com/sveltejs/svelte-preprocess
       // for more information about preprocessors
-      preprocess: preprocess({ sass, postcss: true }),
+      preprocess: preprocess({ postcss: true }),
       adapter: adapter(),
       prerender: {
-        entries: readdirSync('./src/pages').map((v) => `/${v.replace('.md', '')}`)
+        entries: readdirSync('./src/pages').map(
+          (v) => /** @type {`/${string}`} */ (`/${v.replace('.md', '')}`)
+        )
       },
       csp: {
         directives: {
@@ -21,7 +23,7 @@ import { sveltekit } from '@sveltejs/kit/vite';
           'default-src': ['none'],
           'frame-ancestors': ['none'],
           'base-uri': ['none'],
-          'img-src': ['self', process.env.PUBLIC_ASSETS_PATH, 'data:'],
+          'img-src': /** @type {any} */ (['self', process.env.PUBLIC_ASSETS_PATH ?? '', 'data:']),
           'font-src': ['self'],
           'style-src': ['self', 'unsafe-inline'],
           'form-action': ['self', 'https://checkout.stripe.com'],
@@ -31,6 +33,4 @@ import { sveltekit } from '@sveltejs/kit/vite';
       }
     })
   ]
-};
-
-export default config;
+});

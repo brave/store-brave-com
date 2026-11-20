@@ -373,7 +373,7 @@ export const actions: Actions = {
     }
 
     if (session.url) {
-      redirect(303, session.url);
+      redirect(303, session.url, { external: ['https://checkout.stripe.com'] });
     }
   }
 };
