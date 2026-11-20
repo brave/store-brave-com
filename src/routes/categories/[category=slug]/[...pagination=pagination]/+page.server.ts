@@ -1,5 +1,5 @@
 import { error, redirect } from '@sveltejs/kit';
-import { sdk } from '$lib/graphql/sdk';
+import { sdk } from '#lib/graphql/sdk.js';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async function load({ params, url }) {

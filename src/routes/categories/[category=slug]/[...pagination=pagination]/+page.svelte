@@ -1,7 +1,7 @@
 <script>
-  import Breadcrumbs from '$lib/Breadcrumbs.svelte';
-  import Pagination from '$lib/Pagination.svelte';
-  import ProductList from '$lib/ProductList.svelte';
+  import Breadcrumbs from '#lib/Breadcrumbs.svelte';
+  import Pagination from '#lib/Pagination.svelte';
+  import ProductList from '#lib/ProductList.svelte';
   import Button from '@brave/leo/src/components/button/button.svelte';
 
   /** @type {import('./$types').PageData} */

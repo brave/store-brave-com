@@ -7,14 +7,14 @@ import {
   isValidPhoneNumber
 } from 'libphonenumber-js/max';
 import type { CountryCode, CountryCallingCode } from 'libphonenumber-js';
-import { stripe } from '$lib/stripe-api';
+import { stripe } from '#lib/stripe-api.ts';
 import type { Stripe } from 'stripe';
-import { env } from '$env/dynamic/private';
+import { BASE_URL } from '$app/env/private';
 import type { Actions, PageServerLoad } from './$types';
-import { printfulApi } from '$lib/printful-api';
-import { CustomError, encrypt, generateKey, blockedCountryCodes } from '$lib/utils';
-import { sdk } from '$lib/graphql/sdk';
-import type { Variant } from '$lib/graphql/types';
+import { printfulApi } from '#lib/printful-api.ts';
+import { CustomError, encrypt, generateKey, blockedCountryCodes } from '#lib/utils.ts';
+import { sdk } from '#lib/graphql/sdk.js';
+import type { Variant } from '#lib/graphql/types.ts';
 
 type Address = {
   name?: string;
@@ -124,7 +124,7 @@ export const load: PageServerLoad = async ({ url }) => {
       countryCallingCodes[countryCode] = {
         key: `${countryCode}+${callingCode}`,
         code: country.code as CountryCode,
-        callingCode: callingCode
+        callingCode
       };
     }
   }
@@ -210,9 +210,8 @@ export const actions: Actions = {
     }
 
     // Get product variant details from DB
-    const { variants } = await sdk.Variants({
-      variantIds: items.map((v) => v.id)
-    });
+    const { variants } = await sdk.Variants({ variantIds: items.map((v) => v.id) });
+
     const typedVariants = variants ?? ([] as Array<StrongVariant>);
 
     // TODO: (maybe) return error if could not find all products in DB
@@ -356,8 +355,8 @@ export const actions: Actions = {
       session = await stripe.checkout.sessions.create({
         line_items,
         mode: 'payment',
-        success_url: `${env.BASE_URL}/success/{CHECKOUT_SESSION_ID}/`,
-        cancel_url: `${env.BASE_URL}/cart/?${canceledSessionQueryParam}={CHECKOUT_SESSION_ID}`,
+        success_url: `${BASE_URL}/success/{CHECKOUT_SESSION_ID}/`,
+        cancel_url: `${BASE_URL}/cart/?${canceledSessionQueryParam}={CHECKOUT_SESSION_ID}`,
         allow_promotion_codes: true,
         shipping_options: stripeShippingOptions,
         invoice_creation: {
@@ -374,7 +373,7 @@ export const actions: Actions = {
     }
 
     if (session.url) {
-      redirect(303, session.url);
+      redirect(303, session.url, { external: ['https://checkout.stripe.com'] });
     }
   }
 };

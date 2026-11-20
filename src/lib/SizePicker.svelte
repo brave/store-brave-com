@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { Variant } from '$lib/graphql/types';
+  import type { Variant } from '#lib/graphql/types.ts';
 
   export let sizeVariants: Array<Variant> = [];
   export let activeSize: string = '';

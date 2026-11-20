@@ -1,6 +1,6 @@
 <script lang="ts">
   import { createEventDispatcher } from 'svelte';
-  import type { Variant } from '$lib/graphql/types';
+  import type { Variant } from '#lib/graphql/types.ts';
   type Color = {
     name: string;
     primary: string;
@@ -56,7 +56,7 @@
         class="color-link border border-gray-30 block overflow-hidden"
         class:active-option={activeColor === color.name}
         href={colorVariant?.permalink}
-        data-sveltekit-replacestate={shouldClickReplaceState ? '' : 'off'}
+        data-sveltekit-replacestate={shouldClickReplaceState ? '' : 'false'}
         on:mouseenter={() => dispatch('mouseenter', { colorVariant })}
         title={color.name}
       >

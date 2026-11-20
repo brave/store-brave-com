@@ -1,4 +1,4 @@
-import { browser } from '$app/environment';
+import { browser } from '$app/env';
 
 const matomoOrigin = 'https://analytics.brave.com';
 
@@ -20,7 +20,7 @@ if (browser) {
       // e.g. if url = "//mali.cio.us" or "https://ev.il" or "javascript://blah"
       throw new TypeError();
     }
-  })
+  });
 }
 
 export default matomoPolicy;

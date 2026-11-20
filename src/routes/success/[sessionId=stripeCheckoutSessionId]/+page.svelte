@@ -1,7 +1,7 @@
 <script lang="ts">
   import { getContext } from 'svelte';
-  import { contextKey } from '$lib/cartStore';
-  import { browser } from '$app/environment';
+  import { contextKey } from '#lib/cartStore.ts';
+  import { browser } from '$app/env';
 
   // @ts-ignore
   const { emptyCart } = getContext(contextKey);
@@ -17,8 +17,8 @@
   <h1 class="text-[50px] sm:text-[80px] font-semibold pb-m [view-transition-name:page-name]">
     Congrats!
   </h1>
-  <p class="text-[22px] font-medium pb-5xl">Your order should be shipping soon!</p>
 
+  <p class="text-[22px] font-medium pb-5xl">Your order should be shipping soon!</p>
   <h2 class="text-[22px] font-medium pb-xl">Your order</h2>
   <ul class="flex flex-col gap-y-3xl text-center sm:text-left">
     {#each purchaseItems ?? [] as item}

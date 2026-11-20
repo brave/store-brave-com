@@ -3,10 +3,10 @@
   import examples from 'libphonenumber-js/mobile/examples';
   import { getExampleNumber } from 'libphonenumber-js/max';
   import type { CountryCode } from 'libphonenumber-js/max';
-  import { contextKey } from '$lib/cartStore';
-  import { formatPrice } from '$lib/utils';
+  import { contextKey } from '#lib/cartStore.ts';
+  import { formatPrice } from '#lib/utils.ts';
   import Button from '@brave/leo/src/components/button/button.svelte';
-  import QuantitySelector from '$lib/QuantitySelector.svelte';
+  import QuantitySelector from '#lib/QuantitySelector.svelte';
   import { slide } from 'svelte/transition';
   import type { PageData } from './$types';
 

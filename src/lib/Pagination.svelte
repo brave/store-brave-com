@@ -1,20 +1,24 @@
 <script lang="ts">
-  import { page } from '$app/stores';
+  import { page } from '$app/state';
   import Icon from '@brave/leo/src/components/icon/icon.svelte';
 
-  export let itemCount: number;
-  export let perPageLimit: number;
-  export let currentPage: number;
+  let {
+    itemCount,
+    perPageLimit,
+    currentPage
+  }: { itemCount: number; perPageLimit: number; currentPage: number } = $props();
 
-  $: canGoBackward = currentPage > 1;
-  $: canGoForward = currentPage < pages.length;
+  const pages = $derived(
+    Array.from({ length: Math.ceil(itemCount / perPageLimit) }, (_, i) => i + 1)
+  );
+
+  const canGoBackward = $derived(currentPage > 1);
+  const canGoForward = $derived(currentPage < pages.length);
 
   // First normalize URL to ensure trailing slash, and then create base path
-  $: basePagePath = $page.url.pathname
-    .replace(/([^\/])$/, '$1/')
-    .replace(/\/(page\/\d*?\/)?$/, '/page');
-
-  $: pages = Array.from({ length: Math.ceil(itemCount / perPageLimit) }, (_, i) => i + 1);
+  const basePagePath = $derived(
+    page.url.pathname.replace(/([^\/])$/, '$1/').replace(/\/(page\/\d*?\/)?$/, '/page')
+  );
 </script>
 
 <div class="pagination">
@@ -39,9 +43,9 @@
     </svelte:element>
   </span>
   <ol class="pagination-pages">
-    {#each pages as page (page)}
-      <li class="page-item" class:active={page == currentPage}>
-        <a class="page-link" href={`${basePagePath}/${page}/`}>{page}</a>
+    {#each pages as pageNumber (pageNumber)}
+      <li class="page-item" class:active={pageNumber == currentPage}>
+        <a class="page-link" href={`${basePagePath}/${pageNumber}/`}>{pageNumber}</a>
       </li>
     {/each}
   </ol>

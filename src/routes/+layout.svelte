@@ -11,15 +11,15 @@
 
   import { onMount, setContext } from 'svelte';
   import { writable } from 'svelte/store';
-  import { PUBLIC_ASSETS_PATH } from '$env/static/public';
-  import { browser } from '$app/environment';
-  import { page } from '$app/stores';
+  import { PUBLIC_ASSETS_PATH } from '$app/env/public';
+  import { browser } from '$app/env';
+  import { page } from '$app/state';
   import { afterNavigate, onNavigate } from '$app/navigation';
-  import type { Variant } from '$lib/graphql/types';
-  import { cartStorageKey, contextKey } from '$lib/cartStore';
-  import matomoPolicy from '$lib/matomoPolicy';
-  import Toast, { Kind as ToastKind } from '$lib/Toast.svelte';
-  import Navigation from '$lib/Navigation.svelte';
+  import type { Variant } from '#lib/graphql/types.ts';
+  import { cartStorageKey, contextKey } from '#lib/cartStore.ts';
+  import matomoPolicy from '#lib/matomoPolicy.ts';
+  import Toast, { Kind as ToastKind } from '#lib/Toast.svelte';
+  import Navigation from '#lib/Navigation.svelte';
 
   import '@fontsource/poppins/400.css';
   import '@fontsource/poppins/500.css';
@@ -99,11 +99,13 @@
   }
 
   afterNavigate((navigation) => {
+    if (navigation.shallow && navigation.type === 'goto') return;
+
     // @ts-ignore
     _paq = window._paq = window._paq || [];
     _paq.push(['setReferrerUrl', navigation.from?.url.href ?? document.referrer ?? '']);
     _paq.push(['setCustomUrl', navigation.to?.url.href]);
-    _paq.push(['setDocumentTitle', $page.data.title]);
+    _paq.push(['setDocumentTitle', page.data.title]);
     _paq.push(['trackPageView']);
   });
 
@@ -112,7 +114,9 @@
     document.documentElement.classList.remove('preload');
   });
 
-  onNavigate(({ from, to, ...navigation }) => {
+  onNavigate(({ from, to, shallow, type, ...navigation }) => {
+    if (shallow && type === 'goto') return;
+
     const productToProductNav = to?.params?.product && from?.params?.product;
     /*
      * Don't transition if simply switching between variants of same product
@@ -135,7 +139,8 @@
 </script>
 
 <svelte:head>
-  <title>{$page.error ? $page.status : $page.data.title} | Brave Merch Store</title>
+  <title>{page.error ? page.status : page.data.title} | Brave Merch Store</title>
+
   <link rel="preconnect" crossorigin="anonymous" href={PUBLIC_ASSETS_PATH} />
 </svelte:head>
 
@@ -150,7 +155,7 @@
 <main
   class="max-sm:container max-sm:mx-auto xl:container xl:mx-auto px-2xl pt-4xl pb-7xl flex flex-col [view-transition-name:main]"
 >
-  <slot />
+  <slot></slot>
 </main>
 
 <footer

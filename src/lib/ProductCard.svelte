@@ -6,9 +6,9 @@
   import { viewTransition } from '../routes/+layout.svelte';
 
   export let product: ProductSummaryFragment;
+
   $: colorVariants =
     product?.variants?.filter((v) => v.details.size === product.firstVariant?.details.size) || [];
-
   let priceRange = product.priceRange
     ?.map((p) => {
       return p && formatPrice(p);
@@ -34,6 +34,8 @@
 
   let productImage: HTMLImageElement;
   afterNavigate((navigation) => {
+    if (navigation.shallow && navigation.type === 'goto') return;
+
     // @ts-ignore
     if (isInViewport(productImage) && product.slug === navigation.from?.params?.product) {
       // @ts-ignore
@@ -47,6 +49,8 @@
   });
 
   onNavigate((navigation) => {
+    if (navigation.shallow && navigation.type === 'goto') return;
+
     if (product.slug === navigation.to?.params?.product) {
       // @ts-ignore
       productImage.style.viewTransitionName = 'product-image';

@@ -1,6 +1,6 @@
-import { env } from '$env/dynamic/private';
-import { sdk } from '$lib/graphql/sdk';
-import { formatPrice } from '$lib/utils';
+import { BASE_URL } from '$app/env/private';
+import { sdk } from '#lib/graphql/sdk.js';
+import { formatPrice } from '#lib/utils.ts';
 import type { RequestHandler } from './$types';
 
 export const GET = (async () => {
@@ -11,10 +11,10 @@ export const GET = (async () => {
   xmlns:media="http://search.yahoo.com/mrss/" version="2.0">
   <channel>
     <title>Brave Merch Store</title>
-    <link>${env.BASE_URL}</link>
+    <link>${BASE_URL}</link>
     <description>Community inspired, professionally designed.</description>
     <language>en-us</language>
-    <atom:link href="${env.BASE_URL}/feed" rel="self" type="application/rss+xml"/>
+    <atom:link href="${BASE_URL}/feed" rel="self" type="application/rss+xml"/>
     ${allProducts?.map((product) => {
       let priceRange = product.priceRange
         ?.map((p) => {
@@ -23,8 +23,8 @@ export const GET = (async () => {
         .join(' - ');
       return `<item>
         <title>${product.name}</title>
-        <link>${env.BASE_URL}${product.firstVariant?.permalink}</link>
-        <guid>${env.BASE_URL}${product.firstVariant?.permalink}</guid>
+        <link>${BASE_URL}${product.firstVariant?.permalink}</link>
+        <guid>${BASE_URL}${product.firstVariant?.permalink}</guid>
         <description>${priceRange}</description>
         ${product.category ? `<category>${product.category?.name}</category>` : ''}
         <media:content url="${product.firstVariant?.details.files.at(-1).preview_url}"/>

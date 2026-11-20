@@ -1,13 +1,13 @@
 import { redirect } from '@sveltejs/kit';
-import { env } from '$env/dynamic/private';
-import { stripe } from '$lib/stripe-api';
+import { SENTRY_DSN } from '$app/env/private';
+import { stripe } from '#lib/stripe-api.ts';
 import type Stripe from 'stripe';
 import type { PageServerLoad } from './$types';
-import { sdk } from '$lib/graphql/sdk';
+import { sdk } from '#lib/graphql/sdk.js';
 import * as Sentry from '@sentry/node';
 
 Sentry.init({
-  dsn: env.SENTRY_DSN,
+  dsn: SENTRY_DSN,
   maxBreadcrumbs: 5,
   beforeSend(event) {
     if (event.user) {
