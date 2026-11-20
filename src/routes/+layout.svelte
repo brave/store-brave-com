@@ -13,7 +13,7 @@
   import { writable } from 'svelte/store';
   import { PUBLIC_ASSETS_PATH } from '$app/env/public';
   import { browser } from '$app/env';
-  import { page } from '$app/stores';
+  import { page } from '$app/state';
   import { afterNavigate, onNavigate } from '$app/navigation';
   import type { Variant } from '#lib/graphql/types.ts';
   import { cartStorageKey, contextKey } from '#lib/cartStore.ts';
@@ -105,7 +105,7 @@
     _paq = window._paq = window._paq || [];
     _paq.push(['setReferrerUrl', navigation.from?.url.href ?? document.referrer ?? '']);
     _paq.push(['setCustomUrl', navigation.to?.url.href]);
-    _paq.push(['setDocumentTitle', $page.data.title]);
+    _paq.push(['setDocumentTitle', page.data.title]);
     _paq.push(['trackPageView']);
   });
 
@@ -139,7 +139,8 @@
 </script>
 
 <svelte:head>
-  <title>{$page.error ? $page.status : $page.data.title} | Brave Merch Store</title>
+  <title>{page.error ? page.status : page.data.title} | Brave Merch Store</title>
+
   <link rel="preconnect" crossorigin="anonymous" href={PUBLIC_ASSETS_PATH} />
 </svelte:head>
 

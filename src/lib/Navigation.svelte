@@ -1,6 +1,6 @@
 <script lang="ts">
   import { getContext } from 'svelte';
-  import { page as currentPage } from '$app/stores';
+  import { page as currentPage } from '$app/state';
   import { contextKey } from '#lib/cartStore.ts';
   import CartButton from '#lib/CartButton.svelte';
   import Icon from '@brave/leo/src/components/icon/icon.svelte';
@@ -17,7 +17,7 @@
     {
       name: 'Products',
       permalink: '/categories/all/',
-      isActive: () => $currentPage.url.pathname.startsWith('/categories/')
+      isActive: () => currentPage.url.pathname.startsWith('/categories/')
     },
     {
       name: 'Privacy',
@@ -44,6 +44,7 @@
 
   <a class="inline-flex items-center" href="/">
     <img class="logo inline dark:hidden" src="/images/brave-logo.svg" alt="Brave Merch Store" />
+
     <img
       class="logo hidden dark:inline"
       src="/images/brave-logo-dark.svg"
@@ -58,7 +59,7 @@
       {#each pages as page}
         <li
           class="nav-item after:content-[''] h-full flex items-center"
-          class:active={page.isActive?.() || page.permalink === $currentPage.url.pathname}
+          class:active={page.isActive?.() || page.permalink === currentPage.url.pathname}
         >
           <!-- prettier-ignore -->
           <a class="nav-link" href={page.permalink} target={page.newTab ? '_blank' : null}>{page.name}</a>
@@ -67,7 +68,7 @@
     </ul>
     <span
       class="nav-item after:content-none md:after:content-[''] flex items-center"
-      class:active={'/cart/' === $currentPage.url.pathname}
+      class:active={'/cart/' === currentPage.url.pathname}
     >
       <CartButton ref="cart-button" itemCount={totalCartItems} />
     </span>
@@ -82,6 +83,7 @@
     <div class="flex justify-between pb-5xl">
       <a class="flex items-center" href="/" on:click={closeMobileMenu}>
         <img class="logo inline dark:hidden" src="/images/brave-logo.svg" alt="Brave Merch Store" />
+
         <img
           class="logo hidden dark:inline"
           src="/images/brave-logo-dark.svg"
@@ -100,7 +102,7 @@
       {#each pages as page}
         <li
           class="nav-item h-full flex items-center"
-          class:active={page.permalink === $currentPage.url.pathname}
+          class:active={page.permalink === currentPage.url.pathname}
         >
           <a on:click={closeMobileMenu} class="nav-link" href={page.permalink}>{page.name}</a>
         </li>
